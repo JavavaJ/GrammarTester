@@ -1,5 +1,7 @@
 package grammartester;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -25,10 +27,37 @@ public class RadioPracticeChangeable implements ActionListener {
     private JRadioButton radB;
     private JRadioButton radC;
     private JRadioButton radD;
+    private StartPage startPage;
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+    private JPanel mainPanel;
 
     RadioPracticeChangeable() {
         prepareGUI();
     }
+    
+    // inner class
+    private class StartPage extends JPanel implements ActionListener {
+        private JButton startButton;
+        
+        StartPage() {
+            prepareGUI();
+        }
+    
+        public void prepareGUI() {
+            startButton = new JButton("Start Test");
+            startButton.setPreferredSize(new Dimension(90, 30));
+            startButton.addActionListener(this);
+            
+            this.add(BorderLayout.CENTER, startButton);
+        }
+        
+        public void actionPerformed(ActionEvent event) {
+            cardLayout.next(cardPanel);
+            
+        }
+        
+    } // end of inner class
 
     public static void main(String[] args) {
         RadioPracticeChangeable radioPracticeChangeable = new RadioPracticeChangeable();
@@ -40,7 +69,14 @@ public class RadioPracticeChangeable implements ActionListener {
     public void prepareGUI() {
         mainFrame = new JFrame("Radio Button Practice");
         mainFrame.setSize(350, 350);
-        mainFrame.setLayout(new GridLayout(3, 1));
+        
+        cardPanel = new JPanel();
+        cardLayout = new CardLayout();
+        cardPanel.setLayout(cardLayout);
+        
+        mainPanel = new JPanel();
+        
+        mainPanel.setLayout(new GridLayout(3, 1));
 
         headerLabel = new JLabel("Test Practice", JLabel.CENTER);        
 
@@ -84,9 +120,16 @@ public class RadioPracticeChangeable implements ActionListener {
         submitButton.addActionListener(this);
         buttonPanel.add(submitButton);
 
-        mainFrame.add(headerLabel);
-        mainFrame.add(controlPanel);
-        mainFrame.add(buttonPanel);
+        mainPanel.add(headerLabel);
+        mainPanel.add(controlPanel);
+        mainPanel.add(buttonPanel);
+        
+        startPage = new StartPage();
+        
+        cardPanel.add("startPage", startPage);
+        cardPanel.add("mainPanel", mainPanel);
+        
+        mainFrame.add(cardPanel);
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
