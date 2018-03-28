@@ -1,9 +1,13 @@
 package read;
 
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import grammartester.GrammarTestGUI;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 class TestReadFile {
     
@@ -17,26 +21,50 @@ class TestReadFile {
         
         String[] questions = new String[mapOfIndices.size()];
         
-        System.out.println();
-        
-        for (int i = 0; i < mapOfIndices.size(); i++) {
-            // System.out.println("i: " + i);
+                
+        for (int i = 0; i < mapOfIndices.size(); i++) {           
             
             String indexStr = String.valueOf(i+1);
-            // System.out.println("indexStr: " + indexStr);
-            String nextIndexStr = String.valueOf(i+2);
-            // System.out.println("nextIndexStr: " + nextIndexStr);
+            
+            String nextIndexStr = String.valueOf(i+2);            
             if (mapOfIndices.get(nextIndexStr) != null) {
                 questions[i] = myText.substring(mapOfIndices.get(indexStr), 
                                                 mapOfIndices.get(nextIndexStr));
             } else {
                 questions[i] = myText.substring(mapOfIndices.get(indexStr));
-            }     
+            }                
             
-            // System.out.println("questions[" + i + "]: " + questions[i]);
         }
         
-        System.out.println(Arrays.toString(questions));
+        // System.out.println(Arrays.toString(questions));
+        
+        Question q = new Question(questions[15]);
+        System.out.println("getQuestionPart: " + q.getQuestionPart());
+        System.out.println("Option A: " + q.getOptionA());
+        
+        GrammarTestGUI gui = new GrammarTestGUI(String.valueOf(q.getId()),
+                                                q.getQuestionPart(),
+                                                q.getOptionA(), 
+                                                q.getOptionB(), 
+                                                q.getOptionC(), 
+                                                q.getOptionD()
+        );
+        
+        List<Question> allQuestions = new ArrayList<>();
+        for (int i =0; i < questions.length; i++) {
+            allQuestions.add(new Question(questions[i]));
+            System.out.println("Added # " + i);
+        }
+        
+        try {
+            FileOutputStream fos = new FileOutputStream("questions.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(allQuestions);
+            oos.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        
         
         
                
@@ -45,6 +73,8 @@ class TestReadFile {
         
     }
     
+    // the method returns a map of indices of occurences
+    // of question numbers in the text
     public static Map<String, Integer> questionNumIndex(String str) {
         Map<String, Integer> mapIndex = new HashMap<String, Integer>();
         
