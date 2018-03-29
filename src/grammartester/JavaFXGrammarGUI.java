@@ -206,6 +206,25 @@ public class JavaFXGrammarGUI extends Application {
                     radioButton.setSelected(false);
                 }
             }
+                
+            /* A user can press previous button, go back to prev question and then
+            go back to question (pressing next) which user already answered before.
+            The previously marked answer should be selected in radio buttons. The 
+            following lines make sure it happens. */
+            if (chosenAnswers[currentQNum - 1] != null) {
+                if (chosenAnswers[currentQNum - 1].equals("a")) {
+                    radioA.setSelected(true);
+                }
+                if (chosenAnswers[currentQNum - 1].equals("b")) {
+                    radioB.setSelected(true);
+                }
+                if (chosenAnswers[currentQNum - 1].equals("c")) {
+                    radioC.setSelected(true);
+                }
+                if (chosenAnswers[currentQNum - 1].equals("d")) {
+                    radioD.setSelected(true);
+                }
+            }    
             
         }
     }
