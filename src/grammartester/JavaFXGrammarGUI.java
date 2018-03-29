@@ -30,6 +30,7 @@ public class JavaFXGrammarGUI extends Application {
     int currentQNum = 1; // non-zero based
     String[] chosenAnswers;
     int totalOfQs;
+    Button finishButton;
 
     Text questionText;
     String initialQuestionText;
@@ -104,8 +105,13 @@ public class JavaFXGrammarGUI extends Application {
         nextButton.setFont(new Font(20));
         nextButton.setTooltip(new Tooltip("Go to next question"));
         nextButton.setOnAction(e -> click_nextButton());
+        
+        finishButton = new Button("Finish");
+        finishButton.setTooltip(new Tooltip("Finish and Evaluate"));
+        finishButton.setFont(new Font(20));
+        finishButton.setVisible(false);
 
-        HBox buttonPane = new HBox(prevButton, nextButton);
+        HBox buttonPane = new HBox(prevButton, nextButton, finishButton);
         buttonPane.setPadding(new Insets(5));
         buttonPane.setPrefHeight(150);
         buttonPane.setAlignment(Pos.CENTER);
@@ -199,33 +205,43 @@ public class JavaFXGrammarGUI extends Application {
             chosenAnswers[currentQNum - 1] = readRadioButtons();
             currentQNum++;
             setGUITexts();
-            
-            // unselect all radio buttons if question is shown for the first time
-            if (chosenAnswers[currentQNum - 1] == (null)) {
-                for (RadioButton radioButton : radioButtons) {
-                    radioButton.setSelected(false);
+
+            // to avoid going out of array's bound
+            if (currentQNum <= totalOfQs) {
+                
+                // unselect all radio buttons if question is shown for the first time            
+                if (chosenAnswers[currentQNum - 1] == (null)) {
+                    for (RadioButton radioButton : radioButtons) {
+                        radioButton.setSelected(false);
+                    }
                 }
+
+                /* A user can press previous button, go back to prev question and then
+                go back to question (pressing next) which user already answered before.
+                The previously marked answer should be selected in radio buttons. The
+                following lines make sure it happens. */
+                if (chosenAnswers[currentQNum - 1] != null) {
+                    if (chosenAnswers[currentQNum - 1].equals("a")) {
+                        radioA.setSelected(true);
+                    }
+                    if (chosenAnswers[currentQNum - 1].equals("b")) {
+                        radioB.setSelected(true);
+                    }
+                    if (chosenAnswers[currentQNum - 1].equals("c")) {
+                        radioC.setSelected(true);
+                    }
+                    if (chosenAnswers[currentQNum - 1].equals("d")) {
+                        radioD.setSelected(true);
+                    }
+                }
+                
             }
                 
-            /* A user can press previous button, go back to prev question and then
-            go back to question (pressing next) which user already answered before.
-            The previously marked answer should be selected in radio buttons. The 
-            following lines make sure it happens. */
-            if (chosenAnswers[currentQNum - 1] != null) {
-                if (chosenAnswers[currentQNum - 1].equals("a")) {
-                    radioA.setSelected(true);
-                }
-                if (chosenAnswers[currentQNum - 1].equals("b")) {
-                    radioB.setSelected(true);
-                }
-                if (chosenAnswers[currentQNum - 1].equals("c")) {
-                    radioC.setSelected(true);
-                }
-                if (chosenAnswers[currentQNum - 1].equals("d")) {
-                    radioD.setSelected(true);
-                }
-            }    
             
+
+        }
+        if (currentQNum == totalOfQs) {
+            // display Finish and Evaluate button
         }
     }
 
