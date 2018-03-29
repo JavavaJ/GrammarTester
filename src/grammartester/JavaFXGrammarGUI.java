@@ -1,5 +1,5 @@
 /** The class is a JavaFX GUI implementation of Grammar Tester.
- * 
+ *
  */
 
 package grammartester;
@@ -29,170 +29,229 @@ public class JavaFXGrammarGUI extends Application {
     List<Question> allQuestions;
     int currentQNum = 1; // non-zero based
     String[] chosenAnswers;
-    
+    int totalOfQs;
+
     Text questionText;
     String initialQuestionText;
     String initialOptionA;
     String initialOptionB;
     String initialOptionC;
     String initialOptionD;
-    
-    
-    public static void main(String[] args) {        
+
+
+    public static void main(String[] args) {
         launch(args);
-        
+
     }
-    
-    
-    
+
+
+
     public void start(Stage primaryStage) {
         readDatabase();
+        initChosenAnswers();
         setInitialTextValues();
-        
-        questionText = new Text(); 
-        questionText.setFont(Font.font(null, FontWeight.BOLD, 20));        
-        
+
+        questionText = new Text();
+        questionText.setFont(Font.font(null, FontWeight.BOLD, 20));
+        questionText.setWrappingWidth(580);
         questionText.setText(initialQuestionText);
-        
-        
+
+
         HBox qTextPane = new HBox(questionText);
-        qTextPane.setAlignment(Pos.CENTER);
         qTextPane.setPadding(new Insets(5));
-        qTextPane.setPrefHeight(200);        
-        
+        qTextPane.setPrefHeight(200);
+        qTextPane.setAlignment(Pos.CENTER);
+
+
         radioA = new RadioButton();
         radioB = new RadioButton();
         radioC = new RadioButton();
         radioD = new RadioButton();
-        
+
         radioA.setText(initialOptionA);
         radioB.setText(initialOptionB);
         radioC.setText(initialOptionC);
         radioD.setText(initialOptionD);
-        
+
         radioButtons = new RadioButton[4];
-        
+
         radioButtons[0] = radioA;
         radioButtons[1] = radioB;
         radioButtons[2] = radioC;
         radioButtons[3] = radioD;
-        
+
         ToggleGroup tGroup = new ToggleGroup();
-        
+
         for (RadioButton r : radioButtons) {
             r.setToggleGroup(tGroup);
             r.setFont(new Font(15));
         }
 
-        
-        
+
+
         VBox radioPane = new VBox(radioA, radioB, radioC, radioD);
         radioPane.setAlignment(Pos.BASELINE_LEFT);
         radioPane.setSpacing(5);
         radioPane.setPadding(new Insets(5));
-       
-        
+
+
         Button prevButton = new Button("Previous");
         prevButton.setFont(new Font(20));
-        prevButton.setTooltip(new Tooltip("Return to previous answer"));
+        prevButton.setTooltip(new Tooltip("Return to previous question"));
         prevButton.setOnAction(e -> click_prevButton());
-        
-        Button submitButton = new Button("Submit");        
-        submitButton.setFont(new Font(20));
-        submitButton.setTooltip(new Tooltip("Submits the Answer"));
-        submitButton.setOnAction(e -> click_submitButton());
-        
-        HBox buttonPane = new HBox(prevButton, submitButton);
+
+        Button nextButton = new Button("Next");
+        nextButton.setFont(new Font(20));
+        nextButton.setTooltip(new Tooltip("Go to next question"));
+        nextButton.setOnAction(e -> click_nextButton());
+
+        HBox buttonPane = new HBox(prevButton, nextButton);
         buttonPane.setPadding(new Insets(5));
         buttonPane.setPrefHeight(150);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(5);
-        
-        
+
+
         BorderPane mainPane = new BorderPane();
         mainPane.setTop(qTextPane);
         mainPane.setCenter(radioPane);
         mainPane.setBottom(buttonPane);
-        
+
         Scene scene = new Scene(mainPane, 600, 500);
-        
-        
+
+
         String iconPath = "icon_test.jpg";
-        
+
         // setting icon for a window
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(iconPath)));
         primaryStage.setScene(scene);
         primaryStage.setTitle("Grammar Tester");
         primaryStage.show();
-        
+
     }
-    
-    /** The method reads a database of tests and stores results in 
+
+    /** The method reads a database of tests and stores results in
      *  a list of Question objects.
-     * 
+     *
      */
     public void readDatabase() {
         SQLReader sQLReader = new SQLReader();
-        
+
         // path of DB with tests
         String filePath = "jdbc:sqlite:C:/sqlite/TEST7.db";
         String tableName = "test7";
-        
-        allQuestions = sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));  
-        System.out.println("All questions are read!");        
+
+        allQuestions = sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));
+        System.out.println("All questions are read!");
     }
-    
+
     public void setGUITexts() {
-        Question currentQ = allQuestions.get(currentQNum - 1);
-        
-        String qText = currentQNum + ". " + currentQ.getQuestionPart();
-        
-        String optionA = currentQ.getOptionA();
-        String optionB = currentQ.getOptionB();
-        String optionC = currentQ.getOptionC();
-        String optionD = currentQ.getOptionD();
-        
-        questionText.setText(qText);
-        radioA.setText("A) " + optionA);
-        radioB.setText("B) " + optionB);
-        radioC.setText("C) " + optionC);
-        radioD.setText("D) " + optionD);
-        
+         // to avoid going out of array's bound
+        if (currentQNum <= totalOfQs) {
+            Question currentQ = allQuestions.get(currentQNum - 1);
+
+            String qText = currentQNum + ". " + currentQ.getQuestionPart();
+
+            // let's get rid of newline breaks
+            qText = qText.replace("\n", "");
+
+            String optionA = currentQ.getOptionA();
+            String optionB = currentQ.getOptionB();
+            String optionC = currentQ.getOptionC();
+            String optionD = currentQ.getOptionD();
+
+            questionText.setText(qText);
+            radioA.setText("A) " + optionA);
+            radioB.setText("B) " + optionB);
+            radioC.setText("C) " + optionC);
+            radioD.setText("D) " + optionD);
+        }
+
     }
-    
+
     public void setInitialTextValues() {
         System.out.println("Starting initializing text values...");
-        
+
         Question currentQ = allQuestions.get(0);
-        
+
         initialQuestionText = "1. " + currentQ.getQuestionPart();
+
+        // let's get rid of newline breaks
+        initialQuestionText = initialQuestionText.replace("\n", "");
+
+
         initialOptionA = "A) " + currentQ.getOptionA();
         initialOptionB = "B) " + currentQ.getOptionB();
         initialOptionC = "C) " + currentQ.getOptionC();
-        initialOptionD = "D) " + currentQ.getOptionD();        
-        
+        initialOptionD = "D) " + currentQ.getOptionD();
+
     }
-    
-    public void click_submitButton() {
-        currentQNum++;
-        setGUITexts();
-        
-        // TODO write code which reads radio button values and 
-        // puts them in chosenAnswers array
+
+    public void initChosenAnswers() {
+        totalOfQs = allQuestions.size();
+        // initialize an array with a length of number of questions
+        chosenAnswers = new String [totalOfQs];
     }
-    
+
+    public void click_nextButton() {
+        // to avoid going out of array's bound
+        if (currentQNum <= totalOfQs) {
+            chosenAnswers[currentQNum - 1] = readRadioButtons();
+            currentQNum++;
+            setGUITexts();
+            
+            // unselect all radio buttons if question is shown for the first time
+            if (chosenAnswers[currentQNum - 1] == (null)) {
+                for (RadioButton radioButton : radioButtons) {
+                    radioButton.setSelected(false);
+                }
+            }
+            
+        }
+    }
+
     public void click_prevButton() {
         if (currentQNum == 1) {
             // do nothing
         } else {
             currentQNum--;
             setGUITexts();
+            String chosen = chosenAnswers[currentQNum - 1];
+            if (chosen.equals("a")) {
+                radioA.setSelected(true);
+            }
+            if (chosen.equals("b")) {
+                radioB.setSelected(true);
+            }
+            if (chosen.equals("c")) {
+                radioC.setSelected(true);
+            }
+            if (chosen.equals("d")) {
+                radioD.setSelected(true);
+            }
         }
-        
-        // TODO write code which sets as selected radio buttons according to 
+
+        // TODO write code which sets as selected radio buttons according to
         // previously chosen answers
     }
-    
-    
-    
+
+    public String readRadioButtons() {
+        String radValue = "";
+        if (radioA.isSelected()) {
+            radValue = "a";
+        }
+        if (radioB.isSelected()) {
+            radValue = "b";
+        }
+        if (radioC.isSelected()) {
+            radValue = "c";
+        }
+        if (radioD.isSelected()) {
+            radValue = "d";
+        }
+        return radValue;
+    }
+
+
+
 }
