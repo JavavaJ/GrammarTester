@@ -27,6 +27,9 @@ import javafx.stage.Stage;
 import read.Question;
 
 public class JavaFXGrammarGUI extends Application {
+    Stage mainStage;
+    Scene resultScene;
+    
     RadioButton radioA, radioB, radioC, radioD;
     RadioButton [] radioButtons;
     List<Question> allQuestions;
@@ -42,6 +45,7 @@ public class JavaFXGrammarGUI extends Application {
     String initialOptionC;
     String initialOptionD;
 
+    Text resultText;
 
     public static void main(String[] args) {
         launch(args);
@@ -54,6 +58,8 @@ public class JavaFXGrammarGUI extends Application {
         readDatabase();
         initChosenAnswers();
         setInitialTextValues();
+        
+        mainStage = primaryStage;
 
         questionText = new Text();
         questionText.setFont(Font.font(null, FontWeight.BOLD, 20));
@@ -131,14 +137,26 @@ public class JavaFXGrammarGUI extends Application {
         mainPane.setCenter(radioPane);
         mainPane.setBottom(buttonPane);
 
-        Scene scene = new Scene(mainPane, 600, 500);
+        Scene testingScene = new Scene(mainPane, 600, 500);
+        
+        // -------------- end of testingScene code -------------------
+        
+        resultText = new Text();
+        resultText.setFont(Font.font(null, FontWeight.BOLD, 20));
+        resultText.setWrappingWidth(580);
+        
+        VBox resultPane = new VBox(resultText);
+        resultPane.setPadding(new Insets(5));
+        resultPane.setAlignment(Pos.CENTER);
+        
+        resultScene = new Scene(resultPane, 600, 500);
 
 
         String iconPath = "icon_test.jpg";
 
         // setting icon for a window
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(iconPath)));
-        primaryStage.setScene(scene);
+        primaryStage.setScene(testingScene);
         primaryStage.setTitle("Grammar Tester");
         primaryStage.show();
 
@@ -363,7 +381,18 @@ public class JavaFXGrammarGUI extends Application {
                     answerScore++;
                 }
             }
-            System.out.println("Your Score: " + answerScore);           
+            
+            
+            System.out.println("Your Score: " + answerScore);         
+            
+            String resultString = "You have correctly answered " + answerScore +
+                    " out of " + totalOfQs + " questions. It means that your" +
+                    " score is " + (answerScore * 100) / totalOfQs + " %.";
+            
+            System.out.println(resultString);
+            
+            resultText.setText(resultString);
+            mainStage.setScene(resultScene);
             
         }
         
