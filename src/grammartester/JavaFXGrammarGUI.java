@@ -293,18 +293,30 @@ public class JavaFXGrammarGUI extends Application {
             currentQNum--;
             setGUITexts();
             String chosen = chosenAnswers[currentQNum - 1];
-            if (chosen.equals("a")) {
-                radioA.setSelected(true);
+            
+            // if value is null it throws NullPointerException
+            if (chosen != null) {
+                if (chosen.equals("a")) {
+                    radioA.setSelected(true);
+                }
+                if (chosen.equals("b")) {
+                    radioB.setSelected(true);
+                }
+                if (chosen.equals("c")) {
+                    radioC.setSelected(true);
+                }
+                if (chosen.equals("d")) {
+                    radioD.setSelected(true);
+                } 
+                
             }
-            if (chosen.equals("b")) {
-                radioB.setSelected(true);
+            if (chosen == null) {
+                for (RadioButton radBut : radioButtons) {
+                    radBut.setSelected(false);
+                }
             }
-            if (chosen.equals("c")) {
-                radioC.setSelected(true);
-            }
-            if (chosen.equals("d")) {
-                radioD.setSelected(true);
-            }
+            
+                
         }
         
     }
@@ -345,9 +357,7 @@ public class JavaFXGrammarGUI extends Application {
             int answerScore = 0;
             for (int i = 0; i < totalOfQs; i++) {
                 String answered = chosenAnswers[i];
-                String correctAns = allQuestions.get(i).getRightAns();
-                System.out.println("answered: " + answered);
-                System.out.print(" correctAns: " + correctAns);
+                String correctAns = allQuestions.get(i).getRightAns();                
 
                 if (answered.equals(correctAns)) {
                     answerScore++;
@@ -380,11 +390,7 @@ public class JavaFXGrammarGUI extends Application {
             i++;
         }
         
-        String message = "";
-        System.out.println("This is a notChosen list: " + notChosen);
-        System.out.println("");
-        List<String>chAns = new ArrayList<>(Arrays.asList(chosenAnswers));
-        System.out.println("This is chosenAnsers list: " + chAns);
+        String message = ""; // message to display in MessageBox        
         if (!notChosen.isEmpty()) {
             message += "You can't finish now. \n Questions ";
             
