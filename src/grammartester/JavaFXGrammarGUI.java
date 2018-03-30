@@ -4,6 +4,8 @@
 
 package grammartester;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -16,6 +18,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -28,8 +31,8 @@ public class JavaFXGrammarGUI extends Application {
     RadioButton [] radioButtons;
     List<Question> allQuestions;
     int currentQNum = 1; // non-zero based
-    String[] chosenAnswers;
-    int totalOfQs;
+    String[] chosenAnswers; // answers a user chooses via  radio buttons
+    int totalOfQs; // total number of questions in a test
     Button finishButton;
 
     Text questionText;
@@ -110,8 +113,13 @@ public class JavaFXGrammarGUI extends Application {
         finishButton.setTooltip(new Tooltip("Finish and Evaluate"));
         finishButton.setFont(new Font(20));
         finishButton.setVisible(false);
+        finishButton.setOnAction(e -> click_finishButton());
+        
+        // spacer is added to make a group of buttons appear to be in the middle
+        Region spacer = new Region();
+        spacer.setPrefWidth(60);
 
-        HBox buttonPane = new HBox(prevButton, nextButton, finishButton);
+        HBox buttonPane = new HBox(spacer, prevButton, nextButton, finishButton);
         buttonPane.setPadding(new Insets(5));
         buttonPane.setPrefHeight(150);
         buttonPane.setAlignment(Pos.CENTER);
@@ -151,6 +159,11 @@ public class JavaFXGrammarGUI extends Application {
         System.out.println("All questions are read!");
     }
 
+    
+    /** The method is called every time a Button Next is pressed. It sets 
+     * GUI elements (Text and Radio Buttons) to values of elements of
+     * Question (question Part, optionA, optionB, optionC, optionC).
+     */
     public void setGUITexts() {
          // to avoid going out of array's bound
         if (currentQNum <= totalOfQs) {
@@ -175,6 +188,10 @@ public class JavaFXGrammarGUI extends Application {
 
     }
 
+    /** The method reads values from Question object and sets initial values of 
+     * GUI to build it from.
+     * 
+     */
     public void setInitialTextValues() {
         System.out.println("Starting initializing text values...");
 
@@ -193,12 +210,26 @@ public class JavaFXGrammarGUI extends Application {
 
     }
 
+    
+    /** The method initializes the integer totalOfQs and an array chosenAnswers.
+     * 
+     */
     public void initChosenAnswers() {
         totalOfQs = allQuestions.size();
         // initialize an array with a length of number of questions
         chosenAnswers = new String [totalOfQs];
     }
 
+    /** This is a method which is called when Button Next is pressed. It reads 
+     * values of radio buttons and stores them in chosenAnswere array. After 
+     * it sets GUI elements to the values of next Question. Thirdly, the method 
+     * watches to set all radio buttons unselected if the Question is displayed 
+     * for the first time. Also, if the Question has already been previously 
+     * answered, the method sets the radio buttons to the value which was 
+     * answered before. Finally, it checks if the current question is the last 
+     * one. If so, it makes the button "Finish" visible.
+     * 
+     */
     public void click_nextButton() {
         // to avoid going out of array's bound
         if (currentQNum <= totalOfQs) {
@@ -241,10 +272,20 @@ public class JavaFXGrammarGUI extends Application {
 
         }
         if (currentQNum == totalOfQs) {
-            // display Finish and Evaluate button
+            // display Finish button
+            finishButton.setVisible(true);
         }
     }
 
+    
+    /** This is a method which is called when Button Previous is pressed. It 
+     * allows a user to go back and check previously answered questions. While 
+     * doing that the previously answered values should retain the values which
+     * was chosen by a user. Also, the method checks if the question is the first. 
+     * If so, it does not do anything since one can not go earlier than the first
+     * question.
+     * 
+     */
     public void click_prevButton() {
         if (currentQNum == 1) {
             // do nothing
@@ -265,13 +306,16 @@ public class JavaFXGrammarGUI extends Application {
                 radioD.setSelected(true);
             }
         }
-
-        // TODO write code which sets as selected radio buttons according to
-        // previously chosen answers
+        
     }
 
+    /** The method reads the values of radio buttons and return that values as
+     * a string value.
+     * 
+     * @return string values which corresponds to a selected radio button.
+     */
     public String readRadioButtons() {
-        String radValue = "";
+        String radValue = null;
         if (radioA.isSelected()) {
             radValue = "a";
         }
@@ -285,6 +329,74 @@ public class JavaFXGrammarGUI extends Application {
             radValue = "d";
         }
         return radValue;
+    }
+    
+    
+    /** This is a method which is called when Finish Button is pressed. First, 
+     * it "clickes" Next Button in case it was not pressed before. Secondly, 
+     * having checked if all the questions have been answered, it calculates 
+     * the number of right answers.
+     * 
+     */
+    public void click_finishButton() {
+        click_nextButton();
+        
+        if (areAllQsAnswered()) {
+            int answerScore = 0;
+            for (int i = 0; i < totalOfQs; i++) {
+                String answered = chosenAnswers[i];
+                String correctAns = allQuestions.get(i).getRightAns();
+                System.out.println("answered: " + answered);
+                System.out.print(" correctAns: " + correctAns);
+
+                if (answered.equals(correctAns)) {
+                    answerScore++;
+                }
+            }
+            System.out.println("Your Score: " + answerScore);           
+            
+        }
+        
+        // TODO properly display the number of right answers and the score
+        
+            
+    }
+    
+    
+    /** The method checkes if all the questions were answered. If so, it returns
+     * true. Otherwise, it displays a Message Window notifying the user which
+     * questions have not been answered.
+     * 
+     * @return boolean of whether or not all the questions have been answered.
+     */
+    public boolean areAllQsAnswered() {
+        List<Integer> notChosen = new ArrayList<>();
+        
+        int i = 0;
+        for (String ans : chosenAnswers) {
+            if (ans == null) {
+                notChosen.add(i);
+            }
+            i++;
+        }
+        
+        String message = "";
+        System.out.println("This is a notChosen list: " + notChosen);
+        System.out.println("");
+        List<String>chAns = new ArrayList<>(Arrays.asList(chosenAnswers));
+        System.out.println("This is chosenAnsers list: " + chAns);
+        if (!notChosen.isEmpty()) {
+            message += "You can't finish now. \n Questions ";
+            
+            message += notChosen;    
+            
+            message += " have not been answered!";
+            MessageBox.show(message, "Complete the Test");
+            return false;
+        } else {
+            return true;
+        }
+            
     }
 
 
