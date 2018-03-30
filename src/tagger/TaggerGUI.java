@@ -12,6 +12,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -32,6 +33,7 @@ public class TaggerGUI extends Application {
     private int currentQNum = 1; // non-zero based
     int totalOfQs; // total number of questions in a test
     Button finishButton;
+    ChoiceBox<TagType> tagChoice;
 
     Text questionText;
     Text optionAText;
@@ -69,10 +71,10 @@ public class TaggerGUI extends Application {
         optionCText = new Text(initialOptionC);
         optionDText = new Text(initialOptionD);
 
-        optionAText.setFont(new Font(15));
-        optionBText.setFont(new Font(15));
-        optionCText.setFont(new Font(15));
-        optionDText.setFont(new Font(15));
+        optionAText.setFont(new Font(17));
+        optionBText.setFont(new Font(17));
+        optionCText.setFont(new Font(17));
+        optionDText.setFont(new Font(17));
         
         
         
@@ -103,10 +105,23 @@ public class TaggerGUI extends Application {
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(5);
         
+        tagChoice = new ChoiceBox<>();
+        
+        for (TagType tag : TagType.values()) {
+            tagChoice.getItems().add(tag);
+        }
+        
+        tagChoice.setValue(TagType.PASSIVE);  
+        tagChoice.setPrefSize(150, 40);
+        
+        
+        tagChoice.setStyle("-fx-font: 17px \"Segoe UI\";");
+        
         BorderPane mainPane = new BorderPane();
         mainPane.setTop(qTextPane);
         mainPane.setCenter(optionsPane);
         mainPane.setBottom(buttonPane);
+        mainPane.setRight(tagChoice);
         
         Scene taggingScene = new Scene(mainPane, 600, 500);
         
@@ -152,10 +167,10 @@ public class TaggerGUI extends Application {
         initialQuestionText = initialQuestionText.replace("\n", "");
 
 
-        initialOptionA = "A) " + currentQ.getOptionA();
-        initialOptionB = "B) " + currentQ.getOptionB();
-        initialOptionC = "C) " + currentQ.getOptionC();
-        initialOptionD = "D) " + currentQ.getOptionD();
+        initialOptionA = "A) " + currentQ.getOptionA().replace("\n", "");
+        initialOptionB = "B) " + currentQ.getOptionB().replace("\n", "");
+        initialOptionC = "C) " + currentQ.getOptionC().replace("\n", "");
+        initialOptionD = "D) " + currentQ.getOptionD().replace("\n", "");
 
     }
 
