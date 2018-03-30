@@ -5,7 +5,7 @@
 package grammartester;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -33,7 +33,7 @@ public class JavaFXGrammarGUI extends Application {
     RadioButton radioA, radioB, radioC, radioD;
     RadioButton [] radioButtons;
     List<Question> allQuestions;
-    int currentQNum = 1; // non-zero based
+    private int currentQNum = 1; // non-zero based
     String[] chosenAnswers; // answers a user chooses via  radio buttons
     int totalOfQs; // total number of questions in a test
     Button finishButton;
@@ -161,6 +161,22 @@ public class JavaFXGrammarGUI extends Application {
         primaryStage.show();
 
     }
+    
+    public int getCurrentQNum() {
+        return currentQNum;
+    }
+    
+    public void incrementCurrentQNum() {
+        if (currentQNum < totalOfQs) {
+            currentQNum++;
+        }
+    }
+    
+    public void decrementCurrentQNum() {
+        if (currentQNum > 1) {
+            currentQNum--;
+        }
+    }
 
     /** The method reads a database of tests and stores results in
      *  a list of Question objects.
@@ -184,10 +200,10 @@ public class JavaFXGrammarGUI extends Application {
      */
     public void setGUITexts() {
          // to avoid going out of array's bound
-        if (currentQNum <= totalOfQs) {
-            Question currentQ = allQuestions.get(currentQNum - 1);
+        if (getCurrentQNum() <= totalOfQs) {
+            Question currentQ = allQuestions.get(getCurrentQNum() - 1);
 
-            String qText = currentQNum + ". " + currentQ.getQuestionPart();
+            String qText = getCurrentQNum() + ". " + currentQ.getQuestionPart();
 
             // let's get rid of newline breaks
             qText = qText.replace("\n", "");
@@ -250,16 +266,16 @@ public class JavaFXGrammarGUI extends Application {
      */
     public void click_nextButton() {
         // to avoid going out of array's bound
-        if (currentQNum <= totalOfQs) {
-            chosenAnswers[currentQNum - 1] = readRadioButtons();
-            currentQNum++;
+        if (getCurrentQNum() <= totalOfQs) {
+            chosenAnswers[getCurrentQNum() - 1] = readRadioButtons();
+            incrementCurrentQNum();
             setGUITexts();
 
             // to avoid going out of array's bound
-            if (currentQNum <= totalOfQs) {
+            if (getCurrentQNum() <= totalOfQs) {
                 
                 // unselect all radio buttons if question is shown for the first time            
-                if (chosenAnswers[currentQNum - 1] == (null)) {
+                if (chosenAnswers[getCurrentQNum() - 1] == (null)) {
                     for (RadioButton radioButton : radioButtons) {
                         radioButton.setSelected(false);
                     }
@@ -269,17 +285,17 @@ public class JavaFXGrammarGUI extends Application {
                 go back to question (pressing next) which user already answered before.
                 The previously marked answer should be selected in radio buttons. The
                 following lines make sure it happens. */
-                if (chosenAnswers[currentQNum - 1] != null) {
-                    if (chosenAnswers[currentQNum - 1].equals("a")) {
+                if (chosenAnswers[getCurrentQNum() - 1] != null) {
+                    if (chosenAnswers[getCurrentQNum() - 1].equals("a")) {
                         radioA.setSelected(true);
                     }
-                    if (chosenAnswers[currentQNum - 1].equals("b")) {
+                    if (chosenAnswers[getCurrentQNum() - 1].equals("b")) {
                         radioB.setSelected(true);
                     }
-                    if (chosenAnswers[currentQNum - 1].equals("c")) {
+                    if (chosenAnswers[getCurrentQNum() - 1].equals("c")) {
                         radioC.setSelected(true);
                     }
-                    if (chosenAnswers[currentQNum - 1].equals("d")) {
+                    if (chosenAnswers[getCurrentQNum() - 1].equals("d")) {
                         radioD.setSelected(true);
                     }
                 }
@@ -289,7 +305,7 @@ public class JavaFXGrammarGUI extends Application {
             
 
         }
-        if (currentQNum == totalOfQs) {
+        if (getCurrentQNum() == totalOfQs) {
             // display Finish button
             finishButton.setVisible(true);
         }
@@ -305,39 +321,47 @@ public class JavaFXGrammarGUI extends Application {
      * 
      */
     public void click_prevButton() {
-        if (currentQNum == 1) {
-            // do nothing
-        } else {
-            currentQNum--;
-            setGUITexts();
-            String chosen = chosenAnswers[currentQNum - 1];
+        // to avoid going out of array's bound
+        if (getCurrentQNum() <= totalOfQs) {
             
-            // if value is null it throws NullPointerException
-            if (chosen != null) {
-                if (chosen.equals("a")) {
-                    radioA.setSelected(true);
+            if (getCurrentQNum() == 1) {
+                // do nothing
+            } else {
+                chosenAnswers[getCurrentQNum() - 1] = readRadioButtons();
+                decrementCurrentQNum();
+                setGUITexts();
+                String chosen = chosenAnswers[getCurrentQNum() - 1];
+
+                // if value is null it throws NullPointerException
+                if (chosen != null) {
+                    if (chosen.equals("a")) {
+                        radioA.setSelected(true);
+                    }
+                    if (chosen.equals("b")) {
+                        radioB.setSelected(true);
+                    }
+                    if (chosen.equals("c")) {
+                        radioC.setSelected(true);
+                    }
+                    if (chosen.equals("d")) {
+                        radioD.setSelected(true);
+                    } 
+
                 }
-                if (chosen.equals("b")) {
-                    radioB.setSelected(true);
+                if (chosen == null) {
+                    for (RadioButton radBut : radioButtons) {
+                        radBut.setSelected(false);
+                    }
                 }
-                if (chosen.equals("c")) {
-                    radioC.setSelected(true);
-                }
-                if (chosen.equals("d")) {
-                    radioD.setSelected(true);
-                } 
-                
-            }
-            if (chosen == null) {
-                for (RadioButton radBut : radioButtons) {
-                    radBut.setSelected(false);
-                }
+
+
             }
             
-                
         }
         
-    }
+            
+        
+    } // end of method
 
     /** The method reads the values of radio buttons and return that values as
      * a string value.
@@ -421,7 +445,12 @@ public class JavaFXGrammarGUI extends Application {
         
         String message = ""; // message to display in MessageBox        
         if (!notChosen.isEmpty()) {
-            message += "You can't finish now. \n Questions ";
+            message += "You can't finish now. \n Questions ";                        
+            
+            // increment every element of a list by one to switch from zero-based
+            for (int j = 0; j < notChosen.size(); j++) {
+                notChosen.set(j, notChosen.get(j) + 1);
+            }
             
             message += notChosen;    
             
