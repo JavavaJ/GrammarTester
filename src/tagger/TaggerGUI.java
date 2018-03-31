@@ -35,7 +35,7 @@ public class TaggerGUI extends Application {
     int totalOfQs; // total number of questions in a test
     Button updateTagsButton;
     ChoiceBox<TagType> tagChoice;
-    String[] tagsArray; // array holding tags
+    TagType[] tagsArray; // array holding tags
 
     Text questionText;
     Text optionAText;
@@ -118,7 +118,7 @@ public class TaggerGUI extends Application {
             tagChoice.getItems().add(tag);
         }
 
-        tagChoice.setValue(TagType.PASSIVE);
+        tagChoice.setValue(null);
         tagChoice.setPrefSize(150, 40);
 
 
@@ -199,17 +199,68 @@ public class TaggerGUI extends Application {
 
     }
 
-    public void click_prevButton() {
-
-    }
+    
 
     public void click_nextButton() {
+        // to avoid going out of array's bound
+        if (getCurrentQNum() <= totalOfQs) {
+            tagsArray[getCurrentQNum() - 1] = tagChoice.getValue();
+            incrementCurrentQNum();
+            setGUITexts();
+            
+            // to avoid going out of array's bound
+            if (getCurrentQNum() <= totalOfQs) {
+                
+                // unselect ChoiceBox if question is shown for the first time
+                if (tagsArray[getCurrentQNum() - 1] == null) {
+                    tagChoice.setValue(null);
+                }
+                
+                /* A user can press previous button, go back to prev question and then
+                go back to question (pressing next) which user already tagged before.
+                The previously tagged value should be selected in choice box. The
+                following lines make sure it happens. */
+                if (tagsArray[getCurrentQNum() - 1] != null) {
+                    
+                    for (TagType tag : TagType.values()) {
+                        if (tagsArray[getCurrentQNum() - 1].equals(tag)) {
+                            tagChoice.setValue(tag);
+                        }
+                    }                    
+                    
+                }
+                
+            } // end of inner if
+            
+        } // end of outer if
+
+    }
+    
+    public void click_prevButton() {
+        // to avoid going out of array's bound
+        if (getCurrentQNum() <= totalOfQs) {
+            
+            if (getCurrentQNum() == 1) {
+                // do nothing
+            } else {
+                tagsArray[getCurrentQNum() - 1] = tagChoice.getValue();
+                decrementCurrentQNum();
+                setGUITexts();
+                
+                TagType tag = tagsArray[getCurrentQNum() - 1];
+                
+                tagChoice.setValue(tag);
+            }
+            
+        } // end of if
 
     }
 
     public void click_updateTagsButton() {
 
     }
+    
+    
 
     /** The method initializes the integer totalOfQs and an array chosenAnswers.
      * It should be called only after arraylist allQuestions is initialized.
@@ -218,7 +269,10 @@ public class TaggerGUI extends Application {
     public void initTagsArray() {
         totalOfQs = allQuestions.size();
         // initialize an array with a length of number of questions
-        tagsArray = new String [totalOfQs];
+        tagsArray = new TagType[totalOfQs];
+        for (TagType tagtype : tagsArray) {
+            tagtype = null;
+        }
     }
 
     /** The method is called every time a Button Next is pressed. It sets
@@ -235,10 +289,10 @@ public class TaggerGUI extends Application {
             // let's get rid of newline breaks
             qText = qText.replace("\n", "");
 
-            String optionA = currentQ.getOptionA();
-            String optionB = currentQ.getOptionB();
-            String optionC = currentQ.getOptionC();
-            String optionD = currentQ.getOptionD();
+            String optionA = currentQ.getOptionA().replace("\n", "");
+            String optionB = currentQ.getOptionB().replace("\n", "");
+            String optionC = currentQ.getOptionC().replace("\n", "");
+            String optionD = currentQ.getOptionD().replace("\n", "");
 
             questionText.setText(qText);
             optionAText.setText("A) " + optionA);
