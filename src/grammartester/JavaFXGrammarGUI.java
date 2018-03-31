@@ -5,7 +5,6 @@
 package grammartester;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -246,7 +245,8 @@ public class JavaFXGrammarGUI extends Application {
 
     
     /** The method initializes the integer totalOfQs and an array chosenAnswers.
-     * 
+     * It should be called only after arraylist allQuestions is initialized. 
+     * That is after calling the method readDatabase().
      */
     public void initChosenAnswers() {
         totalOfQs = allQuestions.size();
