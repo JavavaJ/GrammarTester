@@ -263,6 +263,7 @@ public class TaggerGUI extends Application {
     }
 
     public void click_updateTagsButton() {
+        // TODO instead of just printing write tag values to a database
         click_nextButton();
         
         if (areAllQsTagged()) {
