@@ -416,6 +416,7 @@ public class JavaFXGrammarGUI extends Application {
     public boolean areAllQsAnswered() {
         List<Integer> notChosen = new ArrayList<>();
 
+        //get the ids of Questions which have not been answered and put them in arraylist
         int i = 0;
         for (String ans : chosenAnswers) {
             if (ans == null) {
