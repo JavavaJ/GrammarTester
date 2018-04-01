@@ -5,6 +5,7 @@
 package tagger;
 
 import grammartester.SQLReader;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -233,6 +234,11 @@ public class TaggerGUI extends Application {
             } // end of inner if
             
         } // end of outer if
+        
+        if (getCurrentQNum() == totalOfQs) {
+            // display UpdateTags button
+            updateTagsButton.setVisible(true);
+        }
 
     }
     
@@ -257,7 +263,13 @@ public class TaggerGUI extends Application {
     }
 
     public void click_updateTagsButton() {
-
+        click_nextButton();
+        
+        if (areAllQsTagged()) {
+            for (TagType tag : tagsArray) {
+                System.out.println(" " + tag);
+            }            
+        }            
     }
     
     
@@ -301,6 +313,32 @@ public class TaggerGUI extends Application {
             optionDText.setText("D) " + optionD);
         }
 
+    }
+    
+    public boolean areAllQsTagged() {
+        List<Integer> notTagged = new ArrayList<>();
+        
+        
+        int i = 0;
+        for (TagType tag : tagsArray) {
+            if (tag.equals(null)){
+                // increment every element of a list by one to switch from zero-based
+                notTagged.add(i + 1);
+            }
+            i++;
+        }
+        
+        String message = ""; // message to display in MessageBox
+        if (!notTagged.isEmpty()) {
+            message += "You can't finish now. \n Questions ";
+            message += notTagged;
+            message += " have not been tagged!";
+            MessageBox.show(message, "Complete Tagging");
+            return false;
+        } else {
+            return true;
+        }
+        
     }
 
 }
