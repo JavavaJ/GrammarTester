@@ -315,19 +315,27 @@ public class TaggerGUI extends Application {
 
     }
     
+    
+    /** The method checkes if all the questions were tagged. If so, it returns
+     * true. Otherwise, it displays a Message Window notifying the user which
+     * questions have not been tagged.
+     *
+     * @return boolean of whether or not all the questions have been tagged.
+     */
     public boolean areAllQsTagged() {
         List<Integer> notTagged = new ArrayList<>();
         
-        
+        //get the ids of Questions which have not been tagged and put them in arraylist
         int i = 0;
         for (TagType tag : tagsArray) {
-            if (tag.equals(null)){
+            if (tag == null){
                 // increment every element of a list by one to switch from zero-based
                 notTagged.add(i + 1);
             }
             i++;
         }
         
+        // create a message to be shown in MessageBox
         String message = ""; // message to display in MessageBox
         if (!notTagged.isEmpty()) {
             message += "You can't finish now. \n Questions ";
