@@ -17,7 +17,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -266,10 +265,10 @@ public class TaggerGUI extends Application {
         // TODO instead of just printing write tag values to a database
         click_nextButton();
         
+        // and finally if all question are tagged write all the tags to database
         if (areAllQsTagged()) {
-            for (TagType tag : tagsArray) {
-                System.out.println(" " + tag);
-            }            
+            SQLTagWriter.writeTags(tagsArray);              
+            // TODO here should be the line closing GUI and displaying SUCCESS window scene
         }            
     }
     
@@ -300,12 +299,12 @@ public class TaggerGUI extends Application {
             String qText = getCurrentQNum() + ". " + currentQ.getQuestionPart();
 
             // let's get rid of newline breaks
-            qText = qText.replace("\n", "");
+            qText = qText.replace("\n", " ");
 
-            String optionA = currentQ.getOptionA().replace("\n", "");
-            String optionB = currentQ.getOptionB().replace("\n", "");
-            String optionC = currentQ.getOptionC().replace("\n", "");
-            String optionD = currentQ.getOptionD().replace("\n", "");
+            String optionA = currentQ.getOptionA().replace("\n", " ");
+            String optionB = currentQ.getOptionB().replace("\n", " ");
+            String optionC = currentQ.getOptionC().replace("\n", " ");
+            String optionD = currentQ.getOptionD().replace("\n", " ");
 
             questionText.setText(qText);
             optionAText.setText("A) " + optionA);
