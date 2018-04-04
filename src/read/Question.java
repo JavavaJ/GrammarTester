@@ -16,6 +16,11 @@ public class Question implements Serializable {
 	private String optionC;
 	private String optionD;
     private String rightAns;
+    private String tags;
+    
+    public Question() {
+        // do nothing and let all the field values be default values
+    }
 
 	/** The Question(String text) constructor is actually is a parser
      * of a text of a multiple choice test question of format
@@ -86,6 +91,10 @@ public class Question implements Serializable {
     public String getRightAns() {
         return rightAns;
     }
+    
+    public String getTags() {
+        return tags;
+    }
 
 	public void setId(int id) {
 		this.id = id;
@@ -113,6 +122,16 @@ public class Question implements Serializable {
     
     public void setRightAns(String rightAns) {
         this.rightAns = rightAns;
+    }
+    
+    public void setTag(String tags) {
+        this.tags = tags;
+    }
+    
+    public void printQuestion() {
+        System.out.println("" + id + ". " + questionPart + "\n A) " 
+                + optionA + "\n B) " + optionB + "\n C) " 
+                + optionC + "\n D) " + optionD + "\n right) " + rightAns); 
     }
 
 }
