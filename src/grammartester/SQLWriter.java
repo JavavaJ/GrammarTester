@@ -31,7 +31,7 @@ class SQLWriter {
                             String optionB, 
                             String optionC, 
                             String optionD) {
-        urlSQLite = "jdbc:sqlite:C:/sqlite/TEST7.db";
+        urlSQLite = "jdbc:sqlite:C:/sqlite/" + dBName + ".db";
         
         try {
             
@@ -43,9 +43,9 @@ class SQLWriter {
 
             stmt = connection.createStatement();
 
-            String sql1 = "INSERT INTO test7 (id, question, a, b, c, d) VALUES"
+            String sql1 = "INSERT INTO " + tableName + " (id, question, a, b, c, d, right, tags) VALUES"
                     + " (" + id + ", '" + questionPart + "', '" + optionA 
-                    + "', '" + optionB + "', '" + optionC + "', '" + optionD + "')";
+                    + "', '" + optionB + "', '" + optionC + "', '" + optionD + "', null, null)";
             
             stmt.executeUpdate(sql1);
             
