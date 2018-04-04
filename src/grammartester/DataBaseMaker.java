@@ -32,10 +32,8 @@ class DataBaseMaker {
             connection = DriverManager.getConnection(urlSQLite);
 
             stmt = connection.createStatement();
-
-            String sql1 = "CREATE DATABASE " + dataBaseName;
-            stmt.executeUpdate(sql1);
-
+           
+            
             String sql2 = "CREATE TABLE " + tableName + " (id " +
             "INTEGER, question TEXT, a TEXT, b TEXT, c TEXT, d TEXT, "
             + "right TEXT, tags TEXT);";
