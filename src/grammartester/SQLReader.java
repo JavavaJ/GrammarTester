@@ -164,6 +164,9 @@ public class SQLReader {
                     String right = queryResult.getString("right");
                     question.setRightAns(right);
                     
+                    String tags = queryResult.getString("tags");
+                    question.setTags(tags);
+                    
                     allQuestions.add(question);
                     
                 }
@@ -188,6 +191,14 @@ public class SQLReader {
         return allQuestions;    
     }
     
+    
+    /** The method takes filePath and tableName and return 
+     * a number of rows in a table.
+     * 
+     * @param filePath path to directory of database
+     * @param tableName name of a table in a database
+     * @return 
+     */
     public int getNumberOfRowsInTable(String filePath, String tableName) {
         int numOfRows = 0;
         
