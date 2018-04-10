@@ -63,6 +63,84 @@ public class Question implements Serializable {
 		setOptionD(optionD);
 
 	}
+    
+    
+    /** The Question(String text) constructor is actually is a parser
+     * of a text of a multiple choice test question of format
+     * "id. A) ..... B) ...... C) ..... D) ...... or 
+     * "id. a) ..... b) ...... c) ..... d) ...... . The second parameter is 
+     * an enum indicating a question opition's delimiter's case.
+     */    
+    public Question(String text, DelimiterCase delimiterCase) {
+		// index of the first dot character "." in the text
+		int dotIndex = text.indexOf(".");		
+
+		
+		// the id of a question is one or two characters before '.'
+		int id = Integer.parseInt(text.substring(0, dotIndex));
+		setId(id);
+
+		
+        int optionAIndex = 0;
+        String questionPart;
+        int optionBIndex = 0;
+        int optionCIndex = 0;
+        int optionDIndex = 0;
+        
+        if (delimiterCase == DelimiterCase.UPPERCASE) {
+            
+            /* next delimiter is "A) " or a). Note that we need only 
+            * text of A option without "A) " that's why we
+            * will later add 3
+            */
+            optionAIndex = text.indexOf("A) ");
+
+            // The text between ". " dotIndex + one_space and optionAIndex
+            // is actually questionPart
+            questionPart = text.substring(dotIndex + 2, optionAIndex);
+            setQuestionPart(questionPart);
+
+            optionBIndex = text.indexOf("B) ");
+            optionCIndex = text.indexOf("C) ");
+            optionDIndex = text.indexOf("D) ");
+            
+        }
+        
+        if (delimiterCase == DelimiterCase.LOWERCASE) {
+            
+            /* next delimiter is "A) " or a). Note that we need only 
+            * text of A option without "A) " that's why we
+            * will later add 3
+            */
+            optionAIndex = text.indexOf("a) ");
+
+            // The text between ". " dotIndex + one_space and optionAIndex
+            // is actually questionPart
+            questionPart = text.substring(dotIndex + 2, optionAIndex);
+            setQuestionPart(questionPart);
+
+            optionBIndex = text.indexOf("b) ");
+            optionCIndex = text.indexOf("c) ");
+            optionDIndex = text.indexOf("d) ");
+            
+        }
+        
+        
+
+		String optionA = text.substring(optionAIndex + 3, optionBIndex);
+		setOptionA(optionA);
+
+		String optionB = text.substring(optionBIndex + 3, optionCIndex);
+		setOptionB(optionB);
+
+		String optionC = text.substring(optionCIndex + 3, optionDIndex);
+		setOptionC(optionC);
+
+		String optionD = text.substring(optionDIndex +3);
+		setOptionD(optionD);
+
+	}
+    
 
 	public int getId() {
 		return id;
@@ -124,7 +202,7 @@ public class Question implements Serializable {
         this.rightAns = rightAns;
     }
     
-    public void setTag(String tags) {
+    public void setTags(String tags) {
         this.tags = tags;
     }
     
