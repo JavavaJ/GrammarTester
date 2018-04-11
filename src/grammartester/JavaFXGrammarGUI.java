@@ -33,7 +33,7 @@ public class JavaFXGrammarGUI extends Application {
     RadioButton [] radioButtons;
     List<Question> allQuestions;
     private int currentQNum = 1; // non-zero based
-    String[] chosenAnswers; // answers a user chooses via  radio buttons
+    String[] chosenAnswers; // answers a user chooses via radio buttons
     int totalOfQs; // total number of questions in a test
     Button finishButton;
 
@@ -45,16 +45,27 @@ public class JavaFXGrammarGUI extends Application {
     String initialOptionD;
 
     Text resultText;
+    
+    public JavaFXGrammarGUI() {
+        super();        
+        this.allQuestions = readDatabase();
+    }
+    
+    public JavaFXGrammarGUI(List<Question> allQuestions) {
+        super();
+        this.allQuestions = allQuestions;
+    }
 
     public static void main(String[] args) {
         launch(args);
-
     }
 
 
 
+    @Override
     public void start(Stage primaryStage) {
-        readDatabase();
+        // allQuestions = readDatabase();        
+        System.out.println("All questions are read!");
         initChosenAnswers();
         setInitialTextValues();
 
@@ -176,20 +187,30 @@ public class JavaFXGrammarGUI extends Application {
             currentQNum--;
         }
     }
-
-    /** The method reads a database of tests and stores results in
-     *  a list of Question objects.
-     *
+    
+    /** The methods sets the elements of List<Question> allQuestions to
+     * values.
+     * @param allQuestions List<Question> allQuestions 
      */
-    public void readDatabase() {
+    public void setAllQuestions(List<Question> allQuestions) {
+        // TODO create a constructor of a class to which you can pass
+        // a referece to List<Question> allQuestions as a parameter
+        // setAllQuestions(allQuestions);
+    }
+
+    /** The method reads a database of tests and returns results in
+     *  a list of Question objects.
+     * @return list of Question objects List<Question>
+     */
+    public List<Question> readDatabase() {
         SQLReader sQLReader = new SQLReader();
 
         // path of DB with tests
         String filePath = "jdbc:sqlite:C:/sqlite/TEST7.db";
         String tableName = "test7";
 
-        allQuestions = sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));
-        System.out.println("All questions are read!");
+        return sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));
+        
     }
 
 
