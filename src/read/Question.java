@@ -4,9 +4,14 @@
  */
 
 
+/* TODO move all trim() statements to setOption[ABCD] method
+
+*/
+
 package read;
 
 import java.io.Serializable;
+import static testmaker.Constants.IS_DEBUGGING_MODE;
 
 public class Question implements Serializable {
 	private int id;
@@ -37,13 +42,14 @@ public class Question implements Serializable {
 
 		/* next delimiter is "A) ". Note that we need only 
 		* text of A option without "A) " that's why we
-		* will later add 3
+		* will later add (3) 2(!!!!!) because somethimes there is no space between
+        * "A)" and option A.
         */
-		int optionAIndex = text.indexOf("A) ");
+		int optionAIndex = text.indexOf("A)");
 
 		// The text between ". " dotIndex + one_space and optionAIndex
 		// is actually questionPart
-		String questionPart = text.substring(dotIndex + 2, optionAIndex);
+		String questionPart = text.substring(dotIndex + 1, optionAIndex);
 		setQuestionPart(questionPart);
 
 		int optionBIndex = text.indexOf("B) ");
@@ -70,6 +76,8 @@ public class Question implements Serializable {
      * "id. A) ..... B) ...... C) ..... D) ...... or 
      * "id. a) ..... b) ...... c) ..... d) ...... . The second parameter is 
      * an enum indicating a question opition's delimiter's case.
+     * @param text plain text of a question to parse
+     * @param delimiterCase upper or lower case of a)b)c)d) or A)B)C)D)
      */    
     public Question(String text, DelimiterCase delimiterCase) {
 		// index of the first dot character "." in the text
@@ -116,7 +124,7 @@ public class Question implements Serializable {
 
             // The text between ". " dotIndex + one_space and optionAIndex
             // is actually questionPart
-            questionPart = text.substring(dotIndex + 2, optionAIndex);
+            questionPart = text.substring(dotIndex + 2, optionAIndex).trim();
             setQuestionPart(questionPart);
 
             optionBIndex = text.indexOf("b) ");
@@ -125,24 +133,33 @@ public class Question implements Serializable {
             
         }
         
+        if (IS_DEBUGGING_MODE) {
+            System.out.println("optionAIndex: " + optionAIndex);
+            System.out.println("optionBIndex: " + optionBIndex);
+        }
         
-
-		String optionA = text.substring(optionAIndex + 3, optionBIndex);
-		setOptionA(optionA);
+		String optionA = text.substring(optionAIndex + 3, optionBIndex);     // error out of bound occurs here!         
+        
+		setOptionA(optionA.trim());               
 
 		String optionB = text.substring(optionBIndex + 3, optionCIndex);
-		setOptionB(optionB);
+		setOptionB(optionB.trim());
 
 		String optionC = text.substring(optionCIndex + 3, optionDIndex);
-		setOptionC(optionC);
+		setOptionC(optionC.trim());
 
 		String optionD = text.substring(optionDIndex +3);
-		setOptionD(optionD);
+		setOptionD(optionD.trim());
 
 	}
     
 
-	public int getId() {
+	/** Returns an id integer of a question which is non-zero based 
+     * ordinal number of question.
+     * @return id integer of a question which is non-zero based 
+     * ordinal number of question
+     */
+    public int getId() {
 		return id;
 	}
 
@@ -191,13 +208,18 @@ public class Question implements Serializable {
 	}
 
 	public void setOptionC(String optionC) {
-		this.optionC = optionC;
+		this.optionC = optionC.trim();
 	}
 
 	public void setOptionD(String optionD) {
 		this.optionD = optionD;
 	}	
     
+    /** Sets the right answer for a Question object.
+     * 
+     * @param rightAns a String (a, b, c, d) which represent a right answer 
+     * of a Question
+     */
     public void setRightAns(String rightAns) {
         this.rightAns = rightAns;
     }
