@@ -48,24 +48,25 @@ public class Question implements Serializable {
 		int optionAIndex = text.indexOf("A)");
 
 		// The text between ". " dotIndex + one_space and optionAIndex
-		// is actually questionPart
+		// is actually questionPart (2 was later changed to 1, because sometimes 
+        // there may not be a space between "." and question part)
 		String questionPart = text.substring(dotIndex + 1, optionAIndex);
 		setQuestionPart(questionPart);
 
-		int optionBIndex = text.indexOf("B) ");
-		int optionCIndex = text.indexOf("C) ");
-		int optionDIndex = text.indexOf("D) ");
+		int optionBIndex = text.indexOf("B)");
+		int optionCIndex = text.indexOf("C)");
+		int optionDIndex = text.indexOf("D)");
 
-		String optionA = text.substring(optionAIndex + 3, optionBIndex);
+		String optionA = text.substring(optionAIndex + 2, optionBIndex);
 		setOptionA(optionA);
 
-		String optionB = text.substring(optionBIndex + 3, optionCIndex);
+		String optionB = text.substring(optionBIndex + 2, optionCIndex);
 		setOptionB(optionB);
 
-		String optionC = text.substring(optionCIndex + 3, optionDIndex);
+		String optionC = text.substring(optionCIndex + 2, optionDIndex);
 		setOptionC(optionC);
 
-		String optionD = text.substring(optionDIndex +3);
+		String optionD = text.substring(optionDIndex + 2);
 		setOptionD(optionD);
 
 	}
@@ -97,39 +98,41 @@ public class Question implements Serializable {
         
         if (delimiterCase == DelimiterCase.UPPERCASE) {
             
-            /* next delimiter is "A) " or a). Note that we need only 
-            * text of A option without "A) " that's why we
-            * will later add 3
+            /* next delimiter is "A)" or "a)". Note that we need only 
+            * text of A option without "A)" that's why we
+            * will later add 2
             */
-            optionAIndex = text.indexOf("A) ");
+            optionAIndex = text.indexOf("A)");
 
             // The text between ". " dotIndex + one_space and optionAIndex
-            // is actually questionPart
-            questionPart = text.substring(dotIndex + 2, optionAIndex);
+            // is actually questionPart (2 was later changed to 1, because sometimes 
+            // there may not be a space between "." and question part)
+            questionPart = text.substring(dotIndex + 1, optionAIndex);
             setQuestionPart(questionPart);
 
-            optionBIndex = text.indexOf("B) ");
-            optionCIndex = text.indexOf("C) ");
-            optionDIndex = text.indexOf("D) ");
+            optionBIndex = text.indexOf("B)");
+            optionCIndex = text.indexOf("C)");
+            optionDIndex = text.indexOf("D)");
             
         }
         
         if (delimiterCase == DelimiterCase.LOWERCASE) {
             
-            /* next delimiter is "A) " or a). Note that we need only 
-            * text of A option without "A) " that's why we
-            * will later add 3
+            /* next delimiter is "A)" or "a)". Note that we need only 
+            * text of A option without "A)" that's why we
+            * will later add 2
             */
-            optionAIndex = text.indexOf("a) ");
+            optionAIndex = text.indexOf("a)");
 
             // The text between ". " dotIndex + one_space and optionAIndex
-            // is actually questionPart
-            questionPart = text.substring(dotIndex + 2, optionAIndex).trim();
+            // is actually questionPart (2 was later changed to 1, because sometimes 
+            // there may not be a space between "." and question part)
+            questionPart = text.substring(dotIndex + 1, optionAIndex);
             setQuestionPart(questionPart);
 
-            optionBIndex = text.indexOf("b) ");
-            optionCIndex = text.indexOf("c) ");
-            optionDIndex = text.indexOf("d) ");
+            optionBIndex = text.indexOf("b)");
+            optionCIndex = text.indexOf("c)");
+            optionDIndex = text.indexOf("d)");
             
         }
         
@@ -138,18 +141,18 @@ public class Question implements Serializable {
             System.out.println("optionBIndex: " + optionBIndex);
         }
         
-		String optionA = text.substring(optionAIndex + 3, optionBIndex);     // error out of bound occurs here!         
+		String optionA = text.substring(optionAIndex + 2, optionBIndex);     // error out of bound occurs here!         
         
-		setOptionA(optionA.trim());               
+		setOptionA(optionA);               
 
-		String optionB = text.substring(optionBIndex + 3, optionCIndex);
-		setOptionB(optionB.trim());
+		String optionB = text.substring(optionBIndex + 2, optionCIndex);
+		setOptionB(optionB);
 
-		String optionC = text.substring(optionCIndex + 3, optionDIndex);
-		setOptionC(optionC.trim());
+		String optionC = text.substring(optionCIndex + 2, optionDIndex);
+		setOptionC(optionC);
 
-		String optionD = text.substring(optionDIndex +3);
-		setOptionD(optionD.trim());
+		String optionD = text.substring(optionDIndex + 2);
+		setOptionD(optionD);
 
 	}
     
@@ -196,15 +199,15 @@ public class Question implements Serializable {
 	}
 
 	public void setQuestionPart(String questionPart) {
-		this.questionPart = questionPart;
+		this.questionPart = questionPart.trim();
 	}
 
 	public void setOptionA(String optionA) {
-		this.optionA = optionA;
+		this.optionA = optionA.trim();
 	}
 
 	public void setOptionB(String optionB) {
-		this.optionB = optionB;
+		this.optionB = optionB.trim();
 	}
 
 	public void setOptionC(String optionC) {
@@ -212,7 +215,7 @@ public class Question implements Serializable {
 	}
 
 	public void setOptionD(String optionD) {
-		this.optionD = optionD;
+		this.optionD = optionD.trim();
 	}	
     
     /** Sets the right answer for a Question object.
@@ -221,11 +224,11 @@ public class Question implements Serializable {
      * of a Question
      */
     public void setRightAns(String rightAns) {
-        this.rightAns = rightAns;
+        this.rightAns = rightAns.trim();
     }
     
     public void setTags(String tags) {
-        this.tags = tags;
+        this.tags = tags.trim();
     }
     
     public void printQuestion() {
