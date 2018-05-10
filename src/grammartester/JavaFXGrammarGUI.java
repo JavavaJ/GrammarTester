@@ -64,7 +64,7 @@ public class JavaFXGrammarGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // allQuestions = readDatabase();        
+        allQuestions = readDatabase();        
         System.out.println("All questions are read!");
         initChosenAnswers();
         setInitialTextValues();
