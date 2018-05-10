@@ -228,7 +228,10 @@ public class Question implements Serializable {
     }
     
     public void setTags(String tags) {
-        this.tags = tags.trim();
+    	if (tags != null) {
+    		this.tags = tags.trim();
+    	}
+        
     }
     
     public void printQuestion() {
