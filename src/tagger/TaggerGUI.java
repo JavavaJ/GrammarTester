@@ -113,10 +113,7 @@ public class TaggerGUI extends Application {
         buttonPane.setSpacing(5);
 
         tagChoice = new ChoiceBox<>();
-
-        for (TagType tag : TagType.values()) {
-            tagChoice.getItems().add(tag);
-        }
+        tagChoice.getItems().addAll(TagType.values());                  
 
         tagChoice.setValue(null);
         tagChoice.setPrefSize(150, 40);

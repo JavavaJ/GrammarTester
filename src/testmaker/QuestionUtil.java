@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import read.DelimiterCase;
 import read.Question;
+import static testmaker.Constants.IS_DEBUGGING_MODE;
 
 public class QuestionUtil {
     
@@ -17,10 +18,21 @@ public class QuestionUtil {
         * forms Question objects and returns an array of Question objects.
         *
         * @param questionsText  a text with numbered multiple choice (4 options) questions
-        * @param delimiterCase an indication of Qs options delimiter, e.g.: A) or a)
+        *
         * @return Question[] an array of Question objects
         */
-    public static Question[] textToQsArray(String questionsText) {
+    public static Question[] parseTextToQsArray(String questionsText) {
+        // sometimes in the text 65533 UTF character appears, we need to get rid of it
+        char strangeChar = (char) 65533;
+        StringBuffer questionTextBuff = new StringBuffer(questionsText);
+        for (int i = 0; i < questionTextBuff.length(); i++) {
+            if (questionTextBuff.charAt(i) == strangeChar) {
+                questionTextBuff.deleteCharAt(i);
+            }            
+        }
+        questionsText = questionTextBuff.toString();
+        
+        
         // determine and set text's delimiter case
         setDelimiterCase(questionsText);        
         
@@ -51,9 +63,21 @@ public class QuestionUtil {
         
         // create an array of questions of Question type
         Question[] questionArray = new Question[questions.length];
+        
+        if (IS_DEBUGGING_MODE) {
+            System.out.println("Running in debugging mode!");
+            System.out.println("Questions length is: " + questions.length);
+        }
+        
         for (int i = 0; i < questions.length; i++) {
             // create instances of Question, giving to its
             // constructor texts of questions
+            if (IS_DEBUGGING_MODE) {
+                System.out.println("Debugging mode!");
+                System.out.println("i: " + i);
+                System.out.println("question[i]: " + questions[i]);
+            }
+            
             questionArray[i] = new Question(questions[i], delimiterCase);
         } // end of loop
 
@@ -77,7 +101,8 @@ public class QuestionUtil {
         int index = 0;
         while (index != -1) {
             String qNumStr = String.valueOf(qNum);
-            index = str.indexOf(qNumStr, index);
+            String token = qNumStr + ".";
+            index = str.indexOf(token, index);
 
             qNum++;
             // break if we reach the end of questions' text
@@ -88,6 +113,18 @@ public class QuestionUtil {
                 index++;
             }
         }
+        
+        // debug line
+        if (IS_DEBUGGING_MODE) {
+            System.out.println("Running is debugging mode!");
+            System.out.println("Map of indices: ");
+            for (int i = 0; i < mapIndex.size(); i++) {
+                System.out.println((i + 1) + " : " + mapIndex.get(String.valueOf(i + 1)));
+            }
+            System.out.println(mapIndex);
+        }
+            
+        
         return mapIndex;
     }
 

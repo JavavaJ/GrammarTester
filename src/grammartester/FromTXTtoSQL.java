@@ -6,25 +6,30 @@ import read.ReadFile;
 import read.Question;
 
 class FromTXTtoSQL {
-    
-    
+
+
     public static void main(String[] args) {
         FromTXTtoSQL fromTXTtoSQL = new FromTXTtoSQL();
         // the following two methods just read a txt file
         String myFile = "C:\\Users\\ALEXXX\\Documents\\NetBeansProjects\\GrammarTester\\test7.txt";
-        String myText = ReadFile.read(myFile);            
-        
-        fromTXTtoSQL.writeTextToSQL(myText);                
-        
+        String myText = ReadFile.read(myFile);
+
+        fromTXTtoSQL.writeTextToSQL(myText);
+
     } // end of main method
 
+    /** The method takes a text with numbered multiple choice (4 options) questions,
+     * forms Question objects and writes them to SQL database.
+     * 
+     * @param questionsText a text with numbered multiple choice (4 options) questions
+     */
     public void writeTextToSQL(String questionsText) {
         writeQsToSQL(textToQsArray(questionsText));
     }
 
     /** The method takes a text with numbered multiple choice (4 options) questions,
      * forms Question objects and returns an array of Question objects.
-     * 
+     *
      * @param questionsText  a text with numbered multiple choice (4 options) questions
      * @return Question[] an array of Question objects
      */
@@ -88,7 +93,7 @@ class FromTXTtoSQL {
 
 
     /** The method takes a string which is a  text with numbered questions.
-     * The method returns a map of indices (position in a text) of q    uestions'
+     * The method returns a map of indices (position in a text) of questions'
      * ordinal numbers. Those indices are used later to parse the questions.
      *
      * @param str text with numbered multiple choice (a, b, c, d) questions

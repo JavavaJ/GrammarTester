@@ -195,14 +195,14 @@ public class SQLReader {
     /** The method takes filePath and tableName and return 
      * a number of rows in a table.
      * 
-     * @param filePath path to directory of database
+     * @param filePathURLFormat path to directory of database
      * @param tableName name of a table in a database
      * @return 
      */
-    public int getNumberOfRowsInTable(String filePath, String tableName) {
+    public int getNumberOfRowsInTable(String filePathURLFormat, String tableName) {
         int numOfRows = 0;
         
-        String urlSQLite = filePath;
+        String urlSQLite = filePathURLFormat;
         Connection connection = null;
         Statement stmt;
         ResultSet rs;
