@@ -3,8 +3,10 @@ package testmaker;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import read.Question;
 
@@ -14,9 +16,14 @@ public class DataBasesUtil {
     private static Statement stmt;
     
     public static void main(String[] args) {
-        String path = "C:\\sqlite\\founders.db";
-        String pathFormatted = path.replace("\\", "/");
-        System.out.println(pathFormatted);
+        String testPath = "C:\\sqlite_grammar_quizzes\\TEST7.db";
+       
+        
+        List<Question> allQuestions = readDB(testPath);
+        for (Question question : allQuestions) {
+        	question.printQuestion();
+        }
+        
     }
     
     
@@ -137,14 +144,155 @@ public class DataBasesUtil {
 				se.printStackTrace();
 			}
             
-        }
-        
-
-
-            
-        
+        }        
         
     }
+    
+    /** The method takes a path name where data base is, and counts 
+     * a number of rows in the data base.
+     * @param dataBasePath path of a data base
+     * @return number of rows in a data base
+     */
+    public static int getNumberOfRowsInTable(String dataBasePath) {
+    	
+    	
+    	// let's find the dataBaseName based on knowledge that path has pattern "....\\....db"
+    	// first let's reverse the string 
+    	String reversedStr = new StringBuffer(dataBasePath).reverse().toString();        
+    	
+    	// and slice fragment at the end of string between "\\" and ".db"
+        String dBName = new StringBuffer(reversedStr.substring(3, reversedStr.indexOf("\\"))).reverse().toString();
+    	
+    	
+    	// the method is based on convention that the table name is toLowerCase from DataBase name
+    	String tableName = dBName.toLowerCase();
+    	
+    	String urlSQLite = "jdbc:sqlite:" + dataBasePath.replace("\\", "/");
+    	
+    	int numOfRows = 0;
+    	
+    	Connection connection = null;
+        Statement stmt;
+        ResultSet rs;
+        
+        try {
+            // load driver
+            Class.forName("org.sqlite.JDBC");
+
+            // establish connection
+            connection = DriverManager.getConnection(urlSQLite);
+            
+            stmt = connection.createStatement();
+            
+            // the sql statement counts a number of rows in a table
+            String sql = "SELECT COUNT(*) FROM " + tableName;
+            rs = stmt.executeQuery(sql);
+            
+            rs.next();
+            numOfRows = rs.getInt(1);
+            
+            rs.close();
+            stmt.close();
+            connection.close();
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return numOfRows;
+    	
+    }
+    
+    public static List<Question> readDB(String dataBasePath) {
+    	List<Question> allQuestions = new ArrayList<>();
+    	
+    	int rowsNum = getNumberOfRowsInTable(dataBasePath);
+    	
+    	String urlSQLite = "jdbc:sqlite:" + dataBasePath.replace("\\", "/");
+    	
+    	Connection connection;
+        PreparedStatement prepStmt = null;
+        ResultSet queryResult;
+        
+        try {
+            // load driver
+            Class.forName("org.sqlite.JDBC");
+
+            // establish connection
+            connection = DriverManager.getConnection(urlSQLite);
+
+            // set up to false Auto Commit to commit a 
+            // multiple sql statement manually
+            connection.setAutoCommit(false);
+            
+            
+            prepStmt = connection.prepareStatement("SELECT * FROM test7 WHERE id = ?");
+            
+            for (int i = 1; i <= rowsNum; i++) {
+                prepStmt.setInt(1, i);
+                queryResult = prepStmt.executeQuery();
+                
+                while (queryResult.next()) {
+                    Question question = new Question();
+                    
+                    int id = queryResult.getInt("id");
+                    question.setId(id);
+                    
+                    String questionText = queryResult.getString("question");
+                    question.setQuestionPart(questionText);
+                    
+                    String aOption = queryResult.getString("a");
+                    question.setOptionA(aOption);
+                    
+                    String bOption = queryResult.getString("b");
+                    question.setOptionB(bOption);
+                    
+                    String cOption = queryResult.getString("c");
+                    question.setOptionC(cOption);
+                    
+                    String dOption = queryResult.getString("d");
+                    question.setOptionD(dOption);
+                    
+                    String right = queryResult.getString("right");
+                    question.setRightAns(right);
+                    
+                    String tags = queryResult.getString("tags");
+                    question.setTags(tags);
+                    
+                    allQuestions.add(question);
+                    
+                }
+                
+                connection.commit();                
+                
+            } // end of loop
+            
+        } catch (Exception e) {
+            // Handle errors for class.forName
+            e.printStackTrace();
+        } finally {
+            try {
+                if (prepStmt != null) {
+                    prepStmt.close();
+                } 
+            } catch (SQLException se) {
+                    se.printStackTrace();
+            }
+        }
+            
+        return allQuestions;    
+    	
+    }
+    
+    
     
     
 }
