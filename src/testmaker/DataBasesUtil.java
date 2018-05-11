@@ -212,6 +212,18 @@ public class DataBasesUtil {
     }
     
     public static List<Question> readDB(String dataBasePath) {
+    	// let's find the dataBaseName based on knowledge that path has pattern "....\\....db"
+    	// first let's reverse the string 
+    	String reversedStr = new StringBuffer(dataBasePath).reverse().toString();        
+    	
+    	// and slice fragment at the end of string between "\\" and ".db"
+        String dBName = new StringBuffer(reversedStr.substring(3, reversedStr.indexOf("\\"))).reverse().toString();
+    	
+    	
+    	// the method is based on convention that the table name is toLowerCase from DataBase name
+    	String tableName = dBName.toLowerCase();
+    	
+    	
     	List<Question> allQuestions = new ArrayList<>();
     	
     	int rowsNum = getNumberOfRowsInTable(dataBasePath);
@@ -234,7 +246,7 @@ public class DataBasesUtil {
             connection.setAutoCommit(false);
             
             
-            prepStmt = connection.prepareStatement("SELECT * FROM test7 WHERE id = ?");
+            prepStmt = connection.prepareStatement("SELECT * FROM " + tableName +" WHERE id = ?");
             
             for (int i = 1; i <= rowsNum; i++) {
                 prepStmt.setInt(1, i);

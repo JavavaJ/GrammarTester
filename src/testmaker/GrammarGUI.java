@@ -192,9 +192,7 @@ public class GrammarGUI extends Application {
      * @param allQuestions List<Question> allQuestions 
      */
     public void setAllQuestions(List<Question> allQuestions) {
-        // TODO create a constructor of a class to which you can pass
-        // a referece to List<Question> allQuestions as a parameter
-        // setAllQuestions(allQuestions);
+        this.allQuestions = allQuestions;
     }
 
     
@@ -385,13 +383,52 @@ public class GrammarGUI extends Application {
         click_nextButton();
 
         if (areAllQsAnswered()) {
+        	
+        	String feedBackAnalisys = null;
+        	
             int answerScore = 0;
             for (int i = 0; i < totalOfQs; i++) {
                 String answered = chosenAnswers[i];
-                String correctAns = allQuestions.get(i).getRightAns();
+                Question question = allQuestions.get(i);
+                String correctAn = question.getRightAns();
 
-                if (answered.equals(correctAns)) {
+                if (answered.equals(correctAn)) {
                     answerScore++;
+                } else {
+                	// write here the code which saves incorrectly answered Qs 
+                	// to display them in the result text.
+                	feedBackAnalisys += (i + 1) + ". ";
+                	feedBackAnalisys += question.getQuestionPart() + " " + "\n";
+                	feedBackAnalisys += "You answered: " + answered + ") ";
+                	
+                	if (answered.equals("a")) {
+                		feedBackAnalisys += question.getOptionA() + "\n";
+                	}
+					if (answered.equals("b")) {
+						feedBackAnalisys += question.getOptionB() + "\n";
+					}
+					if (answered.equals("c")) {
+						feedBackAnalisys += question.getOptionC() + "\n";
+					}
+					if (answered.equals("d")) {
+						feedBackAnalisys += question.getOptionD() + "\n";
+					}
+					
+					feedBackAnalisys += "Correct answer: " + correctAn + ") ";
+                	
+					if (correctAn.equals("a")) {
+                		feedBackAnalisys += question.getOptionA() + "\n";
+                	}
+					if (correctAn.equals("b")) {
+						feedBackAnalisys += question.getOptionB() + "\n";
+					}
+					if (correctAn.equals("c")) {
+						feedBackAnalisys += question.getOptionC() + "\n";
+					}
+					if (correctAn.equals("d")) {
+						feedBackAnalisys += question.getOptionD() + "\n";
+					}
+                	
                 }
             }
 
@@ -401,6 +438,8 @@ public class GrammarGUI extends Application {
             String resultString = "You have correctly answered " + answerScore +
                     " out of " + totalOfQs + " questions. It means that your" +
                     " score is " + (answerScore * 100) / totalOfQs + " %.";
+            
+            resultString += "\n" + feedBackAnalisys;
 
             System.out.println(resultString);
 

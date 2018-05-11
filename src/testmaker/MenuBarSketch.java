@@ -10,6 +10,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -20,6 +21,7 @@ public class MenuBarSketch extends Application {
     }
     
     Stage stage;
+    BorderPane borderPane;
     
     @Override
     public void start(Stage primaryStage) {
@@ -82,10 +84,13 @@ public class MenuBarSketch extends Application {
         // menuBar.setStyle("-fx-background-color: lightgray");
         
         
-        HBox pane = new HBox(menuBar);
-        pane.setPadding(new Insets(5));
+        HBox menuBarPane = new HBox(menuBar);
+        menuBarPane.setPadding(new Insets(5));
         
-        Scene scene = new Scene(pane, 400, 200);
+        borderPane = new BorderPane();        
+        borderPane.setTop(menuBarPane);
+        
+        Scene scene = new Scene(borderPane, 400, 200);
         
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -103,7 +108,19 @@ public class MenuBarSketch extends Application {
                 System.out.println("You are trying to open (absolute path) : " 
                         + filechooser.getSelectedFile().getAbsolutePath());
                 String selectedFile = filechooser.getSelectedFile().getAbsolutePath();
-                stage.close();
+                
+                
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        // TODO customize JavaFXGrammarGUI class to make it reusable and
+                        // capable of working accepting a reference to List<Question>
+                        new GrammarGUI(DataBasesUtil.readDB(selectedFile)).start(stage);
+                    } 
+                 });                
+                
+                stage.close();                               
+                
             }
         });    
     }
