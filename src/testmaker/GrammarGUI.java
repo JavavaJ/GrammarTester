@@ -138,17 +138,25 @@ public class GrammarGUI extends Application {
 
         HBox buttonPane = new HBox(spacer, prevButton, nextButton, finishButton);
         buttonPane.setPadding(new Insets(5));
-        buttonPane.setPrefHeight(150);
+        buttonPane.setPrefHeight(125);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(5);
         
         ProgressBar progressBar = new ProgressBar();
+        HBox progressPane = new HBox(progressBar);
+        progressPane.setAlignment(Pos.CENTER);
+        progressPane.setPadding(new Insets(5));
+        
+        Region spacerProg = new Region();
+        spacerProg.setPrefHeight(50);
+        
+        VBox bottomPane = new VBox(buttonPane, progressPane, spacerProg);
 
 
         BorderPane mainPane = new BorderPane();
         mainPane.setTop(qTextPane);
         mainPane.setCenter(radioPane);
-        mainPane.setBottom(buttonPane);
+        mainPane.setBottom(bottomPane);
 
         Scene testingScene = new Scene(mainPane, 600, 500);
 
