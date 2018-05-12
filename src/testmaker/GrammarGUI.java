@@ -4,13 +4,17 @@
 
 package testmaker;
 
+import grammartester.SQLReader;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
@@ -36,6 +40,9 @@ public class GrammarGUI extends Application {
     String[] chosenAnswers; // answers a user chooses via radio buttons
     int totalOfQs; // total number of questions in a test
     Button finishButton;
+    
+    // progress of the test property for progress bar
+    private DoubleProperty progOfTest; 
 
     Text questionText;
     String initialQuestionText;
@@ -63,7 +70,7 @@ public class GrammarGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // allQuestions = readDatabase();        
+        allQuestions = readDatabase();        
         System.out.println("All questions are read!");
         initChosenAnswers();
         setInitialTextValues();
@@ -136,15 +143,32 @@ public class GrammarGUI extends Application {
 
         HBox buttonPane = new HBox(spacer, prevButton, nextButton, finishButton);
         buttonPane.setPadding(new Insets(5));
-        buttonPane.setPrefHeight(150);
+        buttonPane.setPrefHeight(125);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(5);
+        
+        progOfTest = new SimpleDoubleProperty(0.0);
+        
+        ProgressBar progressBar = new ProgressBar();
+        progressBar.setPrefWidth(400);
+        
+        // bind progressBar property with progOfTest updatable property
+        progressBar.progressProperty().bind(progOfTest.divide((double)totalOfQs));
+        
+        HBox progressPane = new HBox(progressBar);
+        progressPane.setAlignment(Pos.CENTER);
+        progressPane.setPadding(new Insets(5));
+        
+        Region spacerProg = new Region();
+        spacerProg.setPrefHeight(50);
+        
+        VBox bottomPane = new VBox(buttonPane, progressPane, spacerProg);
 
 
         BorderPane mainPane = new BorderPane();
         mainPane.setTop(qTextPane);
         mainPane.setCenter(radioPane);
-        mainPane.setBottom(buttonPane);
+        mainPane.setBottom(bottomPane);
 
         Scene testingScene = new Scene(mainPane, 600, 500);
 
@@ -169,6 +193,22 @@ public class GrammarGUI extends Application {
         primaryStage.setTitle("Grammar Tester");
         primaryStage.show();
 
+    }
+    
+    
+     /** The method reads a database of tests and returns results in
+     *  a list of Question objects.
+     * @return list of Question objects List<Question>
+     */
+    public List<Question> readDatabase() {
+        SQLReader sQLReader = new SQLReader();
+
+        // path of DB with tests
+        String filePath = "jdbc:sqlite:C:/sqlite/TEST7.db";
+        String tableName = "test7";
+
+        return sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));
+        
     }
 
     public int getCurrentQNum() {
@@ -281,13 +321,13 @@ public class GrammarGUI extends Application {
 
             }
 
-
-
         }
         if (getCurrentQNum() == totalOfQs) {
             // display Finish button
             finishButton.setVisible(true);
         }
+        // updates the values of already answered questions number
+        progOfTest.set(getNumberOfAnsweredQs());
     }
 
 
@@ -313,8 +353,8 @@ public class GrammarGUI extends Application {
             }
 
         }
-
-
+        // updates the values of already answered questions number
+        progOfTest.set(getNumberOfAnsweredQs());
 
     } // end of method
     
@@ -449,6 +489,20 @@ public class GrammarGUI extends Application {
         }        
 
 
+    }
+    
+    /** The method iterates through an array of chosen answers
+     * and returns a number of answered questions.
+     * @return a number of answered questions.
+     */
+    public int getNumberOfAnsweredQs() {
+        int numOfAswered = 0;
+        for (String ans : chosenAnswers) {
+            if (ans != null) {
+                numOfAswered++;
+            }
+        }
+        return numOfAswered;
     }
 
 
