@@ -4,6 +4,7 @@
 
 package testmaker;
 
+import grammartester.SQLReader;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
@@ -11,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
@@ -63,7 +65,7 @@ public class GrammarGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // allQuestions = readDatabase();        
+        allQuestions = readDatabase();        
         System.out.println("All questions are read!");
         initChosenAnswers();
         setInitialTextValues();
@@ -139,6 +141,8 @@ public class GrammarGUI extends Application {
         buttonPane.setPrefHeight(150);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(5);
+        
+        ProgressBar progressBar = new ProgressBar();
 
 
         BorderPane mainPane = new BorderPane();
@@ -169,6 +173,22 @@ public class GrammarGUI extends Application {
         primaryStage.setTitle("Grammar Tester");
         primaryStage.show();
 
+    }
+    
+    
+     /** The method reads a database of tests and returns results in
+     *  a list of Question objects.
+     * @return list of Question objects List<Question>
+     */
+    public List<Question> readDatabase() {
+        SQLReader sQLReader = new SQLReader();
+
+        // path of DB with tests
+        String filePath = "jdbc:sqlite:C:/sqlite/TEST7.db";
+        String tableName = "test7";
+
+        return sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));
+        
     }
 
     public int getCurrentQNum() {
