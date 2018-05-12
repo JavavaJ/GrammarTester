@@ -8,6 +8,8 @@ import grammartester.SQLReader;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -38,6 +40,9 @@ public class GrammarGUI extends Application {
     String[] chosenAnswers; // answers a user chooses via radio buttons
     int totalOfQs; // total number of questions in a test
     Button finishButton;
+    
+    // progress of the test property for progress bar
+    private DoubleProperty progOfTest; 
 
     Text questionText;
     String initialQuestionText;
@@ -142,7 +147,14 @@ public class GrammarGUI extends Application {
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(5);
         
+        progOfTest = new SimpleDoubleProperty(0.0);
+        
         ProgressBar progressBar = new ProgressBar();
+        progressBar.setPrefWidth(400);
+        
+        // bind progressBar property with progOfTest updatable property
+        progressBar.progressProperty().bind(progOfTest.divide((double)totalOfQs));
+        
         HBox progressPane = new HBox(progressBar);
         progressPane.setAlignment(Pos.CENTER);
         progressPane.setPadding(new Insets(5));
@@ -309,13 +321,13 @@ public class GrammarGUI extends Application {
 
             }
 
-
-
         }
         if (getCurrentQNum() == totalOfQs) {
             // display Finish button
             finishButton.setVisible(true);
         }
+        // updates the values of already answered questions number
+        progOfTest.set(getNumberOfAnsweredQs());
     }
 
 
@@ -341,8 +353,8 @@ public class GrammarGUI extends Application {
             }
 
         }
-
-
+        // updates the values of already answered questions number
+        progOfTest.set(getNumberOfAnsweredQs());
 
     } // end of method
     
@@ -477,6 +489,20 @@ public class GrammarGUI extends Application {
         }        
 
 
+    }
+    
+    /** The method iterates through an array of chosen answers
+     * and returns a number of answered questions.
+     * @return a number of answered questions.
+     */
+    public int getNumberOfAnsweredQs() {
+        int numOfAswered = 0;
+        for (String ans : chosenAnswers) {
+            if (ans != null) {
+                numOfAswered++;
+            }
+        }
+        return numOfAswered;
     }
 
 
