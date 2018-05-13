@@ -6,10 +6,11 @@ package tagger;
 
 import grammartester.SQLReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,6 +35,7 @@ public class TaggerGUI extends Application {
     private int currentQNum = 1; // non-zero based
     int totalOfQs; // total number of questions in a test
     Button updateTagsButton;
+    ChoiceBox<String> levelChoice;
     ChoiceBox<TagType> tagChoice;
     TagType[] tagsArray; // array holding tags
 
@@ -111,16 +113,68 @@ public class TaggerGUI extends Application {
         buttonPane.setPrefHeight(150);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(5);
+        
+        String[] levelsArray = {"A1", "A2", "B1", "B2", "C1", "Mix"};
+        List<String> levels = new ArrayList<>(Arrays.asList(levelsArray));
+        
+        levelChoice = new ChoiceBox<>();
+        levelChoice.setStyle("-fx-font: 17px \"Segoe UI\";");
+        levelChoice.getItems().addAll(levels);
+        levelChoice.setPrefSize(150, 40);
+        
+        levelChoice.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    if (newValue.equals("A1")) {
+                        tagChoice.getItems().clear();
+                        A1_LEVEL[] a1OnlyTags = A1_LEVEL.values();
+                        TagType[] a1TagsCast = new TagType[a1OnlyTags.length]; 
+                        
+                        // create cast alTagsCast array for ChoiceBox
+                        for (int i = 0; i < a1TagsCast.length; i++) {
+                            a1TagsCast[i] = (TagType) a1OnlyTags[i];
+                        }
+                        
+                        tagChoice.getItems().addAll(a1TagsCast);
+                    }
+                    if (newValue.equals("A2")) {
+                        tagChoice.getItems().clear();
+                        tagChoice.getItems().addAll(A2_LEVEL.values());
+                    }
+                    if (newValue.equals("B1")) {
+                        // set tagChoice for B1
+                    }
+                    if (newValue.equals("B2")) {
+                        // set tagChoice for B2
+                    }
+                    if (newValue.equals("C1")) {
+                        // set tagChoice for C1
+                    }
+                    if (newValue.equals("Mix")) {
+                        tagChoice.getItems().clear();
+                        tagChoice.getItems().addAll(MixType.values()); 
+                    }
+                });
+        
+        
+        Region spacerBetwTaggers = new Region();
+        spacerBetwTaggers.setPrefHeight(30);
 
         tagChoice = new ChoiceBox<>();
-        tagChoice.getItems().addAll(TagType.values());                  
+        MixType[] mixTypes = MixType.values();
+        TagType[] mixTypeCast = new TagType[mixTypes.length];
+        
+        for (int i = 0; i < mixTypes.length; i++) {
+            mixTypeCast[i] = (TagType) mixTypes[i];
+        }
+        
+        tagChoice.getItems().addAll(mixTypeCast);                  
 
         tagChoice.setValue(null);
         tagChoice.setPrefSize(150, 40);
 
 
         tagChoice.setStyle("-fx-font: 17px \"Segoe UI\";");
-        HBox tagPane = new HBox(tagChoice);
+        VBox tagPane = new VBox(levelChoice, spacerBetwTaggers , tagChoice);
         tagPane.setPadding(new Insets(10));
 
         BorderPane mainPane = new BorderPane();
@@ -201,7 +255,18 @@ public class TaggerGUI extends Application {
     public void click_nextButton() {
         // to avoid going out of array's bound
         if (getCurrentQNum() <= totalOfQs) {
-            tagsArray[getCurrentQNum() - 1] = tagChoice.getValue();
+            //gebug printing line
+            System.out.println(tagChoice.getValue());
+            System.out.println(tagChoice.getValue().getClass());
+            
+            // debug line
+            TagType tagDebug = tagChoice.getValue();
+            System.out.println("Class before casting : " + tagDebug.getClass());
+            TagType tagDebug2 = (TagType) tagChoice.getValue();
+            System.out.println("Class after casting : " + tagDebug2.getClass());
+            
+            // tagChoice.getV;
+            tagsArray[getCurrentQNum() - 1] = (TagType) tagChoice.getValue();
             incrementCurrentQNum();
             setGUITexts();
             
@@ -218,13 +283,7 @@ public class TaggerGUI extends Application {
                 The previously tagged value should be selected in choice box. The
                 following lines make sure it happens. */
                 if (tagsArray[getCurrentQNum() - 1] != null) {
-                    
-                    for (TagType tag : TagType.values()) {
-                        if (tagsArray[getCurrentQNum() - 1].equals(tag)) {
-                            tagChoice.setValue(tag);
-                        }
-                    }                    
-                    
+                    tagChoice.setValue(tagsArray[getCurrentQNum() - 1]);                                                    
                 }
                 
             } // end of inner if
@@ -278,7 +337,7 @@ public class TaggerGUI extends Application {
     public void initTagsArray() {
         totalOfQs = allQuestions.size();
         // initialize an array with a length of number of questions
-        tagsArray = new TagType[totalOfQs];
+        tagsArray = new MixType[totalOfQs];
         for (TagType tagtype : tagsArray) {
             tagtype = null;
         }
