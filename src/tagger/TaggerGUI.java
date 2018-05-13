@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,6 +39,7 @@ public class TaggerGUI extends Application {
     ChoiceBox<String> levelChoice;
     ChoiceBox<TagType> tagChoice;
     TagType[] tagsArray; // array holding tags
+    String[] levelsArray; 
     
 
     Text questionText;
@@ -55,6 +57,7 @@ public class TaggerGUI extends Application {
         launch(args);
     }
 
+    @Override
     public void start(Stage primaryStage) {
         readDatabase();
         initTagsArray();
@@ -115,37 +118,40 @@ public class TaggerGUI extends Application {
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(5);
         
-        String[] levelsArray = {"A1", "A2", "B1", "B2", "C1", "Mix"};        
+        String[] availableLevelsArray = {"A1", "A2", "B1", "B2", "C1", "Mix"};        
         
         levelChoice = new ChoiceBox<>();
         levelChoice.setStyle("-fx-font: 17px \"Segoe UI\";");
-        levelChoice.getItems().addAll(levelsArray);
+        levelChoice.getItems().addAll(availableLevelsArray);
         levelChoice.setPrefSize(150, 40);
         
         levelChoice.getSelectionModel().selectedItemProperty()
-                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                    if (newValue.equals("A1")) {
-                        tagChoice.getItems().clear();                                                
-                        tagChoice.getItems().addAll(A1_LEVEL.values());
-                    }
-                    if (newValue.equals("A2")) {
-                        tagChoice.getItems().clear();
-                        tagChoice.getItems().addAll(A2_LEVEL.values());
-                    }
-                    if (newValue.equals("B1")) {
-                        // set tagChoice for B1
-                    }
-                    if (newValue.equals("B2")) {
-                        // set tagChoice for B2
-                    }
-                    if (newValue.equals("C1")) {
-                        // set tagChoice for C1
-                    }
-                    if (newValue.equals("Mix")) {
-                        tagChoice.getItems().clear();
-                        tagChoice.getItems().addAll(MixType.values()); 
-                    }
-                });
+                .addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue != null && newValue.equals("A1")) {
+                    tagChoice.getItems().clear();
+                    tagChoice.getItems().addAll(A1_LEVEL.values());
+                }
+                if (newValue != null && newValue.equals("A2")) {
+                    tagChoice.getItems().clear();
+                    tagChoice.getItems().addAll(A2_LEVEL.values());
+                }
+                if (newValue != null && newValue.equals("B1")) {
+                    // set tagChoice for B1
+                }
+                if (newValue != null && newValue.equals("B2")) {
+                    // set tagChoice for B2
+                }
+                if (newValue != null && newValue.equals("C1")) {
+                    // set tagChoice for C1
+                }
+                if (newValue != null && newValue.equals("Mix")) {
+                    tagChoice.getItems().clear();
+                    tagChoice.getItems().addAll(MixType.values());
+                }
+            }
+        });
         
         
         Region spacerBetwTaggers = new Region();
@@ -241,8 +247,10 @@ public class TaggerGUI extends Application {
     public void click_nextButton() {
         // to avoid going out of array's bound
         if (getCurrentQNum() <= totalOfQs) {
-           
+            // read chosen values
             tagsArray[getCurrentQNum() - 1] = (TagType) tagChoice.getValue();
+            levelsArray[getCurrentQNum() - 1] = levelChoice.getValue();                       
+            
             incrementCurrentQNum();
             setGUITexts();
             
@@ -251,17 +259,46 @@ public class TaggerGUI extends Application {
                 
                 // unselect ChoiceBox if question is shown for the first time
                 if (tagsArray[getCurrentQNum() - 1] == null) {
-                    tagChoice.setValue(null);
+                    tagChoice.setValue(null);                    
+                    levelChoice.getSelectionModel().clearSelection();
                 }
                 
                 /* A user can press previous button, go back to prev question and then
                 go back to question (pressing next) which user already tagged before.
                 The previously tagged value should be selected in choice box. The
                 following lines make sure it happens. */
-                if (tagsArray[getCurrentQNum() - 1] != null) {
-                    tagChoice.setValue(tagsArray[getCurrentQNum() - 1]);                                                    
+                if (levelsArray[getCurrentQNum() - 1] != null) {
+                    levelChoice.setValue(levelsArray[getCurrentQNum() - 1]);
                 }
                 
+                if (tagsArray[getCurrentQNum() - 1] != null) {
+                    // set the needed array of enums to tagChoice, otherwise it will be empty
+                    if (levelsArray[getCurrentQNum() - 1].equals("A1")) {
+                        tagChoice.getItems().clear();
+                        tagChoice.getItems().addAll(A1_LEVEL.values());
+                    }
+                    if (levelsArray[getCurrentQNum() - 1].equals("A2")) {
+                        tagChoice.getItems().clear();
+                        tagChoice.getItems().addAll(A2_LEVEL.values());
+                    }
+                    if (levelsArray[getCurrentQNum() - 1].equals("B1")) {
+                        // set tagChoice for B1
+                    }
+                    if (levelsArray[getCurrentQNum() - 1].equals("B2")) {
+                        // set tagChoice for B2
+                    }
+                    if (levelsArray[getCurrentQNum() - 1].equals("C1")) {
+                        // set tagChoice for C1
+                    }
+                    if (levelsArray[getCurrentQNum() - 1].equals("Mix")) {
+                        tagChoice.getItems().clear();
+                        tagChoice.getItems().addAll(MixType.values());
+                    }
+
+                    tagChoice.setValue(tagsArray[getCurrentQNum() - 1]);
+                }
+
+
             } // end of inner if
             
         } // end of outer if
@@ -280,13 +317,40 @@ public class TaggerGUI extends Application {
             if (getCurrentQNum() == 1) {
                 // do nothing
             } else {
+                // read the chosen value 
                 tagsArray[getCurrentQNum() - 1] = tagChoice.getValue();
+                levelsArray[getCurrentQNum() - 1] = levelChoice.getValue();
                 decrementCurrentQNum();
                 setGUITexts();
+
+                levelChoice.setValue(levelsArray[getCurrentQNum() - 1]);
+
+                // set the needed array of enums to tagChoice, otherwise it will be empty
+                if (levelsArray[getCurrentQNum() - 1].equals("A1")) {
+                    tagChoice.getItems().clear();
+                    tagChoice.getItems().addAll(A1_LEVEL.values());
+                }
+                if (levelsArray[getCurrentQNum() - 1].equals("A2")) {
+                    tagChoice.getItems().clear();
+                    tagChoice.getItems().addAll(A2_LEVEL.values());
+                }
+                if (levelsArray[getCurrentQNum() - 1].equals("B1")) {
+                    // set tagChoice for B1
+                }
+                if (levelsArray[getCurrentQNum() - 1].equals("B2")) {
+                    // set tagChoice for B2
+                }
+                if (levelsArray[getCurrentQNum() - 1].equals("C1")) {
+                    // set tagChoice for C1
+                }
+                if (levelsArray[getCurrentQNum() - 1].equals("Mix")) {
+                    tagChoice.getItems().clear();
+                    tagChoice.getItems().addAll(MixType.values());
+                }
+
+                tagChoice.setValue(tagsArray[getCurrentQNum() - 1]);
                 
-                TagType tag = tagsArray[getCurrentQNum() - 1];
                 
-                tagChoice.setValue(tag);
             }
             
         } // end of if
@@ -316,6 +380,10 @@ public class TaggerGUI extends Application {
         tagsArray = new TagType[totalOfQs];
         for (TagType tagtype : tagsArray) {
             tagtype = null;
+        }
+        levelsArray = new String[totalOfQs];
+        for (int i = 0; i < levelsArray.length; i++) {
+            levelsArray[i] = "";
         }
     }
 
