@@ -6,15 +6,15 @@ package tagger;
 
 public class SQLTagWriterTest {
     public static void main(String[] args) {
-        TagType tag1 = TagType.PASSIVE;
-        TagType tag2 = TagType.PHRASAL_VERBS;
-        TagType tag3 = TagType.PREPOSITIONS;
-        TagType tag4 = TagType.PRESENT_PERFECT;
-        TagType tag5 = TagType.TIME_WORDS;
-        TagType tag6 = TagType.UNDEFINED;
-        TagType tag7 = TagType.VOCABULARY;
+        TagType tag1 = MixType.PASSIVE;
+        TagType tag2 = MixType.PHRASAL_VERBS;
+        TagType tag3 = MixType.PREPOSITIONS;
+        TagType tag4 = MixType.PRESENT_PERFECT;
+        TagType tag5 = MixType.TIME_WORDS;
+        TagType tag6 = MixType.UNDEFINED;
+        TagType tag7 = MixType.VOCABULARY;
         
-        TagType[] tags = new TagType[7];
+        TagType[] tags = new MixType[7];
         
         tags[0] = tag1;
         tags[1] = tag2;
