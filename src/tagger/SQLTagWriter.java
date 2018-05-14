@@ -10,12 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 public class SQLTagWriter {
-    private static String urlPath;
-    private static Connection connection;
-    private static Statement stmt;
-    private static PreparedStatement prepStmt;
-    private static String dataBasePath;
-    private static String tableName;
+    private String urlPath;
+    private Connection connection;
+    private Statement stmt;
+    private PreparedStatement prepStmt;
+    private String dataBasePath;
+    private String tableName;
     
     public SQLTagWriter() {
         urlPath = "jdbc:sqlite:C:/sqlite/TEST7.db";
@@ -30,7 +30,7 @@ public class SQLTagWriter {
         
     }
     
-    public static void writeTags(TagType[] tagsArray) {        
+    public void writeTags(TagType[] tagsArray) {        
         
         try {
             // load driver

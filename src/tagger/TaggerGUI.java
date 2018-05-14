@@ -29,6 +29,7 @@ import read.Question;
 
 public class TaggerGUI extends Application {
     String dataBasePath;
+    String tableName;
     
     Stage mainStage;
     Scene updateScene;
@@ -55,7 +56,7 @@ public class TaggerGUI extends Application {
     String initialOptionD;
     
     public TaggerGUI() {
-        // 
+        dataBasePath = "C:\\sqlite_grammar_quizzes\\TEST7.db";
     }
     
     public TaggerGUI(String selectedFile) {
@@ -223,7 +224,7 @@ public class TaggerGUI extends Application {
         // reverse the path, and read tableName from the end omittin .db which is 3 symbols to "\\"
         String dataBasePathReversed = new StringBuffer(dataBasePath).reverse().toString();        
         String tableNameRev = dataBasePathReversed.substring(3, dataBasePathReversed.indexOf("\\"));
-        String tableName = new StringBuffer(tableNameRev).reverse().toString().toLowerCase(); 
+        tableName = new StringBuffer(tableNameRev).reverse().toString().toLowerCase(); 
         
         SQLReader sQLReader = new SQLReader(dataBasePath, tableName);
         allQuestions = sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable());
@@ -375,7 +376,8 @@ public class TaggerGUI extends Application {
         
         // and finally if all question are tagged write all the tags to database
         if (areAllQsTagged()) {
-            SQLTagWriter.writeTags(tagsArray);              
+            // SQLTagWriter.writeTags(tagsArray);    
+            new SQLTagWriter(dataBasePath, tableName).writeTags(tagsArray);
             // TODO here should be the line closing GUI and displaying SUCCESS window scene
         }            
     }
