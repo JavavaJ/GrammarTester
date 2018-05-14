@@ -6,7 +6,6 @@ package tagger;
 
 import grammartester.SQLReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -217,19 +216,17 @@ public class TaggerGUI extends Application {
     /** The method reads a database of tests and stores results in
      *  a list of Question objects.
      *
+     * @param dataBasePath path to a datebase file which you want to open
      */
     public void readDatabase(String dataBasePath) {        
-        SQLReader sQLReader = new SQLReader();
-
-        // path of DB with tests
-        String filePath = "jdbc:sqlite:" + dataBasePath.replace("\\", "/");
         
         // reverse the path, and read tableName from the end omittin .db which is 3 symbols to "\\"
         String dataBasePathReversed = new StringBuffer(dataBasePath).reverse().toString();        
         String tableNameRev = dataBasePathReversed.substring(3, dataBasePathReversed.indexOf("\\"));
-        String tableName = new StringBuffer(tableNameRev).reverse().toString().toLowerCase();                  
-
-        allQuestions = sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));
+        String tableName = new StringBuffer(tableNameRev).reverse().toString().toLowerCase(); 
+        
+        SQLReader sQLReader = new SQLReader(dataBasePath, tableName);
+        allQuestions = sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable());
         System.out.println("All questions are read!");
     }
 

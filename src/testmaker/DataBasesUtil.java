@@ -303,8 +303,6 @@ public class DataBasesUtil {
         return allQuestions;    
     	
     }
-    
-    
-    
+        
     
 }
