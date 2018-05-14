@@ -2,6 +2,7 @@ package tagger;
 
 import java.io.File;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,10 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import testmaker.FileChooserOpenDB;
+
 
 public class TaggerLauncher extends Application {
     Stage stage;
-    File selectedFile;
+    String selectedFile;
     
     public static void main(String[] args) {
         launch(args);
@@ -44,6 +47,16 @@ public class TaggerLauncher extends Application {
     
     
     public void click_launchButton() {
-        System.out.println("Launch Button is pressed!");
+       Platform.runLater(new Runnable() {
+            public void run() {
+                FileChooserOpenDB filechooser = new FileChooserOpenDB();
+                filechooser.start(new Stage());
+                
+                System.out.println("You have selected (absolute path) : " 
+                        + filechooser.getSelectedFile().getAbsolutePath());
+                selectedFile = filechooser.getSelectedFile().getAbsolutePath();
+                stage.close();
+            }
+        });
     }
 }
