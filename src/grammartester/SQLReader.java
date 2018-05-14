@@ -20,6 +20,23 @@ public class SQLReader {
     private Statement stmt;
     private PreparedStatement prepStmt;
     
+    private String dataBasePath;
+    private String tableName;
+    
+    
+    public SQLReader() {
+        urlSQLite = "jdbc:sqlite:C:/sqlite/TEST7.db";
+    }
+    
+    public SQLReader(String dataBasePath, String tableName) {
+        super();
+        this.dataBasePath = dataBasePath;
+        this.tableName = tableName;
+        
+        urlSQLite = "jdbc:sqlite:" + dataBasePath.replace("\\", "/");
+        
+    }
+    
     
     /** The method makes a single query from database based on idRow 
      * and returns a HashMap of values (id, question, a, b, c, d, right).
@@ -28,9 +45,7 @@ public class SQLReader {
      * @return HashMap<String, String>
      */
     public Map<String, String> makeQuery(int idRow) {
-        Map<String, String> queryValues = new HashMap<>();
-        
-        urlSQLite = "jdbc:sqlite:C:/sqlite/TEST7.db";
+        Map<String, String> queryValues = new HashMap<>();     
         
         try {
             // load driver
@@ -115,9 +130,8 @@ public class SQLReader {
      * @return 
      */
     public List<Question> makeQuery(int fromId, int toId) {
-        List<Question> allQuestions = new ArrayList<>();
+        List<Question> allQuestions = new ArrayList<>();        
         
-        String urlSQLite = "jdbc:sqlite:C:/sqlite/TEST7.db";
         Connection connection;
         PreparedStatement prepStmt = null;
         ResultSet queryResult;
@@ -242,6 +256,55 @@ public class SQLReader {
         return numOfRows;
     }
     
+    
+    
+    /** The method returns 
+     * a number of rows in a table based on filePath and tableName given to 
+     * SQLReader constructor
+     * 
+     * @return int number of rows in a table 
+     */
+    public int getNumberOfRowsInTable() {
+        int numOfRows = 0;
+        
+        Connection connection = null;
+        Statement stmt;
+        ResultSet rs;
+        
+        try {
+            // load driver
+            Class.forName("org.sqlite.JDBC");
+
+            // establish connection
+            connection = DriverManager.getConnection(urlSQLite);
+            
+            stmt = connection.createStatement();
+            
+            // the sql statement counts a number of rows in a table
+            String sql = "SELECT COUNT(*) FROM " + tableName;
+            rs = stmt.executeQuery(sql);
+            
+            rs.next();
+            numOfRows = rs.getInt(1);
+            
+            rs.close();
+            stmt.close();
+            connection.close();
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return numOfRows;
+    }
     
        
 
