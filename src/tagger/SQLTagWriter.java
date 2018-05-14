@@ -10,22 +10,36 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 public class SQLTagWriter {
-    private static String databasePath;
+    private static String urlPath;
     private static Connection connection;
     private static Statement stmt;
     private static PreparedStatement prepStmt;
+    private static String dataBasePath;
+    private static String tableName;
     
-    public static void writeTags(TagType[] tagsArray) {
-        databasePath = "jdbc:sqlite:C:/sqlite/TEST7.db";
+    public SQLTagWriter() {
+        urlPath = "jdbc:sqlite:C:/sqlite/TEST7.db";
+    }
+    
+    public SQLTagWriter(String dataBasePath, String tableName) {
+        super();
+        this.dataBasePath = dataBasePath;
+        this.tableName = tableName;
+        
+        urlPath = "jdbc:sqlite:" + dataBasePath.replace("\\", "/");
+        
+    }
+    
+    public static void writeTags(TagType[] tagsArray) {        
         
         try {
             // load driver
             Class.forName("org.sqlite.JDBC");
             
             // establish connection
-            connection = DriverManager.getConnection(databasePath);
+            connection = DriverManager.getConnection(urlPath);
             
-            String sqlCommand = "UPDATE test7 SET tags = ? WHERE id = ?";
+            String sqlCommand = "UPDATE " + tableName + " SET tags = ? WHERE id = ?";
             
             prepStmt = connection.prepareStatement(sqlCommand);            
             
