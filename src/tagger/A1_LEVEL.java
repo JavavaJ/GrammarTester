@@ -37,6 +37,90 @@ public enum A1_LEVEL implements TagType {
             return "past_simple";
         }  
         
+    },
+    
+    POSSESSIVES {
+        
+        @Override
+        public String toString() {
+            return "Possessives";
+        }
+        
+        @Override
+        public String getTag() {
+            return "possessives";
+        }  
+        
+    },
+    
+    OBJ_PRONOUN {
+        
+        @Override
+        public String toString() {
+            return "Obj Pronoun";
+        }
+        
+        @Override
+        public String getTag() {
+            return "obj_pron";
+        }  
+        
+    },
+    
+    TIME_WORDS {
+        // return a String which is used Choice Box name
+        @Override
+        public String toString() {
+            return "Time words";
+        }
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "time_word";
+        }
+    },
+    
+    QUESTION_WORDS {
+        // return a String which is used Choice Box name
+        @Override
+        public String toString() {
+            return "Question words";
+        }
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "question_word";
+        }
+    },
+    
+    VOCABULARY {
+        // return a String which is used Choice Box name
+        @Override
+        public String toString() {
+            return "Vocabulary";
+        }
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "voc";
+        }
+    },
+    
+    LIKE_DOING {
+        
+        @Override
+        public String toString() {
+            return "Like Doing";
+        }
+        
+        @Override
+        public String getTag() {
+            return "like_doing";
+        }  
+        
     };
     
 }
