@@ -1,6 +1,5 @@
 package tagger;
 
-import java.io.File;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -47,14 +46,24 @@ public class TaggerLauncher extends Application {
     
     
     public void click_launchButton() {
-       Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable() {
             public void run() {
                 FileChooserOpenDB filechooser = new FileChooserOpenDB();
                 filechooser.start(new Stage());
-                
-                System.out.println("You have selected (absolute path) : " 
+
+                System.out.println("You have selected (absolute path) : "
                         + filechooser.getSelectedFile().getAbsolutePath());
                 selectedFile = filechooser.getSelectedFile().getAbsolutePath();
+
+                // the following snippet is a way to call another Applicaton from the 
+                // current one. 
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {                         
+                        new TaggerGUI(selectedFile).start(new Stage());
+                    }
+                });
+
                 stage.close();
             }
         });
