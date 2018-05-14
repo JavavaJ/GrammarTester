@@ -1,6 +1,5 @@
 package testmaker;
 
-import java.io.File;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -13,6 +12,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import tagger.TaggerGUI;
 
 
 public class MenuBarSketch extends Application {
@@ -22,6 +22,7 @@ public class MenuBarSketch extends Application {
     
     Stage stage;
     BorderPane borderPane;
+    String selectedFile;
     
     @Override
     public void start(Stage primaryStage) {
@@ -70,6 +71,7 @@ public class MenuBarSketch extends Application {
         menuBar.getMenus().add(toolsMenu);
         
         MenuItem taggerItem = new MenuItem("Tagger");
+        taggerItem.setOnAction( e -> click_taggerItem());
         toolsMenu.getItems().add(taggerItem);
         
         MenuItem testCompilerItem = new MenuItem("Compile test");
@@ -123,5 +125,32 @@ public class MenuBarSketch extends Application {
                 
             }
         });    
+    }
+    
+    public void click_taggerItem() {
+        System.out.println("Tagger Item is clicked!");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                FileChooserOpenDB filechooser = new FileChooserOpenDB();
+                filechooser.start(new Stage());
+
+                System.out.println("You have selected (absolute path) : "
+                        + filechooser.getSelectedFile().getAbsolutePath());
+                selectedFile = filechooser.getSelectedFile().getAbsolutePath();
+
+                // the following snippet is a way to call another Applicaton from the 
+                // current one. 
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {                         
+                        new TaggerGUI(selectedFile).start(new Stage());
+                    }
+                });
+
+                stage.close();
+            }
+        });
+        
     }
 }
