@@ -59,19 +59,7 @@ public enum MixType implements TagType {
             return "phrasal_verb";
         }
     }, 
-    PREPOSITIONS {
-        // return a String which is used Choice Box name
-        @Override
-        public String toString() {
-            return "Prepositions";
-        }
-        
-        // returns a tag which is used to tag questions in SQL database
-        @Override
-        public String getTag() {
-            return "preposition";
-        }
-    },
+    
     UNDEFINED {
         // return a String which is used Choice Box name
         @Override

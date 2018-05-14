@@ -127,8 +127,7 @@ public class MenuBarSketch extends Application {
         });    
     }
     
-    public void click_taggerItem() {
-        System.out.println("Tagger Item is clicked!");
+    public void click_taggerItem() {        
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
