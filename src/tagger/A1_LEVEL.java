@@ -135,6 +135,20 @@ public enum A1_LEVEL implements TagType {
         public String getTag() {
             return "preposition";
         }
+    }, 
+    
+    TO_BE {
+        // return a String which is used Choice Box name
+        @Override
+        public String toString() {
+            return "To Be";
+        }
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "to_be";
+        }
     };
     
 }
