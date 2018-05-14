@@ -148,7 +148,7 @@ public class SQLReader {
             connection.setAutoCommit(false);
             
             
-            prepStmt = connection.prepareStatement("SELECT * FROM test7 WHERE id = ?");
+            prepStmt = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE id = ?");
             
             for (int i = fromId; i <= toId; i++) {
                 prepStmt.setInt(1, i);
