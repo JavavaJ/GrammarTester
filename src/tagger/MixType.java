@@ -45,19 +45,7 @@ public enum MixType implements TagType {
             return "voc";
         }
     },
-    TIME_WORDS {
-        // return a String which is used Choice Box name
-        @Override
-        public String toString() {
-            return "Time words";
-        }
-        
-        // returns a tag which is used to tag questions in SQL database
-        @Override
-        public String getTag() {
-            return "time_word";
-        }
-    },
+    
     PHRASAL_VERBS {
         // return a String which is used Choice Box name
         @Override
