@@ -29,6 +29,8 @@ import javafx.stage.Stage;
 import read.Question;
 
 public class TaggerGUI extends Application {
+    String dataBasePath;
+    
     Stage mainStage;
     Scene updateScene;
 
@@ -52,6 +54,15 @@ public class TaggerGUI extends Application {
     String initialOptionB;
     String initialOptionC;
     String initialOptionD;
+    
+    public TaggerGUI() {
+        // 
+    }
+    
+    public TaggerGUI(String selectedFile) {
+        super();
+        this.dataBasePath = selectedFile;
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -59,7 +70,7 @@ public class TaggerGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        readDatabase();
+        readDatabase(dataBasePath);
         initTagsArray();
         setInitialTextValues();
 
@@ -207,12 +218,16 @@ public class TaggerGUI extends Application {
      *  a list of Question objects.
      *
      */
-    public void readDatabase() {
+    public void readDatabase(String dataBasePath) {        
         SQLReader sQLReader = new SQLReader();
 
         // path of DB with tests
-        String filePath = "jdbc:sqlite:C:/sqlite/TEST7.db";
-        String tableName = "test7";
+        String filePath = "jdbc:sqlite:" + dataBasePath.replace("\\", "/");
+        
+        // reverse the path, and read tableName from the end omittin .db which is 3 symbols to "\\"
+        String dataBasePathReversed = new StringBuffer(dataBasePath).reverse().toString();        
+        String tableNameRev = dataBasePathReversed.substring(3, dataBasePathReversed.indexOf("\\"));
+        String tableName = new StringBuffer(tableNameRev).reverse().toString().toLowerCase();                  
 
         allQuestions = sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));
         System.out.println("All questions are read!");
