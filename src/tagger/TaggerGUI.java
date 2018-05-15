@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -48,6 +49,7 @@ public class TaggerGUI extends Application {
     
     // progress of the test property for progress bar
     private DoubleProperty progOfTest;
+    HBox progressPane;
     
 
     Text questionText;
@@ -143,7 +145,7 @@ public class TaggerGUI extends Application {
         // bind progressBar property with progOfTest updatable property
         progressBar.progressProperty().bind(progOfTest.divide((double)totalOfQs));
         
-        HBox progressPane = new HBox(progressBar);
+        progressPane = new HBox(progressBar);
         progressPane.setAlignment(Pos.CENTER);
         progressPane.setPadding(new Insets(5));
         
@@ -404,10 +406,15 @@ public class TaggerGUI extends Application {
         
         // and finally if all question are tagged write all the tags to database
         if (areAllQsTagged()) {
+            // run ProgressIndicator here to indicate that lengthy process is running
+            ProgressIndicator progressIndicator = new ProgressIndicator();
+            progressPane.getChildren().add(progressIndicator);
             // SQLTagWriter.writeTags(tagsArray);    
             new SQLTagWriter(dataBasePath, tableName).writeTags(tagsArray);
             // TODO here should be the line closing GUI and displaying SUCCESS window scene
-        }            
+        }
+        
+        
     }
     
     
