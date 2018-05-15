@@ -109,16 +109,86 @@ public enum A1_LEVEL implements TagType {
         }
     },
     
-    LIKE_DOING {
+    ARTICLES {
         
         @Override
         public String toString() {
-            return "Like Doing";
+            return "Articles";
         }
         
         @Override
         public String getTag() {
-            return "like_doing";
+            return "articles";
+        }  
+        
+    },
+    
+    THERE_IS {
+        
+        @Override
+        public String toString() {
+            return "There is";
+        }
+        
+        @Override
+        public String getTag() {
+            return "there_is";
+        }  
+        
+    },
+    
+    SOME_ANY {
+        
+        @Override
+        public String toString() {
+            return "Some / any";
+        }
+        
+        @Override
+        public String getTag() {
+            return "some_any";
+        }  
+        
+    },    
+        
+    MUCH_MANY {
+        
+        @Override
+        public String toString() {
+            return "Much / many";
+        }
+        
+        @Override
+        public String getTag() {
+            return "much_many";
+        }  
+        
+    },
+    
+    THESE_THOSE {
+        
+        @Override
+        public String toString() {
+            return "These / those";
+        }
+        
+        @Override
+        public String getTag() {
+            return "these_those";
+        }  
+        
+    },
+    
+    CONJUNCTIONS {
+        
+        @Override
+        public String toString() {
+            return "Conjunctions";
+        }
+        
+        @Override
+        public String getTag() {
+            return "conj";
         }  
         
     },
