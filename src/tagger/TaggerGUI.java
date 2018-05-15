@@ -38,6 +38,7 @@ public class TaggerGUI extends Application {
     
     Stage mainStage;
     Scene updateScene;
+    Scene successScene;
 
     List<Question> allQuestions;
     private int currentQNum = 1; // non-zero based
@@ -227,6 +228,7 @@ public class TaggerGUI extends Application {
         successPaneV.setAlignment(Pos.CENTER);
         successMainPane = new HBox(successPaneV);
         successMainPane.setAlignment(Pos.CENTER);        
+        successScene = new Scene(successMainPane, 600, 500);
 
         // ^^^^^^^^^^^^^^^^^^^^^ SUCCESS PANE CODE ^^^^^^^^^^^^^^^^^^
         
@@ -418,18 +420,21 @@ public class TaggerGUI extends Application {
     }
 
     public void click_updateTagsButton() {
+        // run ProgressIndicator here to indicate that lengthy process is running
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        progressPane.getChildren().add(progressIndicator);
         // TODO instead of just printing write tag values to a database
         click_nextButton();
         
+        
+        
         // and finally if all question are tagged write all the tags to database
         if (areAllQsTagged()) {
-            // run ProgressIndicator here to indicate that lengthy process is running
-            ProgressIndicator progressIndicator = new ProgressIndicator();
-            progressPane.getChildren().add(progressIndicator);
+            
             // SQLTagWriter.writeTags(tagsArray);    
             new SQLTagWriter(dataBasePath, tableName).writeTags(tagsArray);
             // TODO here should be the line closing GUI and displaying SUCCESS window scene
-            taggingScene = new Scene(successMainPane, 600, 500);
+            mainStage.setScene(successScene);
         }
         
         
