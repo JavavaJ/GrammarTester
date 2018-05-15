@@ -8,6 +8,8 @@ import grammartester.SQLReader;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -15,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -42,6 +45,9 @@ public class TaggerGUI extends Application {
     ChoiceBox<TagType> tagChoice;
     TagType[] tagsArray; // array holding tags
     String[] levelsArray; 
+    
+    // progress of the test property for progress bar
+    private DoubleProperty progOfTest;
     
 
     Text questionText;
@@ -127,7 +133,24 @@ public class TaggerGUI extends Application {
         buttonPane.setPadding(new Insets(5));
         buttonPane.setPrefHeight(150);
         buttonPane.setAlignment(Pos.CENTER);
-        buttonPane.setSpacing(5);
+        buttonPane.setSpacing(5);        
+        
+        progOfTest = new SimpleDoubleProperty(0.0);
+        
+        ProgressBar progressBar = new ProgressBar();
+        progressBar.setPrefWidth(400);
+        
+        // bind progressBar property with progOfTest updatable property
+        progressBar.progressProperty().bind(progOfTest.divide((double)totalOfQs));
+        
+        HBox progressPane = new HBox(progressBar);
+        progressPane.setAlignment(Pos.CENTER);
+        progressPane.setPadding(new Insets(5));
+        
+        Region spacerProg = new Region();
+        spacerProg.setPrefHeight(50);
+        
+        VBox bottomPane = new VBox(buttonPane, progressPane, spacerProg);
         
         String[] availableLevelsArray = {"A1", "A2", "B1", "B2", "C1", "Mix"};        
         
@@ -183,7 +206,7 @@ public class TaggerGUI extends Application {
         BorderPane mainPane = new BorderPane();
         mainPane.setTop(qTextPane);
         mainPane.setCenter(optionsPane);
-        mainPane.setBottom(buttonPane);
+        mainPane.setBottom(bottomPane);
         mainPane.setRight(tagPane);
 
         Scene taggingScene = new Scene(mainPane, 600, 500);
@@ -320,6 +343,9 @@ public class TaggerGUI extends Application {
             // display UpdateTags button
             updateTagsButton.setVisible(true);
         }
+        
+        // updates the values of already tagged questions number
+        progOfTest.set(getNumberOfTaggedQs());
 
     }
     
@@ -367,6 +393,8 @@ public class TaggerGUI extends Application {
             }
             
         } // end of if
+        // updates the values of already answered questions number
+        progOfTest.set(getNumberOfTaggedQs());
 
     }
 
@@ -395,6 +423,7 @@ public class TaggerGUI extends Application {
         for (TagType tagtype : tagsArray) {
             tagtype = null;
         }
+        // initialize levelsArray
         levelsArray = new String[totalOfQs];
         for (int i = 0; i < levelsArray.length; i++) {
             levelsArray[i] = "";
@@ -427,6 +456,20 @@ public class TaggerGUI extends Application {
             optionDText.setText("D) " + optionD);
         }
 
+    }
+    
+    /** The method iterates through an array of tagged answers
+     * and returns a number of tagged questions.
+     * @return a number of tagged questions.
+     */
+    public int getNumberOfTaggedQs() {
+        int numOfTagged = 0;
+        for (int i = 0; i < tagsArray.length; i++) {
+            if (tagsArray[i] != null) {
+                numOfTagged++;
+            }
+        }
+        return numOfTagged;
     }
     
     
