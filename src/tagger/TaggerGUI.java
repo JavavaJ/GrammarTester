@@ -28,6 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import read.Question;
 
@@ -50,6 +51,8 @@ public class TaggerGUI extends Application {
     // progress of the test property for progress bar
     private DoubleProperty progOfTest;
     HBox progressPane;
+    HBox successMainPane;
+    Scene taggingScene;
     
 
     Text questionText;
@@ -211,8 +214,22 @@ public class TaggerGUI extends Application {
         mainPane.setBottom(bottomPane);
         mainPane.setRight(tagPane);
 
-        Scene taggingScene = new Scene(mainPane, 600, 500);
+        taggingScene = new Scene(mainPane, 600, 500);
+        
+        // ===================== SUCCESS PANE CODE ================
+        
+        String successStr = "Congratulation! \n You have successfully "
+                + "updated your database.";
+        Text successText = new Text(successStr);
+        successText.setTextAlignment(TextAlignment.CENTER);        
+        
+        VBox successPaneV = new VBox(successText);
+        successPaneV.setAlignment(Pos.CENTER);
+        successMainPane = new HBox(successPaneV);
+        successMainPane.setAlignment(Pos.CENTER);        
 
+        // ^^^^^^^^^^^^^^^^^^^^^ SUCCESS PANE CODE ^^^^^^^^^^^^^^^^^^
+        
         String iconPath = "tag_icon.png";
 
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(iconPath)));
@@ -220,7 +237,7 @@ public class TaggerGUI extends Application {
         primaryStage.setTitle("Grammar Tagger");
         primaryStage.show();
 
-
+        
     }
 
     public int getCurrentQNum() {
@@ -412,6 +429,7 @@ public class TaggerGUI extends Application {
             // SQLTagWriter.writeTags(tagsArray);    
             new SQLTagWriter(dataBasePath, tableName).writeTags(tagsArray);
             // TODO here should be the line closing GUI and displaying SUCCESS window scene
+            taggingScene = new Scene(successMainPane, 600, 500);
         }
         
         
