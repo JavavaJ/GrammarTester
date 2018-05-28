@@ -131,12 +131,12 @@ public class MenuBarSketch extends Application {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                FileChooserOpenDB filechooser = new FileChooserOpenDB();
-                filechooser.start(new Stage());
+                FileChooserOpenDB tagggerFilechooser = new FileChooserOpenDB();
+                tagggerFilechooser.start(new Stage());
 
                 System.out.println("You have selected (absolute path) : "
-                        + filechooser.getSelectedFile().getAbsolutePath());
-                selectedFile = filechooser.getSelectedFile().getAbsolutePath();
+                        + tagggerFilechooser.getSelectedFile().getAbsolutePath());
+                selectedFile = tagggerFilechooser.getSelectedFile().getAbsolutePath();
 
                 // the following snippet is a way to call another Applicaton from the 
                 // current one. 
