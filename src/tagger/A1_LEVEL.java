@@ -39,6 +39,34 @@ public enum A1_LEVEL implements TagType {
         
     },
     
+    WAS_WERE {
+        
+        @Override
+        public String toString() {
+            return "Was / were";
+        }
+        
+        @Override
+        public String getTag() {
+            return "was_were";
+        }  
+        
+    },
+    
+    CAN_COULD {
+        
+        @Override
+        public String toString() {
+            return "Can / could";
+        }
+        
+        @Override
+        public String getTag() {
+            return "can_could";
+        }  
+        
+    },
+    
     POSSESSIVES {
         
         @Override
@@ -218,6 +246,20 @@ public enum A1_LEVEL implements TagType {
         @Override
         public String getTag() {
             return "to_be";
+        }
+    },
+    
+    LIKE_DOING {
+        // return a String which is used Choice Box name
+        @Override
+        public String toString() {
+            return "Like doing";
+        }
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "like_doing";
         }
     };
     

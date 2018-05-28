@@ -6,6 +6,7 @@ package tagger;
 
 public class SQLTagWriterTest {
     public static void main(String[] args) {
+        /*
         TagType tag1 = MixType.PASSIVE;
         TagType tag2 = MixType.PHRASAL_VERBS;
         TagType tag3 = MixType.PREPOSITIONS;
@@ -23,6 +24,7 @@ public class SQLTagWriterTest {
         // tags[4] = tag5;
         tags[5] = tag6;
         tags[6] = tag7;
+        */
                 
         
         // SQLTagWriter.writeTags(tags);

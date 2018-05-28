@@ -70,7 +70,7 @@ public class GrammarGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        allQuestions = readDatabase();        
+        // allQuestions = readDatabase();        
         System.out.println("All questions are read!");
         initChosenAnswers();
         setInitialTextValues();
@@ -200,14 +200,15 @@ public class GrammarGUI extends Application {
      *  a list of Question objects.
      * @return list of Question objects List<Question>
      */
-    public List<Question> readDatabase() {
-        SQLReader sQLReader = new SQLReader();
+    public List<Question> readDatabase() {     
 
         // path of DB with tests
         String filePath = "jdbc:sqlite:C:/sqlite/TEST7.db";
         String tableName = "test7";
+        
+        SQLReader sQLReader = new SQLReader(filePath, tableName);
 
-        return sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable(filePath, tableName));
+        return sQLReader.makeQuery(1, sQLReader.getNumberOfRowsInTable());
         
     }
 
