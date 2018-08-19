@@ -249,6 +249,34 @@ public enum A1_LEVEL implements TagType {
         }
     },
     
+    ORDINALS {
+        // return a String which is used Choice Box name
+        @Override
+        public String toString() {
+            return "Ordinals";
+        }
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "ordinals";
+        }
+    },
+    
+    NUMBERS {
+        // return a String which is used Choice Box name
+        @Override
+        public String toString() {
+            return "Numbers";
+        }
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "numbers";
+        }
+    },
+    
     LIKE_DOING {
         // return a String which is used Choice Box name
         @Override
