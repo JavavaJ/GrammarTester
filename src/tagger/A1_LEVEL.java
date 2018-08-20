@@ -134,7 +134,7 @@ public enum A1_LEVEL implements TagType {
         @Override
         public String getTag() {
             return "voc";
-        }
+        }                
     },
     
     ARTICLES {
