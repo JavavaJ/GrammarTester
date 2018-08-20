@@ -68,6 +68,8 @@ public class TaggerGUI extends Application {
     String initialOptionB;
     String initialOptionC;
     String initialOptionD;
+    String initialLevelChoiceValue;
+    TagType initialTagTypeValue;
     
     // default tagger constructor
     public TaggerGUI() {
@@ -301,6 +303,9 @@ public class TaggerGUI extends Application {
         initialOptionB = "B) " + currentQ.getOptionB().replace("\n", "");
         initialOptionC = "C) " + currentQ.getOptionC().replace("\n", "");
         initialOptionD = "D) " + currentQ.getOptionD().replace("\n", "");
+        
+        initialLevelChoiceValue = levelsArray[0];
+        initialTagTypeValue = tagsArray[0];
 
     }
 
@@ -448,30 +453,16 @@ public class TaggerGUI extends Application {
     
 
     /** The method initializes the integer totalNumOfQs and an array chosenAnswers.
-     * It should be called only after arraylist allQuestions is initialized.
+     * It should be called only after ArrayList allQuestions is initialized.
      * That is after calling the method readDatabase().
      */
     public void initTagsArray() {
         totalNumOfQs = allQuestions.size();
         // initialize an array with a length of number of questions
-        tagsArray = new TagType[totalNumOfQs];
+        tagsArray = new TagType[totalNumOfQs];        
         
-        TagType[] allA1Tags = A1_LEVEL.values(); // all tags from A1_Level enum
-        TagType[] allA2Tags = A2_LEVEL.values(); // all tags from A2_Level enum
-        
-                
-        List<String> allA1TagsStringList = new ArrayList<>(allA1Tags.length);
-        List<String> allA2TagsStringList = new ArrayList<>(allA2Tags.length);
-        
-        // fill allA1TagsStringList with string values
-        for (int i = 0; i < allA1Tags.length; i++) {
-            allA1TagsStringList.add(allA1Tags[i].getTag()); 
-        }
-        
-        // fill allA2TagsStringList with string values
-        for (int i = 0; i < allA2Tags.length; i++) {
-            allA2TagsStringList.add(allA2Tags[i].getTag()); 
-        }
+        // initialize levelsArray
+        levelsArray = new String[totalNumOfQs];
         
         // reference to Question object to prevent a memory leak
         Question currentQuestion = null;
@@ -480,15 +471,8 @@ public class TaggerGUI extends Application {
             currentQuestion = allQuestions.get(i);
             String tempTag = currentQuestion.getTags();
             
-            // if the tag is from A1_LEVEL enum, get enum type from A1_LEVEL
-            if (allA1TagsStringList.contains(tempTag)) {
-                tagsArray[i] = A1_LEVEL.valueOf(tempTag.toUpperCase());
-            }
-            
-            // if the tag is from A2_LEVEL enum, get enum type from A2_LEVEL
-            if (allA2TagsStringList.contains(tempTag)) {
-                tagsArray[i] = A2_LEVEL.valueOf(tempTag.toUpperCase());
-            }            
+            tagsArray[i] = TagType.getTagTypeByTag(tempTag);
+            levelsArray[i] = getLevelByTag(tagsArray[i]);
             
         }
         
@@ -496,12 +480,13 @@ public class TaggerGUI extends Application {
         for (TagType tagtype : tagsArray) {
             tagtype = null;
         }
-        */
-        // initialize levelsArray
-        levelsArray = new String[totalNumOfQs];
+        */        
+        
+        /*
         for (int i = 0; i < levelsArray.length; i++) {
             levelsArray[i] = "";
         }
+        */
     }
 
     /** The method is called every time a Button Next or Button Previous is 
@@ -595,11 +580,17 @@ public class TaggerGUI extends Application {
         // create arraylist containing all enums of A2_LEVEL
         List<TagType>a2Tags = Arrays.asList(A2_LEVEL.values());
         
+        // create arraylist containing all enums of MixType
+        List<TagType>MixTypeTags = Arrays.asList(MixType.values());
+        
         if (a1Tags.contains(tagtype)) {
             tagLevel = "A1";
         }
         if (a2Tags.contains(tagtype)) {
             tagLevel = "A2";
+        }
+        if (MixTypeTags.contains(tagtype)) {
+            tagLevel = "Mix";
         }
         
         return tagLevel;
