@@ -170,6 +170,10 @@ public class TaggerGUI extends Application {
         levelChoice.getItems().addAll(availableLevelsArray);
         levelChoice.setPrefSize(150, 40);
         
+        // set initial value
+        levelChoice.setValue(initialLevelChoiceValue);        
+        
+        
         levelChoice.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
             @Override
@@ -198,19 +202,20 @@ public class TaggerGUI extends Application {
             }
         });
         
-        
+                
         Region spacerBetwTaggers = new Region();
         spacerBetwTaggers.setPrefHeight(30);
 
-        tagChoice = new ChoiceBox<>();        
+                
+        tagChoice = new ChoiceBox<>();
+        // tagChoice.getItems().addAll(MixType.values());
+        // tagChoice.setValue(null);
         
-        tagChoice.getItems().addAll(MixType.values());                  
-
-        tagChoice.setValue(null);
         tagChoice.setPrefSize(150, 40);
-
-
         tagChoice.setStyle("-fx-font: 17px \"Segoe UI\";");
+        
+        tagChoice.setValue(initialTagTypeValue);
+        
         VBox tagPane = new VBox(levelChoice, spacerBetwTaggers , tagChoice);
         tagPane.setPadding(new Insets(10));
 
