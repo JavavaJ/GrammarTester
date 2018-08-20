@@ -42,12 +42,13 @@ public class TaggerGUI extends Application {
 
     List<Question> allQuestions;
     private int currentQNum = 1; // non-zero based
-    int totalOfQs; // total number of questions in a test
+    int totalNumOfQs; // total number of questions in a test
     Button updateTagsButton;
     ChoiceBox<String> levelChoice;
     ChoiceBox<TagType> tagChoice;
     TagType[] tagsArray; // array holding tags
-    String[] levelsArray; 
+    String[] levelsArray; // array of levels mostly needed to choose corrent
+    // choice box when moving one question back
     
     // progress of the test property for progress bar
     private DoubleProperty progOfTest;
@@ -67,6 +68,7 @@ public class TaggerGUI extends Application {
     String initialOptionC;
     String initialOptionD;
     
+    // default tagger constructor
     public TaggerGUI() {
         dataBasePath = "C:\\sqlite_grammar_quizzes\\TEST7.db";
     }
@@ -147,7 +149,7 @@ public class TaggerGUI extends Application {
         progressBar.setPrefWidth(400);
         
         // bind progressBar property with progOfTest updatable property
-        progressBar.progressProperty().bind(progOfTest.divide((double)totalOfQs));
+        progressBar.progressProperty().bind(progOfTest.divide((double)totalNumOfQs));
         
         progressPane = new HBox(progressBar);
         progressPane.setAlignment(Pos.CENTER);
@@ -247,7 +249,7 @@ public class TaggerGUI extends Application {
     }
 
     public void incrementCurrentQNum() {
-        if (currentQNum < totalOfQs) {
+        if (currentQNum < totalNumOfQs) {
             currentQNum++;
         }
     }
@@ -268,6 +270,8 @@ public class TaggerGUI extends Application {
         // reverse the path, and read tableName from the end omittin .db which is 3 symbols to "\\"
         String dataBasePathReversed = new StringBuffer(dataBasePath).reverse().toString();        
         String tableNameRev = dataBasePathReversed.substring(3, dataBasePathReversed.indexOf("\\"));
+        // naming convention of data bases and table names is that the name is the same 
+        // but data base name is in all capitals and table name is in all lower case letters
         tableName = new StringBuffer(tableNameRev).reverse().toString().toLowerCase(); 
         
         SQLReader sQLReader = new SQLReader(dataBasePath, tableName);
@@ -303,7 +307,7 @@ public class TaggerGUI extends Application {
 
     public void click_nextButton() {
         // to avoid going out of array's bound
-        if (getCurrentQNum() <= totalOfQs) {
+        if (getCurrentQNum() <= totalNumOfQs) {
             // read chosen values
             tagsArray[getCurrentQNum() - 1] = (TagType) tagChoice.getValue();
             levelsArray[getCurrentQNum() - 1] = levelChoice.getValue();                       
@@ -312,7 +316,7 @@ public class TaggerGUI extends Application {
             setGUITexts();
             
             // to avoid going out of array's bound
-            if (getCurrentQNum() <= totalOfQs) {
+            if (getCurrentQNum() <= totalNumOfQs) {
                 
                 // unselect ChoiceBox if question is shown for the first time
                 if (tagsArray[getCurrentQNum() - 1] == null) {
@@ -360,7 +364,7 @@ public class TaggerGUI extends Application {
             
         } // end of outer if
         
-        if (getCurrentQNum() == totalOfQs) {
+        if (getCurrentQNum() == totalNumOfQs) {
             // display UpdateTags button
             updateTagsButton.setVisible(true);
         }
@@ -372,7 +376,7 @@ public class TaggerGUI extends Application {
     
     public void click_prevButton() {
         // to avoid going out of array's bound
-        if (getCurrentQNum() <= totalOfQs) {
+        if (getCurrentQNum() <= totalNumOfQs) {
             
             if (getCurrentQNum() == 1) {
                 // do nothing
@@ -442,31 +446,32 @@ public class TaggerGUI extends Application {
     
     
 
-    /** The method initializes the integer totalOfQs and an array chosenAnswers.
+    /** The method initializes the integer totalNumOfQs and an array chosenAnswers.
      * It should be called only after arraylist allQuestions is initialized.
      * That is after calling the method readDatabase().
      */
     public void initTagsArray() {
-        totalOfQs = allQuestions.size();
+        totalNumOfQs = allQuestions.size();
         // initialize an array with a length of number of questions
-        tagsArray = new TagType[totalOfQs];
+        tagsArray = new TagType[totalNumOfQs];
         for (TagType tagtype : tagsArray) {
             tagtype = null;
         }
         // initialize levelsArray
-        levelsArray = new String[totalOfQs];
+        levelsArray = new String[totalNumOfQs];
         for (int i = 0; i < levelsArray.length; i++) {
             levelsArray[i] = "";
         }
     }
 
-    /** The method is called every time a Button Next is pressed. It sets
+    /** The method is called every time a Button Next or Button Previous is 
+     * pressed. It sets
      * GUI elements (Text elements) to values of elements of
      * Question (question Part, optionA, optionB, optionC, optionC).
      */
     public void setGUITexts() {
          // to avoid going out of array's bound
-        if (getCurrentQNum() <= totalOfQs) {
+        if (getCurrentQNum() <= totalNumOfQs) {
             Question currentQ = allQuestions.get(getCurrentQNum() - 1);
 
             String qText = getCurrentQNum() + ". " + currentQ.getQuestionPart();
@@ -535,5 +540,7 @@ public class TaggerGUI extends Application {
         }
         
     }
+    
+    
 
 }
