@@ -6,6 +6,7 @@ package tagger;
 
 import grammartester.SQLReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
@@ -541,6 +542,28 @@ public class TaggerGUI extends Application {
         
     }
     
-    
+    /** The method takes TagType as a parameter and returns a level String
+     * to set right ChoiceBox (levelChoice).
+     * 
+     * @param tagtype
+     * @return tagLevel "A1", "A2", "B1", "B2", "C1", "Mix"
+     */
+    public String getLevelByTag(TagType tagtype) {        
+        String tagLevel = "";
+        // create arraylist containing all enums of A1_LEVEL
+        List<TagType>a1Tags = Arrays.asList(A1_LEVEL.values());
+        
+        // create arraylist containing all enums of A2_LEVEL
+        List<TagType>a2Tags = Arrays.asList(A2_LEVEL.values());
+        
+        if (a1Tags.contains(tagtype)) {
+            tagLevel = "A1";
+        }
+        if (a2Tags.contains(tagtype)) {
+            tagLevel = "A2";
+        }
+        
+        return tagLevel;
+    }
 
 }
