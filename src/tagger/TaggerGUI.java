@@ -211,10 +211,31 @@ public class TaggerGUI extends Application {
         // tagChoice.getItems().addAll(MixType.values());
         // tagChoice.setValue(null);
         
+        if (initialLevelChoiceValue.equals("A1")) {
+            tagChoice.getItems().addAll(A1_LEVEL.values());
+        }
+        if (initialLevelChoiceValue.equals("A2")) {
+            tagChoice.getItems().addAll(A2_LEVEL.values());
+        }
+        if (initialLevelChoiceValue.equals("B1")) {
+            // set code for B1 scenario
+        }
+        if (initialLevelChoiceValue.equals("B2")) {
+            // set code for B2 scenario
+        }
+        if (initialLevelChoiceValue.equals("C1")) {
+            // set code for C1 scenario
+        }
+        if (initialLevelChoiceValue.equals("Mix")) {
+            tagChoice.getItems().addAll(MixType.values());
+        }
+        
+        tagChoice.setValue(initialTagTypeValue);
+        
         tagChoice.setPrefSize(150, 40);
         tagChoice.setStyle("-fx-font: 17px \"Segoe UI\";");
         
-        tagChoice.setValue(initialTagTypeValue);
+        
         
         VBox tagPane = new VBox(levelChoice, spacerBetwTaggers , tagChoice);
         tagPane.setPadding(new Insets(10));
