@@ -11,6 +11,21 @@ package tagger;
  */
 public enum A2_LEVEL implements TagType {
     
+    COMPARATIVES {
+        
+        @Override
+        public String toString() {
+            return "Comparatives";
+        }         
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "compar";
+        }
+        
+    },
+    
     PRESENT_PERFECT {
         // return a String which is used Choice Box name
         @Override
@@ -37,6 +52,36 @@ public enum A2_LEVEL implements TagType {
         @Override
         public String getTag() {
             return "is_going_to";
+        }
+        
+    },
+    
+    HAVE_GOT {
+        
+        @Override
+        public String toString() {
+            return "Have got";
+        }         
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "have_got";
+        }
+        
+    }, 
+    
+    RELATIVE_PRONOUNS {
+        
+        @Override
+        public String toString() {
+            return "Relatives Pronouns";
+        }         
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "rel_prons";
         }
         
     };
