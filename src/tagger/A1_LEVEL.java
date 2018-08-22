@@ -39,6 +39,20 @@ public enum A1_LEVEL implements TagType {
         
     },
     
+    PRESENT_CONTINUOUS {
+        
+        @Override
+        public String toString() {
+            return "Present Continuous";
+        }
+        
+        @Override
+        public String getTag() {
+            return "pres_cont";
+        }            
+       
+    },
+    
     WAS_WERE {
         
         @Override
