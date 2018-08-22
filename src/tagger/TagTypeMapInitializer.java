@@ -52,4 +52,8 @@ public class TagTypeMapInitializer {
         
     }
     
+    public static Map<String, TagType> getTagsMap() {
+        return tagTypeMap;
+    }
+    
 }
