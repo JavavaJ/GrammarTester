@@ -3,16 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/TestMaker.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/GrammarGUI.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/A2_LEVEL.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/MenuBarSketch.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TagType.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/DataBasesUtil.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/TestMaker.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TaggerLauncher.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/grammartester/SQLReader.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/A1_LEVEL.java</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/MenuBarSketch.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/SQLTagWriterTest.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/read/Question.java</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TaggerGUI.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/SQLTagWriter.java</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/DataBasesUtil.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TaggerGUI.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/MixType.java</file>
         </group>
     </open-files>
