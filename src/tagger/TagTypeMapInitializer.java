@@ -28,6 +28,7 @@ public class TagTypeMapInitializer {
         tagTypeMap.put("past_simple", A1_LEVEL.PAST_SIMPLE);
         tagTypeMap.put("possessives", A1_LEVEL.POSSESSIVES);
         tagTypeMap.put("preposition", A1_LEVEL.PREPOSITIONS);
+        tagTypeMap.put("pres_cont", A1_LEVEL.PRESENT_CONTINUOUS);
         tagTypeMap.put("present_simple", A1_LEVEL.PRESENT_SIMPLE);
         tagTypeMap.put("question_word", A1_LEVEL.QUESTION_WORDS);
         tagTypeMap.put("some_any", A1_LEVEL.SOME_ANY);
@@ -41,8 +42,11 @@ public class TagTypeMapInitializer {
         
         // ========== A2_LEVEL ===========
         
-        tagTypeMap.put("is_going_to", A2_LEVEL.IS_GOING_TO);
+        tagTypeMap.put("is_going_to", A2_LEVEL.COMPARATIVES);
+        tagTypeMap.put("have_got", A2_LEVEL.HAVE_GOT);
+        tagTypeMap.put("compar", A2_LEVEL.IS_GOING_TO);
         tagTypeMap.put("present_perfect", A2_LEVEL.PRESENT_PERFECT);
+        tagTypeMap.put("rel_prons", A2_LEVEL.RELATIVE_PRONOUNS);
         
         // ========== MixType ===========
         
