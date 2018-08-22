@@ -8,6 +8,9 @@ public class EnumTest {
         
         MixType tagNull = null;
         
+        // This is a little line of comments to check
+        // how git system with eclipse works.
+        
         System.out.println(tagNull == null);
     }
     
