@@ -11,6 +11,36 @@ package tagger;
  */
 public enum A2_LEVEL implements TagType {
     
+    ADVERBS {
+        
+        @Override
+        public String toString() {
+            return "Adverbs";
+        }         
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "adverb";
+        }
+        
+    },
+    
+    ADJECTIVES_ED_ING {
+        
+        @Override
+        public String toString() {
+            return "Adj ed / ing";
+        }         
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "adj_ed_ing";
+        }
+        
+    },
+    
     COMPARATIVES {
         
         @Override
@@ -55,6 +85,36 @@ public enum A2_LEVEL implements TagType {
         }
         
     },
+    
+    MY_MINE {
+        
+        @Override
+        public String toString() {
+            return "My / mine";
+        }         
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "my_mine";
+        }
+        
+    }, 
+    
+    INFINITIVE {
+        
+        @Override
+        public String toString() {
+            return "Infinitive";
+        }         
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "infin";
+        }
+        
+    }, 
     
     HAVE_GOT {
         
