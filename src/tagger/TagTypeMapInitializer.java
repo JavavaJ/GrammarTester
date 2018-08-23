@@ -42,9 +42,13 @@ public class TagTypeMapInitializer {
         
         // ========== A2_LEVEL ===========
         
+        tagTypeMap.put("adj_ed_ing", A2_LEVEL.ADJECTIVES_ED_ING);
+        tagTypeMap.put("adverb", A2_LEVEL.ADVERBS);
         tagTypeMap.put("is_going_to", A2_LEVEL.COMPARATIVES);
         tagTypeMap.put("have_got", A2_LEVEL.HAVE_GOT);
+        tagTypeMap.put("infin", A2_LEVEL.INFINITIVE);
         tagTypeMap.put("compar", A2_LEVEL.IS_GOING_TO);
+        tagTypeMap.put("my_mine", A2_LEVEL.MY_MINE);
         tagTypeMap.put("present_perfect", A2_LEVEL.PRESENT_PERFECT);
         tagTypeMap.put("rel_prons", A2_LEVEL.RELATIVE_PRONOUNS);
         
