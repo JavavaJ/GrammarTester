@@ -71,6 +71,21 @@ public enum A2_LEVEL implements TagType {
         
     }, 
     
+    FUTURE_SIMPLE {
+        // return a String which is used Choice Box name
+        @Override
+        public String toString() {
+            return "Future Simple";
+        }         
+        
+        // returns a tag which is used to tag questions in SQL database
+        @Override
+        public String getTag() {
+            return "fut_simple";
+        }
+        
+    }, 
+    
     IS_GOING_TO {
         
         @Override
