@@ -45,6 +45,7 @@ public class TagTypeMapInitializer {
         tagTypeMap.put("adj_ed_ing", A2_LEVEL.ADJECTIVES_ED_ING);
         tagTypeMap.put("adverb", A2_LEVEL.ADVERBS);
         tagTypeMap.put("is_going_to", A2_LEVEL.COMPARATIVES);
+        tagTypeMap.put("fut_simple", A2_LEVEL.FUTURE_SIMPLE);
         tagTypeMap.put("have_got", A2_LEVEL.HAVE_GOT);
         tagTypeMap.put("infin", A2_LEVEL.INFINITIVE);
         tagTypeMap.put("compar", A2_LEVEL.IS_GOING_TO);
