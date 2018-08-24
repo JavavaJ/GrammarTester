@@ -8,7 +8,9 @@ package mcq_compiler;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,83 @@ import tagger.TagType;
 public class MCQCompilationFactory {
     
     
-    public List<Question> getSpecifiedQList(TagType tagType) {
+    public static List<Question> getSpecifiedQList(TagType tagType) {
         List<Question> qSpecifiedList = new ArrayList<>();
+        
+        String currWorkDir = new File("").getAbsolutePath();
+        String pathToAllElemDB = currWorkDir + "\\resources\\ALL_ELEM.db";
+        
+        String tableName = "all_elem";
+        
+        String urlSQLite = "jdbc:sqlite:" + pathToAllElemDB.replace("\\", "/");
+        
+        // int rowsNum = getNumOfRows(tagType);
+        
+        Connection connection = null;
+        Statement stmt = null;
+        ResultSet rs;
+        
+        String tagString = tagType.getTag();
+        
+        try {            
+            // load driver
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection(urlSQLite);
+            
+                        
+            stmt = connection.createStatement();
+            String sqlCommand = "select * from all_elem "
+                    + "where tags = '" + tagString + "'";
+            
+            rs = stmt.executeQuery(sqlCommand);
+            
+            int rowNum = 0;
+            
+            while (rs.next()) {
+                rowNum++;
+                // stmt.getString(1, i);                
+
+                Question question = new Question();
+                question.setId(rowNum);
+
+                String questionText = rs.getString("question");
+                question.setQuestionPart(questionText);
+
+                String aOption = rs.getString("a");
+                question.setOptionA(aOption);
+
+                String bOption = rs.getString("b");
+                question.setOptionB(bOption);
+
+                String cOption = rs.getString("c");
+                question.setOptionC(cOption);
+
+                String dOption = rs.getString("d");
+                question.setOptionD(dOption);
+
+                String right = rs.getString("right");
+                question.setRightAns(right);
+
+                String tags = rs.getString("tags");
+                question.setTags(tags);
+
+                qSpecifiedList.add(question);
+
+            } // end of while loop
+            
+        } catch (Exception e) {
+            // Handle errors for class.forName
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        
         return qSpecifiedList;        
     }
     
