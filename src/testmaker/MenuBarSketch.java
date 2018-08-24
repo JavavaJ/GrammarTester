@@ -12,6 +12,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import mcq_compiler.MCQCompilerGUI;
 import tagger.TaggerGUI;
 
 
@@ -75,6 +76,7 @@ public class MenuBarSketch extends Application {
         toolsMenu.getItems().add(taggerItem);
         
         MenuItem testCompilerItem = new MenuItem("Compile test");
+        testCompilerItem.setOnAction( e -> click_testCompilerItem());
         toolsMenu.getItems().add(testCompilerItem);
         
         Menu helpMenu = new Menu("_Help");
@@ -150,6 +152,20 @@ public class MenuBarSketch extends Application {
                 stage.close();
             }
         });
+        
+    }
+    
+    public void click_testCompilerItem() {
+        System.out.println("You have clickec Compile Test button...");
+        
+        Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        // TODO customize JavaFXGrammarGUI class to make it reusable and
+                        // capable of working accepting a reference to List<Question>
+                        new MCQCompilerGUI().start(stage);
+                    } 
+                 });  
         
     }
 }
