@@ -16,7 +16,26 @@ public class TagTypeMapInitializer {
     
     static Map<String, TagType> tagTypeMap = new HashMap<>();
     static {
+        TagType[] alLevelTags = A1_LEVEL.values();
+        
+        for (TagType tagType : alLevelTags) {
+            tagTypeMap.put(tagType.getTag(), tagType);
+        }
+        
+        TagType[] a2LevelTags = A2_LEVEL.values();
+        
+        for (TagType tagType : a2LevelTags) {
+            tagTypeMap.put(tagType.getTag(), tagType);
+        }
+        
+        TagType[] mixTypeTags = MixType.values();
+        
+        for (TagType tagType : mixTypeTags) {
+            tagTypeMap.put(tagType.getTag(), tagType);
+        }
+        
         // ========== A1_LEVEL ===========
+        /*
         tagTypeMap.put("articles", A1_LEVEL.ARTICLES);
         tagTypeMap.put("can_could", A1_LEVEL.CAN_COULD);
         tagTypeMap.put("conj", A1_LEVEL.CONJUNCTIONS);
@@ -58,6 +77,7 @@ public class TagTypeMapInitializer {
         tagTypeMap.put("passive", MixType.PASSIVE);
         tagTypeMap.put("phrasal_verb", MixType.PHRASAL_VERBS);
         tagTypeMap.put("undefined", MixType.UNDEFINED);
+        */
         
     }
     
