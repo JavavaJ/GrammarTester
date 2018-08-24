@@ -7,7 +7,10 @@
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/A2_LEVEL.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/MenuBarSketch.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TagType.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TagTypeMapInitializer.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/DataBasesUtil.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/build.xml</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/TestMaker.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TaggerLauncher.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/grammartester/SQLReader.java</file>
@@ -17,6 +20,7 @@
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/SQLTagWriter.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TaggerGUI.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/MixType.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/EnumTest.java</file>
         </group>
     </open-files>
 </project-private>
