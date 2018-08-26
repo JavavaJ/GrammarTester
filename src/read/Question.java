@@ -11,6 +11,9 @@
 package read;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import tagger.TagType;
 import static testmaker.Constants.IS_DEBUGGING_MODE;
 
 public class Question implements Serializable {
@@ -23,6 +26,12 @@ public class Question implements Serializable {
     private String optionD;
     private String rightAns;
     private String tags;
+    private Set<TagType> possibleTagTypes; // set to hold values of possible
+    // TagType's when the Question is analyzed by classifier
+    
+    {
+        possibleTagTypes = new HashSet<>();
+    }
     
     public Question() {
         // do nothing and let all the field values be default values
