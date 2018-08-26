@@ -47,6 +47,7 @@ public class MCQCompilerGUI extends Application {
     public void start(Stage primaryStage) {
         initAllTagTypes();
         
+        primaryStage.setMaximized(true);
         mainStage = primaryStage;
                 
         String headerString = "Select a category";
@@ -79,9 +80,12 @@ public class MCQCompilerGUI extends Application {
         mainPane.setBottom(buttonPane);
         mainPane.setPadding(new Insets(5));
         
-        Scene mainScene = new Scene(mainPane, 600, 500);
+        Scene mainScene = new Scene(mainPane);
+        
         
         primaryStage.setScene(mainScene);
+        primaryStage.setFullScreen(true);
+        
         primaryStage.setTitle("MCQ Compiler");
         primaryStage.show();
         
