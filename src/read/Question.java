@@ -203,6 +203,10 @@ public class Question implements Serializable {
     public String getTags() {
         return tags;
     }
+    
+    public Set<TagType> getPossibleTagTypes() {
+        return possibleTagTypes;    
+    }
 
 	public void setId(int id) {
 		this.id = id;
