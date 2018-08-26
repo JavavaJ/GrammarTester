@@ -14,12 +14,13 @@ import java.io.Serializable;
 import static testmaker.Constants.IS_DEBUGGING_MODE;
 
 public class Question implements Serializable {
-	private int id;
-	private String questionPart;
-	private String optionA;
-	private String optionB;
-	private String optionC;
-	private String optionD;
+
+    private int id;
+    private String questionPart;
+    private String optionA;
+    private String optionB;
+    private String optionC;
+    private String optionD;
     private String rightAns;
     private String tags;
     
@@ -76,7 +77,7 @@ public class Question implements Serializable {
      * of a text of a multiple choice test question of format
      * "id. A) ..... B) ...... C) ..... D) ...... or 
      * "id. a) ..... b) ...... c) ..... d) ...... . The second parameter is 
-     * an enum indicating a question opition's delimiter's case.
+     * an enum indicating a question option's delimiter's case.
      * @param text plain text of a question to parse
      * @param delimiterCase upper or lower case of a)b)c)d) or A)B)C)D)
      */    
