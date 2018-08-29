@@ -31,35 +31,34 @@ import tagger.TagType;
  * @author ALEXXX
  */
 public class StartClassifiersChain {
+    static InputStream inputStream;
+    static POSModel model;
+    static POSTaggerME tagger;
+    
+    // static initializer is needed to instantiate all needed code to work with Open NLP library
+    static {
+        String fullPathToFile = new File("").getAbsolutePath() + "\\libs\\en-pos-maxent.bin";
+        try {            
+            inputStream = new FileInputStream(fullPathToFile);
+            model = new POSModel(inputStream);
+            tagger = new POSTaggerME(model);            
+        } catch (IOException ioException) {
+            ioException.printStackTrace();            
+        }        
+    }
 
     public static void main(String[] args) throws IOException {
         StartClassifiersChain obj = new StartClassifiersChain();
         obj.start();
     }
-
-    public void start() throws IOException {
-        /*
-        TagType prepositionTagType = A1_LEVEL.PREPOSITIONS;
-
-        // get the list of question with tag PREPOSITIONS
-        List<Question> qList = MCQCompilationFactory.getSpecifiedQList(prepositionTagType);
-        */
+    
+    public Set<String> getAllNLPTagsSet(Question question) {
         
-        TagType comparativeTagType = A2_LEVEL.COMPARATIVES;
-        // get the list of questions with tag COMPARATIVES
-        List<Question> qListComparatives = 
-                MCQCompilationFactory.getSpecifiedQList(comparativeTagType);
-        
-        // print the first Question in this list
-        // qList.get(0).printQuestion();
-        // get the first Question in the list and instantiate QuestionForClassification from it
-        QuestionForClassification currentClassQuestion = new QuestionForClassification(qListComparatives.get(0));
-
         // concatenate all the options of the Question into one string
-        String allQuestionsOptionString = currentClassQuestion.getOptionA() + " "
-                + currentClassQuestion.getOptionB() + " "
-                + currentClassQuestion.getOptionC() + " "
-                + currentClassQuestion.getOptionD();
+        String allQuestionsOptionString = question.getOptionA() + " "
+                + question.getOptionB() + " "
+                + question.getOptionC() + " "
+                + question.getOptionD();
 
         StringBuilder sbDividedByTokens = new StringBuilder();
         // divide a string into separate words
@@ -71,19 +70,7 @@ public class StartClassifiersChain {
         String dividedByTokens = sbDividedByTokens.toString();
         dividedByTokens = dividedByTokens.trim();
 
-        // initialize some classes from openNLP 
-        InputStream inputStream;
-        POSModel model;
-        POSTaggerME tagger;
-        
-        String fullPathToFile = new File("").getAbsolutePath() + "\\libs\\en-pos-maxent.bin";
-
-        inputStream = new FileInputStream(fullPathToFile);
-        model = new POSModel(inputStream);
-        tagger = new POSTaggerME(model);
-
-
-            
+                   
         
         SimpleTokenizer tokenizer = SimpleTokenizer.INSTANCE;        
         String[] tokensWord = tokenizer.tokenize(dividedByTokens);              
@@ -105,10 +92,35 @@ public class StartClassifiersChain {
             allNLPTags.add(getNLPTag(separateSampleWord));
         }
         
+        return allNLPTags;
+    }
+
+    public void start() throws IOException {
+        /*
+        TagType prepositionTagType = A1_LEVEL.PREPOSITIONS;
+
+        // get the list of question with tag PREPOSITIONS
+        List<Question> qList = MCQCompilationFactory.getSpecifiedQList(prepositionTagType);
+        */
+        
+        TagType comparativeTagType = A2_LEVEL.COMPARATIVES;
+        // get the list of questions with tag COMPARATIVES
+        List<Question> qListComparatives = 
+                MCQCompilationFactory.getSpecifiedQList(comparativeTagType);
+        
+        // print the first Question in this list
+        // qList.get(0).printQuestion();
+        // get the first Question in the list and instantiate QuestionForClassification from it
+        QuestionForClassification currentClassQuestion = new QuestionForClassification(qListComparatives.get(0));
+
+        
+        
+        
+        
         
         // finally some code for creating Chain of Responsiblity
         AbstractClassifier comparativeClassifier = new ComparativeClassifier();
-        comparativeClassifier.classify(currentClassQuestion, allNLPTags);
+        comparativeClassifier.classify(currentClassQuestion, getAllNLPTagsSet(currentClassQuestion));
         
         currentClassQuestion.printAllPossibleTagTypes();
              
