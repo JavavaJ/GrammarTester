@@ -60,4 +60,10 @@ public class QuestionForClassification extends Question {
         possibleTagTypes.add(tagType);
     }
     
+    public void printAllPossibleTagTypes() {
+        for (TagType tag : possibleTagTypes) {
+            System.out.println(tag.toString());
+        }
+    }
+    
 }
