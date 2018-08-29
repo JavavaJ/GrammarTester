@@ -17,6 +17,8 @@ import tagger.TagType;
  */
 public class QuestionForClassification extends Question {
     
+    
+    
     private Set<TagType> possibleTagTypes; // set to hold values of possible
     // TagType's when the Question is analyzed by classifier
     
@@ -34,11 +36,28 @@ public class QuestionForClassification extends Question {
     }
     
     public QuestionForClassification(String text, DelimiterCase delimiterCase) {
+        super(text, delimiterCase);
+    }
+    
+    public QuestionForClassification(Question question) {
+        super();
+        this.id = question.getId();
+        this.questionPart = question.getQuestionPart();
+        this.optionA = question.getOptionA();
+        this.optionB = question.getOptionB();
+        this.optionC = question.getOptionC();
+        this.optionD = question.getOptionD();
+        this.rightAns = question.getRightAns();
+        this.tags = question.getTags();
         
     }
     
     public Set<TagType> getPossibleTagTypes() {
         return possibleTagTypes;    
+    }
+    
+    public void setPossibleTagType(TagType tagType) {
+        possibleTagTypes.add(tagType);
     }
     
 }
