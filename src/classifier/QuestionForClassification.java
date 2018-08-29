@@ -66,4 +66,8 @@ public class QuestionForClassification extends Question {
         }
     }
     
+    public boolean isAllPossibleTagTypesSetEmpty() {
+        return possibleTagTypes.isEmpty();
+    }
+    
 }
