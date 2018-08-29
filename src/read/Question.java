@@ -12,14 +12,14 @@ import static testmaker.Constants.IS_DEBUGGING_MODE;
 
 public class Question implements Serializable {
 
-    private int id;
-    private String questionPart;
-    private String optionA;
-    private String optionB;
-    private String optionC;
-    private String optionD;
-    private String rightAns;
-    private String tags;
+    protected int id;
+    protected String questionPart;
+    protected String optionA;
+    protected String optionB;
+    protected String optionC;
+    protected String optionD;
+    protected String rightAns;
+    protected String tags;
 
     public Question() {
         // do nothing and let all the field values be default values
