@@ -94,9 +94,10 @@ public class MenuBarSketch extends Application {
         borderPane = new BorderPane();        
         borderPane.setTop(menuBarPane);
         
-        Scene scene = new Scene(borderPane, 400, 200);
+        Scene scene = new Scene(borderPane);
         
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
         
     }
