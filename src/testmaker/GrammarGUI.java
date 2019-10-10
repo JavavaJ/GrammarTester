@@ -75,6 +75,7 @@ public class GrammarGUI extends Application {
         initChosenAnswers();
         setInitialTextValues();
 
+        primaryStage.setMaximized(true);
         mainStage = primaryStage;
 
         questionText = new Text();
@@ -191,6 +192,7 @@ public class GrammarGUI extends Application {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(iconPath)));
         primaryStage.setScene(testingScene);
         primaryStage.setTitle("Grammar Tester");
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
     }
