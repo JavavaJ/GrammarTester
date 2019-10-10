@@ -427,7 +427,7 @@ public class GrammarGUI extends Application {
 
         if (areAllQsAnswered()) {
         	
-        	String feedBackAnalisys = null;
+        	String feedBackAnalisys = "";
         	
             int answerScore = 0;
             for (int i = 0; i < totalOfQs; i++) {
@@ -441,7 +441,8 @@ public class GrammarGUI extends Application {
                 	// write here the code which saves incorrectly answered Qs 
                 	// to display them in the result text.
                 	feedBackAnalisys += (i + 1) + ". ";
-                	feedBackAnalisys += question.getQuestionPart() + " " + "\n";
+                	String currQuestionPart = question.getQuestionPart();
+                	feedBackAnalisys += currQuestionPart + " " + "\n";
                 	feedBackAnalisys += "You answered: " + answered + ") ";
                 	
                 	if (answered.equals("a")) {
@@ -481,7 +482,7 @@ public class GrammarGUI extends Application {
                     " out of " + totalOfQs + " questions. It means that your" +
                     " score is " + (answerScore * 100) / totalOfQs + " %.";
             
-            resultString += "\n" + feedBackAnalisys;
+            resultString += "\n" + "\n" + "Mistakes Analysis: " + "\n" + feedBackAnalisys;
 
             System.out.println(resultString);
 
