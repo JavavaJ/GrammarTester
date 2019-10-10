@@ -475,7 +475,6 @@ public class GrammarGUI extends Application {
                 }
             }
 
-
             System.out.println("Your Score: " + answerScore);
 
             String resultString = "You have correctly answered " + answerScore +
@@ -488,7 +487,7 @@ public class GrammarGUI extends Application {
 
             resultText.setText(resultString);
             mainStage.setScene(resultScene);
-
+            mainStage.setMaximized(true);
         }        
 
 
