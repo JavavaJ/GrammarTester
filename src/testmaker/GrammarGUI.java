@@ -29,6 +29,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import read.Question;
 
+// TODO separate logic from frontend view to make it reusable
 public class GrammarGUI extends Application {
     Stage mainStage;
     Scene resultScene;
