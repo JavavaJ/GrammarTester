@@ -36,21 +36,21 @@ public class GrammarGUI extends Application {
 
     RadioButton radioA, radioB, radioC, radioD;
     RadioButton [] radioButtons;
-    List<Question> allQuestions;
-    private int currentQNum = 1; // non-zero based
-    String[] chosenAnswers; // answers a user chooses via radio buttons
-    int totalOfQs; // total number of questions in a test
+    List<Question> allQuestions;  // is already in service class
+    private int currentQNum = 1; // non-zero based  // is already in service class
+    String[] chosenAnswers; // answers a user chooses via radio buttons  // is already in service class
+    int totalOfQs; // total number of questions in a test  // is already in service class
     Button finishButton;
     
     // progress of the test property for progress bar
     private DoubleProperty progOfTest; 
 
-    Text questionText;
-    String initialQuestionText;
-    String initialOptionA;
-    String initialOptionB;
-    String initialOptionC;
-    String initialOptionD;
+    Text questionText;  // is already in service class
+    String initialQuestionText;  // is already in service class
+    String initialOptionA;  // is already in service class
+    String initialOptionB;  // is already in service class
+    String initialOptionC;  // is already in service class
+    String initialOptionD;  // is already in service class
 
     Text resultText;
     
@@ -73,8 +73,8 @@ public class GrammarGUI extends Application {
     public void start(Stage primaryStage) {
         // allQuestions = readDatabase();        
         System.out.println("All questions are read!");
-        initChosenAnswers();
-        setInitialTextValues();
+        initChosenAnswers();  // is already in service class
+        setInitialTextValues();  // is already in service class
 
         primaryStage.setMaximized(true);
         mainStage = primaryStage;
