@@ -217,15 +217,15 @@ public class GrammarGUI extends Application {
 
     public int getCurrentQNum() {
         return currentQNum;
-    }
+    }  // is already in service class
 
-    public void incrementCurrentQNum() {
+    public void incrementCurrentQNum() {  // is already in service class
         if (currentQNum < totalOfQs) {
             currentQNum++;
         }
     }
 
-    public void decrementCurrentQNum() {
+    public void decrementCurrentQNum() {  // is already in service class
         if (currentQNum > 1) {
             currentQNum--;
         }
@@ -237,7 +237,7 @@ public class GrammarGUI extends Application {
      */
     public void setAllQuestions(List<Question> allQuestions) {
         this.allQuestions = allQuestions;
-    }
+    }  // is already in service class
 
     
 
@@ -273,7 +273,7 @@ public class GrammarGUI extends Application {
      * GUI to build it from.
      *
      */
-    public void setInitialTextValues() {
+    public void setInitialTextValues() {  // is already in service class
         System.out.println("Starting initializing text values...");
 
         Question currentQ = allQuestions.get(0);
@@ -296,7 +296,7 @@ public class GrammarGUI extends Application {
      * It should be called only after arraylist allQuestions is initialized.
      * That is after calling the method readDatabase().
      */
-    public void initChosenAnswers() {
+    public void initChosenAnswers() {  // is already in service class
         totalOfQs = allQuestions.size();
         // initialize an array with a length of number of questions
         chosenAnswers = new String [totalOfQs];

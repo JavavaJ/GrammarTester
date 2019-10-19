@@ -52,6 +52,31 @@ public class GrammarGUIService {
 
     }
 
+    // TODO make the method zero based
+    public int getCurrentQNum() {
+        return currentQNum;
+    }
+
+    public void incrementCurrentQNum() {
+        if (currentQNum < totalOfQs) {
+            currentQNum++;
+        }
+    }
+
+    public void decrementCurrentQNum() {
+        if (currentQNum > 1) {
+            currentQNum--;
+        }
+    }
+
+    /** The methods sets the elements of List<Question> allQuestions to
+     * values.
+     * @param allQuestions List<Question> allQuestions
+     */
+    public void setAllQuestions(List<Question> allQuestions) {
+        this.allQuestions = allQuestions;
+    }
+
 
 
 }
