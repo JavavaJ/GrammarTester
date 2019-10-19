@@ -77,6 +77,18 @@ public class GrammarGUIService {
         this.allQuestions = allQuestions;
     }
 
-
+    /** The method iterates through an array of chosen answers
+     * and returns a number of answered questions.
+     * @return a number of answered questions.
+     */
+    public int getNumberOfAnsweredQs() {
+        int numOfAswered = 0;
+        for (String ans : chosenAnswers) {
+            if (ans != null) {
+                numOfAswered++;
+            }
+        }
+        return numOfAswered;
+    }
 
 }

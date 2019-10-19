@@ -303,7 +303,7 @@ public class GrammarGUI extends Application {
     }
 
     /** This is a method which is called when Button Next is pressed. It reads
-     * values of radio buttons and stores them in chosenAnswere array. After
+     * values of radio buttons and stores them in chosenAnswers array. After
      * it sets GUI elements to the values of next Question. Thirdly, the method
      * watches to set all radio buttons unselected if the Question is displayed
      * for the first time. Also, if the Question has already been previously
@@ -322,9 +322,7 @@ public class GrammarGUI extends Application {
             // to avoid going out of array's bound
             if (getCurrentQNum() <= totalOfQs) {
                 setRadButtonsToAnswerValues();
-
             }
-
         }
         if (getCurrentQNum() == totalOfQs) {
             // display Finish button
@@ -385,7 +383,6 @@ public class GrammarGUI extends Application {
             if (chosen.equals("d")) {
                 radioD.setSelected(true);
             }
-
         }
         if (chosen == null) {
             for (RadioButton radBut : radioButtons) {
@@ -499,7 +496,7 @@ public class GrammarGUI extends Application {
      * and returns a number of answered questions.
      * @return a number of answered questions.
      */
-    public int getNumberOfAnsweredQs() {
+    public int getNumberOfAnsweredQs() {  // is already in service class
         int numOfAswered = 0;
         for (String ans : chosenAnswers) {
             if (ans != null) {
