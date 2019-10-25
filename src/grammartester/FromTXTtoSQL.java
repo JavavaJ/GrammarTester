@@ -2,7 +2,7 @@ package grammartester;
 
 import java.util.HashMap;
 import java.util.Map;
-import read.ReadFile;
+import utils.ReadFileAsString;
 import question.Question;
 
 class FromTXTtoSQL {
@@ -12,7 +12,7 @@ class FromTXTtoSQL {
         FromTXTtoSQL fromTXTtoSQL = new FromTXTtoSQL();
         // the following two methods just read a txt file
         String myFile = "C:\\Users\\ALEXXX\\Documents\\NetBeansProjects\\GrammarTester\\test7.txt";
-        String myText = ReadFile.read(myFile);
+        String myText = ReadFileAsString.read(myFile);
 
         fromTXTtoSQL.writeTextToSQL(myText);
 

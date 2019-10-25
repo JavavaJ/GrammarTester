@@ -6,13 +6,13 @@ package grammartester;
 
 import java.util.HashMap;
 import java.util.Map;
-import read.ReadFile;
+import utils.ReadFileAsString;
 
 class RightAnswersUpdate {
     public static void main(String[] args) {
         // the following two method just read a txt file
         String myFile = "C:\\Users\\ALEXXX\\Documents\\NetBeansProjects\\GrammarTester\\test7_keys.txt";
-        String myText = ReadFile.read(myFile);
+        String myText = ReadFileAsString.read(myFile);
         
         // create a map of right answers
         Map<Integer, String> rightMap = new HashMap<>();
