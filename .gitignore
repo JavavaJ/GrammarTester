@@ -6,3 +6,7 @@
 .idea/
 GrammarTester.iml
 out/
+
+
+### some plugin ###
+.PVS-Studio/

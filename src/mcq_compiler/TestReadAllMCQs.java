@@ -1,6 +1,6 @@
 package mcq_compiler;
 
-import read.Question;
+import question.Question;
 import java.util.List;
 
 public class TestReadAllMCQs {

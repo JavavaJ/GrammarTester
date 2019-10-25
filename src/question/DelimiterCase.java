@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package read;
+package question;
 
 /** The enum is an indication of whether a delimiter's case of a question's 
  * options is lowercase or uppercase. For example, A) B) C) D) or a) b) c) d).

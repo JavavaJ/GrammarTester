@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import read.Question;
+import question.Question;
 
 public class TableAsSceneTest extends Application {
     

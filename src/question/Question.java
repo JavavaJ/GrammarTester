@@ -8,12 +8,13 @@
 
 */
 
-package read;
+package question;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import tagger.TagType;
+
+import question.topics.TagType;
 import static testmaker.Constants.IS_DEBUGGING_MODE;
 
 public class Question implements Serializable {

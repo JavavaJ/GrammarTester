@@ -4,6 +4,8 @@ package read;
 import java.util.HashMap;
 import java.util.Map;
 import grammartester.GrammarTestGUI;
+import question.Question;
+
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;

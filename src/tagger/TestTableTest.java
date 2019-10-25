@@ -2,7 +2,7 @@ package tagger;
 
 import grammartester.SQLReader;
 import java.util.List;
-import read.Question;
+import question.Question;
 
 public class TestTableTest {
     List<Question> allQuestions;

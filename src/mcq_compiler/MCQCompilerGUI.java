@@ -21,11 +21,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import tagger.A1_LEVEL;
-import tagger.A2_LEVEL;
+import question.topics.A1_LEVEL;
+import question.topics.A2_LEVEL;
 import tagger.MixType;
-import tagger.TagType;
-import testmaker.DataBasesUtil;
+import question.topics.TagType;
 import testmaker.GrammarGUI;
 
 /**

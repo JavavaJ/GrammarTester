@@ -4,6 +4,8 @@
 
 package tagger;
 
+import question.topics.TagType;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,7 +32,7 @@ public class SQLTagWriter {
         
     }
     
-    public void writeTags(TagType[] tagsArray) {        
+    public void writeTags(TagType[] tagsArray) {
         
         try {
             // load driver

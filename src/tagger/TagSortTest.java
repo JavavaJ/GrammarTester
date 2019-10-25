@@ -5,6 +5,10 @@
  */
 package tagger;
 
+import question.topics.A1_LEVEL;
+import question.topics.A2_LEVEL;
+import question.topics.TagType;
+
 /**
  *
  * @author ALEXXX
@@ -13,7 +17,7 @@ public class TagSortTest {
     
     public static void main(String[] args) {
         
-        TagType [] tagEnums  = new TagType[2];
+        TagType[] tagEnums  = new TagType[2];
         int count = 0;
         for (A1_LEVEL a1 : A1_LEVEL.values()) {
             tagEnums[count] = (TagType) a1;

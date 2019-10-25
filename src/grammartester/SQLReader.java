@@ -1,6 +1,6 @@
 package grammartester;
 
-import read.Question;
+import question.Question;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;

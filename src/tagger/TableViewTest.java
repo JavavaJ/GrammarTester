@@ -18,7 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import read.Question;
+import question.Question;
 
 public class TableViewTest extends Application {
     List<Question> allQuestions;

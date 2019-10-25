@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tagger;
+package question.topics;
 
 /**
  *
  * @author ALEXXX
  */
-public enum A1_LEVEL implements TagType { 
+public enum A1_LEVEL implements TagType {
     
     PRESENT_SIMPLE {
         

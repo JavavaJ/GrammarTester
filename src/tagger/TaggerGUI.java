@@ -31,7 +31,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import read.Question;
+import question.Question;
+import question.topics.A1_LEVEL;
+import question.topics.A2_LEVEL;
+import question.topics.TagType;
 
 public class TaggerGUI extends Application {
     String dataBasePath;

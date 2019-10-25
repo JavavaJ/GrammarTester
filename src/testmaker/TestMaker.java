@@ -24,7 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import read.Question;
+import question.Question;
 
 /** The class is a GUI which firstly asks a user to input a plain text of multiple
  * choice questions, displays that text as a table and asks a user to input 

@@ -23,7 +23,7 @@
 //import javafx.scene.text.FontWeight;
 //import javafx.scene.text.Text;
 //import javafx.stage.Stage;
-//import read.Question;
+//import question.Question;
 //
 //public class JavaFXGrammarGUI extends Application {
 //    Stage mainStage;

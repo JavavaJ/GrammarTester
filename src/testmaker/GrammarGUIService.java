@@ -1,7 +1,7 @@
 package testmaker;
 
 import javafx.beans.property.DoubleProperty;
-import read.Question;
+import question.Question;
 
 import java.util.List;
 

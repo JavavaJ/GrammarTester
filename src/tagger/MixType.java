@@ -4,6 +4,8 @@
 
 package tagger;
 
+import question.topics.TagType;
+
 public enum MixType implements TagType {
     
     PASSIVE {

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import read.DelimiterCase;
-import read.Question;
+import question.DelimiterCase;
+import question.Question;
 import static testmaker.Constants.IS_DEBUGGING_MODE;
 
 public class QuestionUtil {

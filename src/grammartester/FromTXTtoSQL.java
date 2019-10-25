@@ -3,7 +3,7 @@ package grammartester;
 import java.util.HashMap;
 import java.util.Map;
 import read.ReadFile;
-import read.Question;
+import question.Question;
 
 class FromTXTtoSQL {
 

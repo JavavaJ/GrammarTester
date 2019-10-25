@@ -5,6 +5,10 @@
  */
 package tagger;
 
+import question.topics.A1_LEVEL;
+import question.topics.A2_LEVEL;
+import question.topics.TagType;
+
 import java.util.HashMap;
 import java.util.Map;
 
