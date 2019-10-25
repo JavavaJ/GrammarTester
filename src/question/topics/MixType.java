@@ -2,7 +2,7 @@
  * 
  */
 
-package tagger;
+package question.topics;
 
 import question.topics.TagType;
 

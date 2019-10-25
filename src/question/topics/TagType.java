@@ -5,8 +5,6 @@
  */
 package question.topics;
 
-import tagger.TagTypeMapInitializer;
-
 import java.util.Map;
 
 /**

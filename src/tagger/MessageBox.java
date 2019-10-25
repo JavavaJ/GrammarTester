@@ -10,6 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MessageBox  {
+
     public static void show(String message, String title) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);  

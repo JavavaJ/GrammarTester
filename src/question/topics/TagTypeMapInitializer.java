@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tagger;
+package question.topics;
 
 import question.topics.A1_LEVEL;
 import question.topics.A2_LEVEL;
+import question.topics.MixType;
 import question.topics.TagType;
 
 import java.util.HashMap;

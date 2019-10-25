@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import question.topics.A1_LEVEL;
 import question.topics.A2_LEVEL;
-import tagger.MixType;
+import question.topics.MixType;
 import question.topics.TagType;
 import testmaker.GrammarGUI;
 

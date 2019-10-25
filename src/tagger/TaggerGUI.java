@@ -8,6 +8,8 @@ import database.SQLReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import database.SQLTagWriter;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -34,6 +36,7 @@ import javafx.stage.Stage;
 import question.Question;
 import question.topics.A1_LEVEL;
 import question.topics.A2_LEVEL;
+import question.topics.MixType;
 import question.topics.TagType;
 
 public class TaggerGUI extends Application {
@@ -587,7 +590,8 @@ public class TaggerGUI extends Application {
             message += "You can't finish now. \n Questions ";
             message += notTagged;
             message += " have not been tagged!";
-            MessageBox.show(message, "Complete Tagging");
+            String messageBoxTitle = "Complete Tagging";
+            MessageBox.show(message, messageBoxTitle);
             return false;
         } else {
             return true;

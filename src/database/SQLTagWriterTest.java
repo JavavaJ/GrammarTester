@@ -2,7 +2,7 @@
  * 
  */
 
-package tagger;
+package database;
 
 public class SQLTagWriterTest {
     public static void main(String[] args) {
