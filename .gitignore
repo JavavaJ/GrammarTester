@@ -1,3 +1,8 @@
 /build/
 /dist/
 /bin/
+
+### IntelliJ IDEA ###
+.idea/
+GrammarTester.iml
+out/

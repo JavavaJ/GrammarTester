@@ -28,10 +28,10 @@ public class MCQCompilationFactory {
         List<Question> qSpecifiedList = new ArrayList<>();
         
         String currWorkDir = new File("").getAbsolutePath();
+
+        // TODO put all database connection properties in a file or class Properties
         String pathToAllElemDB = currWorkDir + "\\resources\\ALL_ELEM.db";
-        
         String tableName = "all_elem";
-        
         String urlSQLite = "jdbc:sqlite:" + pathToAllElemDB.replace("\\", "/");
         
         // int rowsNum = getNumOfRows(tagType);
@@ -102,6 +102,76 @@ public class MCQCompilationFactory {
         }
         
         return qSpecifiedList;        
+    }
+
+    public static List<Question> readAllQuestions() {
+        List<Question> allQuestions = new ArrayList<>();
+
+        String currWorkDir = new File("").getAbsolutePath();
+
+        // TODO put all database connection properties in a file or class Properties
+        String pathToAllElemDB = currWorkDir + "\\resources\\ALL_ELEM.db";
+        String tableName = "all_elem";
+        String urlSQLite = "jdbc:sqlite:" + pathToAllElemDB.replace("\\", "/");
+
+        Connection connection;
+        Statement stmt = null;
+        ResultSet rs;
+
+        try {
+            // load driver
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection(urlSQLite);
+
+
+            stmt = connection.createStatement();
+            String sqlCommand = "select * from all_elem";
+            rs = stmt.executeQuery(sqlCommand);
+
+            int rowNum = 0;
+            while (rs.next()) {
+                rowNum++;
+                Question question = new Question();
+                question.setId(rowNum);
+
+                String questionText = rs.getString("question");
+                question.setQuestionPart(questionText);
+
+                String aOption = rs.getString("a");
+                question.setOptionA(aOption);
+
+                String bOption = rs.getString("b");
+                question.setOptionB(bOption);
+
+                String cOption = rs.getString("c");
+                question.setOptionC(cOption);
+
+                String dOption = rs.getString("d");
+                question.setOptionD(dOption);
+
+                String right = rs.getString("right");
+                question.setRightAns(right);
+
+                String tags = rs.getString("tags");
+                question.setTags(tags);
+
+                allQuestions.add(question);
+
+            } // end of while loop
+
+        } catch (Exception e) {
+            // Handle errors for class.forName
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return allQuestions;
     }
     
     public static int getNumOfRows(TagType tagType) {

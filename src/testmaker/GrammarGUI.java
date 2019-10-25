@@ -539,6 +539,4 @@ public class GrammarGUI extends Application {
 
     }
 
-
-
 }
