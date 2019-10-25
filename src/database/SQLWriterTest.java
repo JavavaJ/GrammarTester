@@ -1,4 +1,4 @@
-package grammartester;
+package database;
 
 class SQLWriterTest {
     public static void main(String[] args) {

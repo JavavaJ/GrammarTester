@@ -6,6 +6,8 @@ package grammartester;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import database.SQLReader;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

@@ -4,7 +4,7 @@
 
 package testmaker;
 
-import grammartester.SQLReader;
+import database.SQLReader;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;

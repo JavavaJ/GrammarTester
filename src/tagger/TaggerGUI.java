@@ -4,7 +4,7 @@
 
 package tagger;
 
-import grammartester.SQLReader;
+import database.SQLReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

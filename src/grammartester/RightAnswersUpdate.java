@@ -6,6 +6,8 @@ package grammartester;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import database.SQLUpdateColumn;
 import utils.ReadFileAsString;
 
 class RightAnswersUpdate {

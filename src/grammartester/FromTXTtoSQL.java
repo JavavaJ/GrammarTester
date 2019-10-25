@@ -2,6 +2,8 @@ package grammartester;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import database.SQLWriter;
 import utils.ReadFileAsString;
 import question.Question;
 

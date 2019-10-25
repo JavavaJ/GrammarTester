@@ -1,11 +1,11 @@
-package grammartester;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-class SQLWriter {
+public class SQLWriter {
     private String dBName;
     private String tableName;
     private String urlSQLite;
@@ -17,55 +17,46 @@ class SQLWriter {
         dBName = "TEST7";
         tableName = "test7";
     }
-    
+
     public SQLWriter(String dBName, String tableName) {
         this.dBName = dBName;
         this.tableName = tableName;
     }
-    
-    
-    
-    public void storeValues(int id, 
-                            String questionPart, 
-                            String optionA, 
-                            String optionB, 
-                            String optionC, 
+
+    public void storeValues(int id,
+                            String questionPart,
+                            String optionA,
+                            String optionB,
+                            String optionC,
                             String optionD) {
         urlSQLite = "jdbc:sqlite:C:/sqlite/" + dBName + ".db";
-        
+
         try {
-            
-            // load driver
+
             Class.forName("org.sqlite.JDBC");
-
-            // establish connection
             connection = DriverManager.getConnection(urlSQLite);
-
             stmt = connection.createStatement();
 
             String sql1 = "INSERT INTO " + tableName + " (id, question, a, b, c, d, right, tags) VALUES"
-                    + " (" + id + ", '" + questionPart + "', '" + optionA 
+                    + " (" + id + ", '" + questionPart + "', '" + optionA
                     + "', '" + optionB + "', '" + optionC + "', '" + optionD + "', null, null)";
-            
+
             stmt.executeUpdate(sql1);
-            
             stmt.close();
             connection.close();
 
-            } catch (SQLException se) {
-            // Handle errors for JDBC
+        } catch (SQLException se) {
             se.printStackTrace();
         } catch (Exception e) {
             // Handle errors for class.forName
             e.printStackTrace();
         } finally {
-            // finally block used to close resources
             try {
                 if (stmt != null) {
                     stmt.close();
-                } 
+                }
             } catch (SQLException se2) {
-                    // nothing we can do
+                se2.printStackTrace();
             }
             try {
                 if (connection != null) {
@@ -74,11 +65,8 @@ class SQLWriter {
             } catch (SQLException se) {
                 se.printStackTrace();
             } // end of final try
+        } // end of finally
 
+    } // end of storeValues
 
-                
-            
-        } // end of finally    
-                
-    } // end of storeValues                      
 } // end of class

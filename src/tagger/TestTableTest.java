@@ -1,6 +1,6 @@
 package tagger;
 
-import grammartester.SQLReader;
+import database.SQLReader;
 import java.util.List;
 import question.Question;
 

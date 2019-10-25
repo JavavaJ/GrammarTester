@@ -4,7 +4,7 @@
 
 package tagger;
 
-import grammartester.SQLReader;
+import database.SQLReader;
 import java.util.List;
 import javafx.application.Application;
 import javafx.collections.FXCollections;

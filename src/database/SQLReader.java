@@ -1,4 +1,4 @@
-package grammartester;
+package database;
 
 import question.Question;
 import java.sql.Connection;
