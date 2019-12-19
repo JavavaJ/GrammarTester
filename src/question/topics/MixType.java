@@ -4,8 +4,6 @@
 
 package question.topics;
 
-import question.topics.TagType;
-
 public enum MixType implements TagType {
     
     PASSIVE {
@@ -52,6 +50,5 @@ public enum MixType implements TagType {
     };
     
     // public abstract String getTag();
-    
-    
+
 }
