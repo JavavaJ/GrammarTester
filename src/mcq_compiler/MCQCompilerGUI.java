@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import question.Question;
 import question.topics.A1_LEVEL;
 import question.topics.A2_LEVEL;
 import question.topics.MixType;
@@ -102,7 +103,9 @@ public class MCQCompilerGUI extends Application {
                     public void run() {
                         // TODO customize JavaFXGrammarGUI class to make it reusable and
                         // capable of working accepting a reference to List<Question>
-                        new GrammarGUI(MCQCompilationFactory.getSpecifiedQList(allTagsChoice.getValue())).start(mainStage);
+                        TagType tagSelectedValue = allTagsChoice.getValue();
+                        List<Question> selectedQList = MCQCompilationFactory.getSpecifiedQList(tagSelectedValue);
+                        new GrammarGUI(selectedQList).start(mainStage);
                     } 
                  });     
             
