@@ -1,9 +1,6 @@
 package database.topics;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 public class TopicsDBUtil {
@@ -47,14 +44,25 @@ public class TopicsDBUtil {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection connection = DriverManager.getConnection(urlSQLite);
+            String prepSql = "INSERT INTO topics (level, topic_full, topic_tag) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(prepSql);
 
             for (TopicEntity topic : topics) {
                 String level = topic.getLevel();
                 String topicFull = topic.getTopicFull();
                 String topicTag = topic.getTopicTag();
+
+                preparedStatement.setString(1, level);
+                preparedStatement.setString(2, topicFull);
+                preparedStatement.setString(3, topicTag);
+
+                preparedStatement.addBatch();
             }
 
-            String sql = "INSERT INTO topics (level, topic_full, topic_tag) VALUES ('one', 'two', 'three')";
+            preparedStatement.executeBatch();
+            preparedStatement.close();
+            connection.close();
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
