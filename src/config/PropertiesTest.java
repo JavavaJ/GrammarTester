@@ -10,8 +10,8 @@ public class PropertiesTest {
         String allElemDbPath = properties.getProperty("allElemDbPath");
         System.out.println("allElemDbPath: " + allElemDbPath);
 
-        String dBDrivers = properties.getProperty("dBDrivers");
-        System.out.println("dBDrivers: " + dBDrivers);
+        String dBDrivers = properties.getProperty("dBDriver");
+        System.out.println("dBDriver: " + dBDrivers);
 
         String allElemTableName = properties.getProperty("allElemTableName");
         System.out.println("allElemTableName: " + allElemTableName);

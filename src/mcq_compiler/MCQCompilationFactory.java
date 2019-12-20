@@ -13,6 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import config.PropertiesLoader;
 import question.Question;
 import question.topics.TagType;
 
@@ -29,9 +32,12 @@ public class MCQCompilationFactory {
         String currWorkDir = new File("").getAbsolutePath();
 
         // TODO put all database connection properties in a file or class Properties
-        String pathToAllElemDB = currWorkDir + "\\resources\\ALL_ELEM.db";
-        String tableName = "all_elem";
-        String urlSQLite = "jdbc:sqlite:" + pathToAllElemDB.replace("\\", "/");
+        Properties properties = PropertiesLoader.getProperties();
+        String allElemDbPath = properties.getProperty("allElemDbPath");
+        String allElemDBAbsolutePath = currWorkDir + allElemDbPath;
+
+        String tableName = properties.getProperty("allElemTableName");
+        String urlSQLite = "jdbc:sqlite:" + allElemDBAbsolutePath.replace("\\", "/");
         
         // int rowsNum = getNumOfRows(tagType);
         
@@ -43,7 +49,8 @@ public class MCQCompilationFactory {
         
         try {            
             // load driver
-            Class.forName("org.sqlite.JDBC");
+            String dBDriver = properties.getProperty("dBDriver");
+            Class.forName(dBDriver);
             connection = DriverManager.getConnection(urlSQLite);
             
                         
