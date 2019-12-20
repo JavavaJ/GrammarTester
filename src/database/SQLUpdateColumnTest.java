@@ -8,4 +8,6 @@ class SQLUpdateColumnTest {
         updater.updateColumn(2, "b");
         
     }
+
+
 }
