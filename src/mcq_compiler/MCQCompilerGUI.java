@@ -33,10 +33,9 @@ import testmaker.GrammarGUI;
  * @author ALEXXX
  */
 public class MCQCompilerGUI extends Application {
+
     Stage mainStage;    
     List<TagType> allTagTypesList;
-    
-    
     ChoiceBox<TagType> allTagsChoice;
     
     public static void main(String[] args) {
@@ -113,7 +112,10 @@ public class MCQCompilerGUI extends Application {
     }
     
     public void initAllTagTypes() {
+        // todo change the concept tagtype to topic
         allTagTypesList = new ArrayList<>();
+
+        // todo change the logic of initialization to values read from database
         allTagTypesList.addAll(Arrays.asList(A1_LEVEL.values()));
         allTagTypesList.addAll(Arrays.asList(A2_LEVEL.values()));
         
