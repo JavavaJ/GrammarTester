@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class CreateTopicsDBUtil {
+public class TopicsDBUtil {
 
     public static void main(String[] args) {
         String dBPath = "resources/ALL_ELEM.db";
@@ -32,6 +32,10 @@ public class CreateTopicsDBUtil {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static void writeEnumsToTopicsDb() {
 
     }
 
