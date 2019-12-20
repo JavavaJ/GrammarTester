@@ -76,7 +76,6 @@ public class AggregateDataBaseUtil {
 
             // establish connection
             connectionGlob = DriverManager.getConnection(urlSQLite);
-
             stmt = connectionGlob.createStatement();
 
             String sql2 = "CREATE TABLE " + tableName + " (miniid "

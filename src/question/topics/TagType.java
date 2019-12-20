@@ -13,14 +13,14 @@ import java.util.Map;
  */
 public interface TagType {
      
-    public static final Map<String, TagType> TAG_TYPE_MAP = TagTypeMapInitializer.getTagsMap();
+    Map<String, TagType> TAG_TYPE_MAP = TagTypeMapInitializer.getTagsMap();
     
     @Override
-    public String toString();
+    String toString();
     
-    public String getTag();
+    String getTag();
     
-    public static TagType getTagTypeByTag(String str) {        
+    static TagType getTagTypeByTag(String str) {
         return TAG_TYPE_MAP.get(str);
     };
 }
