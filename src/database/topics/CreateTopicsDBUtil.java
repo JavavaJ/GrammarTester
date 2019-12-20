@@ -9,7 +9,7 @@ public class CreateTopicsDBUtil {
 
     public static void main(String[] args) {
         String dBPath = "resources/ALL_ELEM.db";
-
+        createTopicTable(dBPath);
     }
 
     public static void createTopicTable(String dataBasePath) {
