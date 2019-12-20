@@ -9,6 +9,7 @@ public class CreateTopicsDBUtil {
 
     public static void main(String[] args) {
         String dBPath = "resources/ALL_ELEM.db";
+        System.out.println("Preparing to create topics table ...");
         createTopicTable(dBPath);
     }
 
@@ -23,6 +24,7 @@ public class CreateTopicsDBUtil {
 
             String sql = "CREATE TABLE topics (level TEXT, topic_full TEXT, topic_tag TEXT);";
             statement.executeUpdate(sql);
+            System.out.println("Topics table is created ... ");
             statement.close();
             connection.close();
         } catch (SQLException e) {
