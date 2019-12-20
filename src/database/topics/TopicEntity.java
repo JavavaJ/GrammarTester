@@ -7,6 +7,8 @@ public class TopicEntity {
     private String topicFull;
     private String topicTag;
 
+    public TopicEntity(){}
+
     public Integer getId() {
         return id;
     }

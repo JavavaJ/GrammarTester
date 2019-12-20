@@ -8,6 +8,8 @@ package mcq_compiler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import database.topics.TopicGather;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -115,12 +117,22 @@ public class MCQCompilerGUI extends Application {
         // todo change the concept tagtype to topic
         allTagTypesList = new ArrayList<>();
 
+        // todo create TopicGather proper functionality
+        // todo replace allTagTypesList ChoiceBox<TagType> generic to ChoiceBox<String>
+        // todo with streams implement the new logic
+
         // todo change the logic of initialization to values read from database
-        allTagTypesList.addAll(Arrays.asList(A1_LEVEL.values()));
+        A1_LEVEL[] a1LevelsArray = A1_LEVEL.values();
+        List<A1_LEVEL> a1LevelList = Arrays.asList(a1LevelsArray);
+        allTagTypesList.addAll(a1LevelList);
+
+
+
+
         allTagTypesList.addAll(Arrays.asList(A2_LEVEL.values()));
         
         //TODO add all other levels
-        allTagTypesList.addAll(Arrays.asList(MixType.values()));                
+        allTagTypesList.addAll(Arrays.asList(MixType.values()));
     }
     
 }

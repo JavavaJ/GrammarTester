@@ -1,5 +1,6 @@
 package database;
 
+import config.PropertiesLoader;
 import question.Question;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -143,11 +144,9 @@ public class SQLReader {
             // establish connection
             connection = DriverManager.getConnection(urlSQLite);
 
-            // set up to false Auto Commit to commit a 
-            // multiple sql statement manually
+            // set up to false Auto Commit to commit a multiple sql statement manually
             connection.setAutoCommit(false);
-            
-            
+
             prepStmt = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE id = ?");
             
             for (int i = fromId; i <= toId; i++) {
@@ -223,7 +222,7 @@ public class SQLReader {
         
         try {
             // load driver
-            Class.forName("org.sqlite.JDBC");
+            Class.forName(PropertiesLoader.getProperties().getProperty("dBDriver"));
 
             // establish connection
             connection = DriverManager.getConnection(urlSQLite);
@@ -273,7 +272,7 @@ public class SQLReader {
         
         try {
             // load driver
-            Class.forName("org.sqlite.JDBC");
+            Class.forName(PropertiesLoader.getProperties().getProperty("dBDriver"));
 
             // establish connection
             connection = DriverManager.getConnection(urlSQLite);

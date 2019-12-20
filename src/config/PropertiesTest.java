@@ -18,6 +18,13 @@ public class PropertiesTest {
 
         String topicsTableName = properties.getProperty("topicsTableName");
         System.out.println("topicsTableName: " + topicsTableName);
+
+        String dDPrefix = properties.getProperty("dDPrefix");
+        System.out.println("dDPrefix: " + dDPrefix);
+
+
+
+//        dDUrlPrefix
     }
 
 }
