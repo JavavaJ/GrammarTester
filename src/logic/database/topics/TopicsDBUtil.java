@@ -6,10 +6,10 @@ import java.util.List;
 public class TopicsDBUtil {
 
     public static void main(String[] args) {
-//        String dBPath = "resources/ALL_ELEM.db";
-//        System.out.println("Preparing to create topics table ...");
-//        createTopicTable(dBPath);
-//        writeEnumsToTopicsDb();
+        String dBPath = "resources/ALL_ELEM.db";
+        System.out.println("Preparing to create topics table ...");
+        createTopicTable(dBPath);
+        writeEnumsToTopicsDb();
 
     }
 
