@@ -22,7 +22,7 @@ public class TopicsDBUtil {
             Connection connection = DriverManager.getConnection(urlSQLite);
             Statement statement = connection.createStatement();
 
-            String sql = "CREATE TABLE topics (level TEXT, topic_full TEXT, topic_tag TEXT);";
+            String sql = "CREATE TABLE topics (id INTEGER, level TEXT, topic_full TEXT, topic_tag TEXT);";
             statement.executeUpdate(sql);
             System.out.println("Topics table is created ... ");
             statement.close();
@@ -46,19 +46,22 @@ public class TopicsDBUtil {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection connection = DriverManager.getConnection(urlSQLite);
-            String prepSql = "INSERT INTO topics (level, topic_full, topic_tag) VALUES (?, ?, ?)";
+            String prepSql = "INSERT INTO topics (id, level, topic_full, topic_tag) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(prepSql);
 
+            int id = 1;
             for (TopicEntity topic : topics) {
                 String level = topic.getLevel();
                 String topicFull = topic.getTopicFull();
                 String topicTag = topic.getTopicTag();
 
-                preparedStatement.setString(1, level);
-                preparedStatement.setString(2, topicFull);
-                preparedStatement.setString(3, topicTag);
+                preparedStatement.setInt(1, id);
+                preparedStatement.setString(2, level);
+                preparedStatement.setString(3, topicFull);
+                preparedStatement.setString(4, topicTag);
 
                 preparedStatement.addBatch();
+                id++;
             }
 
             preparedStatement.executeBatch();

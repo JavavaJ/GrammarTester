@@ -38,9 +38,6 @@ public class TopicGather {
             connection.setAutoCommit(false);
 
             String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
-            // todo introduce id into table
-            // todo write topics to db
-            // todo run db test
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             for (int i = 1; i <= numOfRows; i++) {
