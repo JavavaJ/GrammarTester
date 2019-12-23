@@ -4,13 +4,14 @@ import logic.database.SQLReader;
 import logic.config.PropertiesLoader;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class TopicGather {
 
-    private static final List<TopicEntity> topics = initTopics();
+    private static List<TopicEntity> topics = initTopics();
+    private static Map<String, TopicEntity> fullTopic2TopicMap = fullTopicMapInit();
+
+    private static Map<String, TopicEntity> tag2TopicMap = tagMapInit();
 
     public static List<TopicEntity> getTopics() {
         return topics;
@@ -67,6 +68,30 @@ public class TopicGather {
         }
 
         return topics;
+    }
+
+    private static Map<String, TopicEntity> fullTopicMapInit() {
+        Map<String, TopicEntity> map = new HashMap<>();
+        topics.stream().forEach(topic -> {
+            map.put(topic.getTopicFull(), topic);
+        });
+        return map;
+    }
+
+    private static Map<String, TopicEntity> tagMapInit() {
+        Map<String, TopicEntity> map = new HashMap<>();
+        topics.stream().forEach(topic -> {
+            map.put(topic.getTopicTag(), topic);
+        });
+        return map;
+    }
+
+    public static Map<String, TopicEntity> getFullTopic2TopicMap() {
+        return fullTopic2TopicMap;
+    }
+
+    public static Map<String, TopicEntity> getTag2TopicMap() {
+        return tag2TopicMap;
     }
 
 }

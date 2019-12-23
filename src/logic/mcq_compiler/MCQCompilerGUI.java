@@ -8,6 +8,7 @@ package logic.mcq_compiler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,6 +23,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import logic.database.topics.TopicEntity;
+import logic.database.topics.TopicGather;
 import logic.question.Question;
 import logic.question.topics.MixType;
 import logic.question.topics.A1_LEVEL;
@@ -35,9 +38,9 @@ import logic.testmaker.GrammarGUI;
  */
 public class MCQCompilerGUI extends Application {
 
-    Stage mainStage;    
-    List<TagType> allTagTypesList;
-    ChoiceBox<TagType> allTagsChoice;
+    private Stage mainStage;
+    private List<String> allTagTypesList;
+    private ChoiceBox<String> allTagsChoice;
     
     public static void main(String[] args) {
         launch(args);
@@ -103,8 +106,11 @@ public class MCQCompilerGUI extends Application {
                     public void run() {
                         // TODO customize JavaFXGrammarGUI class to make it reusable and
                         // capable of working accepting a reference to List<Question>
-                        TagType tagSelectedValue = allTagsChoice.getValue();
-                        List<Question> selectedQList = MCQCompilationFactory.getSpecifiedQList(tagSelectedValue);
+                        String tagSelectedValFullTopic = allTagsChoice.getValue();
+                        String tagString = TopicGather.getFullTopic2TopicMap()
+                                .get(tagSelectedValFullTopic)
+                                .getTopicTag();
+                        List<Question> selectedQList = MCQCompilationFactory.getSpecifiedQList(tagString);
                         new GrammarGUI(selectedQList).start(mainStage);
                     } 
                  });     
@@ -113,25 +119,10 @@ public class MCQCompilerGUI extends Application {
     }
     
     public void initAllTagTypes() {
-        // todo change the concept tagtype to topic
-        allTagTypesList = new ArrayList<>();
-
-        // todo create TopicGather proper functionality
-        // todo replace allTagTypesList ChoiceBox<TagType> generic to ChoiceBox<String>
-        // todo with streams implement the new logic
-
-        // todo change the logic of initialization to values read from java.database
-        A1_LEVEL[] a1LevelsArray = A1_LEVEL.values();
-        List<A1_LEVEL> a1LevelList = Arrays.asList(a1LevelsArray);
-        allTagTypesList.addAll(a1LevelList);
-
-
-
-
-        allTagTypesList.addAll(Arrays.asList(A2_LEVEL.values()));
-        
-        //TODO add all other levels
-        allTagTypesList.addAll(Arrays.asList(MixType.values()));
+        allTagTypesList = TopicGather.getTopics()
+                .stream()
+                .map(TopicEntity::getTopicFull)
+                .collect(Collectors.toList());
     }
     
 }

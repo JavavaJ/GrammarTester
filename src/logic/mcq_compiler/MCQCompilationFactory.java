@@ -27,7 +27,7 @@ import logic.question.topics.TagType;
 public class MCQCompilationFactory {
     
     
-    public static List<Question> getSpecifiedQList(TagType tagType) {
+    public static List<Question> getSpecifiedQList(String tagString) {
         List<Question> qSpecifiedList = new ArrayList<>();
         
         String currWorkDir = new File("").getAbsolutePath();
@@ -35,7 +35,7 @@ public class MCQCompilationFactory {
         // TODO put all java.database connection properties in a file or class Properties
         Properties properties = PropertiesLoader.getProperties();
         String allElemDbPath = properties.getProperty("allElemDbPath");
-        String allElemDBAbsolutePath = currWorkDir + allElemDbPath;
+        String allElemDBAbsolutePath = currWorkDir +"/" + allElemDbPath;
 
         String tableName = properties.getProperty("allElemTableName");
         String urlSQLite = "jdbc:sqlite:" + allElemDBAbsolutePath.replace("\\", "/");
@@ -45,8 +45,6 @@ public class MCQCompilationFactory {
         Connection connection = null;
         Statement stmt = null;
         ResultSet rs;
-        
-        String tagString = tagType.getTag();
         
         try {            
             // load driver
@@ -70,7 +68,7 @@ public class MCQCompilationFactory {
                 Question question = new Question();
                 question.setId(rowNum);
 
-                String questionText = rs.getString("java/question");
+                String questionText = rs.getString("question");
                 question.setQuestionPart(questionText);
 
                 String aOption = rs.getString("a");
