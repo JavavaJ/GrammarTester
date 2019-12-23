@@ -85,7 +85,6 @@ public class MCQCompilerGUI extends Application {
         
         Scene mainScene = new Scene(mainPane);
         
-        
         primaryStage.setScene(mainScene);
         primaryStage.setFullScreen(true);
         
@@ -94,31 +93,29 @@ public class MCQCompilerGUI extends Application {
         
     }
     
-    public void click_goButton() {               
+    private void click_goButton() {
         System.out.println("Go to Test Button has been pressed!");
         
         if (allTagsChoice.getValue() == null) {
             // code which calls alert message to choose value from menu
         } else {
-            
             Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        // TODO customize JavaFXGrammarGUI class to make it reusable and
-                        // capable of working accepting a reference to List<Question>
                         String tagSelectedValFullTopic = allTagsChoice.getValue();
+                        // todo abstract out all the service logic from GUI code
                         String tagString = TopicGather.getFullTopic2TopicMap()
                                 .get(tagSelectedValFullTopic)
                                 .getTopicTag();
                         List<Question> selectedQList = MCQCompilationFactory.getSpecifiedQList(tagString);
                         new GrammarGUI(selectedQList).start(mainStage);
                     } 
-                 });     
-            
+                 });
         }
     }
-    
-    public void initAllTagTypes() {
+
+    // todo abstract out all the service logic from GUI code
+    private void initAllTagTypes() {
         allTagTypesList = TopicGather.getTopics()
                 .stream()
                 .map(TopicEntity::getTopicFull)
