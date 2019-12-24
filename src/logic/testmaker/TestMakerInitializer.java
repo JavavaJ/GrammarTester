@@ -6,11 +6,12 @@ import javafx.embed.swing.JFXPanel;
 import javafx.stage.Stage;
 
 public class TestMakerInitializer {
+
     public static void main(String[] args) {
         
         // set -Dprism.order=sw command to VM
         Properties systemProperties = System.getProperties();
-        systemProperties.setProperty("prism.order", "sw");
+        // systemProperties.setProperty("prism.order", "sw");
         
         // to check
         System.out.println("Outside JavaFX prism.order=" + System.getProperty("prism.order"));
@@ -25,4 +26,5 @@ public class TestMakerInitializer {
             }
         });
     }
+
 }

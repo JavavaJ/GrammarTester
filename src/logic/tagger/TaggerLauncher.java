@@ -37,13 +37,11 @@ public class TaggerLauncher extends Application {
         HBox hpane = new HBox(buttonContainer);
         hpane.setAlignment(Pos.CENTER);
         
-        
         Scene scene = new Scene(hpane, 300, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
         
     }
-    
     
     public void click_launchButton() {
         Platform.runLater(new Runnable() {
