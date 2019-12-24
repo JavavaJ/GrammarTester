@@ -21,7 +21,7 @@ class FromTXTtoSQL {
     } // end of main method
 
     /** The method takes a text with numbered multiple choice (4 options) questions,
-     * forms Question objects and writes them to SQL java.database.
+     * forms Question objects and writes them to SQL database.
      * 
      * @param questionsText a text with numbered multiple choice (4 options) questions
      */
