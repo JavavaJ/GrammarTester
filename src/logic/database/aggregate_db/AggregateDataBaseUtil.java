@@ -63,7 +63,7 @@ public class AggregateDataBaseUtil {
     }
 
     /**
-     * The method creates an aggregate java.database file and a SQL table in it.
+     * The method creates an aggregate database file and a SQL table in it.
      *
      * @param dataBasePath (full path to .db file where to create a table)
      * @param tableName (is expected to be in lower case)
@@ -203,7 +203,7 @@ public class AggregateDataBaseUtil {
         return miniId;
     }
 
-    // return tableCount which is a number of a dababase file, like 13 in TEST13
+    // return tableCount which is a number of a database file, like 13 in TEST13
     public static int getTableCount(int tableCount, Question question, int prevId) {
         if (prevId > question.getId()) {
             tableCount++;

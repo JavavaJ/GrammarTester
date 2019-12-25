@@ -59,9 +59,7 @@ public class SQLUpdateColumn {
             } catch (SQLException se) {
                 se.printStackTrace();
             } // end of final try
-                
 
-                
             
         } // end of finally    
     } // end of updateColumn

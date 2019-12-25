@@ -15,7 +15,7 @@ public class DataBaseMaker {
     private static Statement stmt;
 
 
-    /** The method creates a java.database file and a SQL table in it.
+    /** The method creates a database file and a SQL table in it.
      *
      * @param dataBaseName (is expected to be capitalized)
      * @param tableName (is expected to be in lower case)

@@ -22,7 +22,7 @@ class SQLWriterTest {
         SQLWriter writer = new SQLWriter(dDName, tableName);
         writer.storeValues(id, tableName, a, b, c, d);
         
-        System.out.println("Values are stored!"); // SUCCUSS!!
+        System.out.println("Values are stored!"); // SUCCESS!!
         
     }
 }

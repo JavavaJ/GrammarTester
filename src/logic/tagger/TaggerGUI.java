@@ -5,6 +5,8 @@
 package logic.tagger;
 
 import logic.database.SQLReader;
+
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -303,8 +305,12 @@ public class TaggerGUI extends Application {
     public void readDatabase(String dataBasePath) {        
         
         // reverse the path, and read tableName from the end omittin .db which is 3 symbols to "\\"
-        String dataBasePathReversed = new StringBuffer(dataBasePath).reverse().toString();        
-        String tableNameRev = dataBasePathReversed.substring(3, dataBasePathReversed.indexOf("\\"));
+        String dataBasePathReversed = new StringBuffer(dataBasePath).reverse().toString();
+        // todo replace \\ to system separator
+        String separator = FileSystems.getDefault()
+            .getSeparator();
+        int endIndex = dataBasePathReversed.indexOf(separator);
+        String tableNameRev = dataBasePathReversed.substring(3, endIndex);
         // naming convention of data bases and table names is that the name is the same 
         // but data base name is in all capitals and table name is in all lower case letters
         tableName = new StringBuffer(tableNameRev).reverse().toString().toLowerCase(); 

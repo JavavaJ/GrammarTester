@@ -5,6 +5,7 @@ import logic.testmaker.split_paragraph.ParagraphOption;
 import logic.testmaker.split_paragraph.Util;
 import logic.testmaker.split_paragraph.exception.NoSuchBraceException;
 
+import java.nio.file.FileSystems;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -107,9 +108,14 @@ public class UtilTest {
 //        testGetOnlyParagraph();
 //        testGetFormatedParagraph();
 //        testJustThatFunction();
-        List<BracedOrdinal> bracedOrdinals = Util.getAllParensedNumbers(orderedText);
-        String onlyOptionsText = Util.getOnlyOptionsText(bracedOrdinals, orderedText);
-        System.out.println(onlyOptionsText);
+
+        String separator = FileSystems.getDefault()
+            .getSeparator();
+        System.out.println(separator);
+
+//        List<BracedOrdinal> bracedOrdinals = Util.getAllParensedNumbers(orderedText);
+//        String onlyOptionsText = Util.getOnlyOptionsText(bracedOrdinals, orderedText);
+//        System.out.println(onlyOptionsText);
     }
 
 }

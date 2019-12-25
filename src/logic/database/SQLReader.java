@@ -40,8 +40,8 @@ public class SQLReader {
     }
     
     
-    /** The method makes a single query from java.database based on idRow
-     * and returns a HashMap of values (id, java.question, a, b, c, d, right).
+    /** The method makes a single query from database based on idRow
+     * and returns a HashMap of values (id, question, a, b, c, d, right).
      * 
      * @param int idRow
      * @return HashMap<String, String>
@@ -71,11 +71,11 @@ public class SQLReader {
                 // get the resuts of a query and put them into hashmap
                 int id = queryResult.getInt("id");
 
-                // integer id should be converted to String type              ;
+                // integer id should be converted to String type;
                 queryValues.put("id", Integer.toString(id));
 
-                String question = queryResult.getString("java/question");
-                queryValues.put("java/question", question);
+                String question = queryResult.getString("question");
+                queryValues.put("question", question);
                 String a = queryResult.getString("a");
                 queryValues.put("a", a);
                 String b = queryResult.getString("b");
@@ -124,7 +124,7 @@ public class SQLReader {
     
     /** The method makes multiple queries from java.database using
      * single connection and thus is resource-efficient. It reads row in a 
-     * java.database starting from row fromId and to row toId. The method returns an
+     * database starting from row fromId and to row toId. The method returns an
      * arraylist of Question objects.
      * 
      * @param fromId
@@ -160,7 +160,7 @@ public class SQLReader {
                     int id = queryResult.getInt("id");
                     question.setId(id);
                     
-                    String questionText = queryResult.getString("java/question");
+                    String questionText = queryResult.getString("question");
                     question.setQuestionPart(questionText);
                     
                     String aOption = queryResult.getString("a");
@@ -209,8 +209,8 @@ public class SQLReader {
     /** The method takes filePath and tableName and return 
      * a number of rows in a table.
      * 
-     * @param filePathURLFormat path to directory of java.database
-     * @param tableName name of a table in a java.database
+     * @param filePathURLFormat path to directory of database
+     * @param tableName name of a table in a database
      * @return 
      */
     public int getNumberOfRowsInTable(String filePathURLFormat, String tableName) {
@@ -305,7 +305,5 @@ public class SQLReader {
         }
         return numOfRows;
     }
-    
-       
 
 } // end of class
