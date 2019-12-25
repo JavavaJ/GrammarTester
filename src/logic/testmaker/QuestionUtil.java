@@ -24,14 +24,7 @@ public class QuestionUtil {
     public static Question[] parseTextToQsArray(String questionsText) {
         // sometimes in the text 65533 UTF character appears, we need to get rid of it
         char strangeChar = (char) 65533;
-        StringBuffer questionTextBuff = new StringBuffer(questionsText);
-        for (int i = 0; i < questionTextBuff.length(); i++) {
-            if (questionTextBuff.charAt(i) == strangeChar) {
-                questionTextBuff.deleteCharAt(i);
-            }            
-        }
-        questionsText = questionTextBuff.toString();
-        
+        questionsText = getRemoveCharacter(questionsText, strangeChar);
         
         // determine and set text's delimiter case
         setDelimiterCase(questionsText);        
@@ -75,7 +68,7 @@ public class QuestionUtil {
             if (Constants.IS_DEBUGGING_MODE) {
                 System.out.println("Debugging mode!");
                 System.out.println("i: " + i);
-                System.out.println("java.question[i]: " + questions[i]);
+                System.out.println("question[i]: " + questions[i]);
             }
             
             questionArray[i] = new Question(questions[i], delimiterCase);
@@ -85,7 +78,7 @@ public class QuestionUtil {
         
         
     }
-    
+
     /** The method takes a string which is a  text with numbered questions.
      * The method returns a map of indices (position in a text) of questions'
      * ordinal numbers. Those indices are used later to parse the questions.
@@ -104,13 +97,26 @@ public class QuestionUtil {
             String token = qNumStr + ".";
             index = str.indexOf(token, index);
 
+            String strLowCase = str.toLowerCase();
+            String aWithBrace = "a)";
+            String bWithBrace = "b)";
+            String cWithBrace = "c)";
+            String dWithBrace = "d)";
+
+            // parse text to see if there are A)B)C)D) fragments, if not - it's probably some integer with dot
+            // mistaken for qNum
+            int aBraceIndex = strLowCase.indexOf(aWithBrace, index);
+            int bBraceIndex = strLowCase.indexOf(bWithBrace, aBraceIndex);
+            int cBraceIndex = strLowCase.indexOf(cWithBrace, bBraceIndex);
+            int dBraceIndex = strLowCase.indexOf(dWithBrace, cBraceIndex);
+
             qNum++;
             // break if we reach the end of questions' text
             if (index == -1) {
                 break;
             } else {
                 mapIndex.put(qNumStr, index);
-                index++;
+                index = dBraceIndex;
             }
         }
         
@@ -166,7 +172,16 @@ public class QuestionUtil {
         }      
         
     }
-    
-    
+
+    private static String getRemoveCharacter(String questionsText, char strangeChar) {
+        StringBuffer questionTextBuff = new StringBuffer(questionsText);
+        for (int i = 0; i < questionTextBuff.length(); i++) {
+            if (questionTextBuff.charAt(i) == strangeChar) {
+                questionTextBuff.deleteCharAt(i);
+            }
+        }
+        questionsText = questionTextBuff.toString();
+        return questionsText;
+    }
     
 }

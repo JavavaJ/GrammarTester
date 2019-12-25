@@ -19,6 +19,8 @@ import static logic.testmaker.Constants.IS_DEBUGGING_MODE;
 
 public class Question implements Serializable {
 
+	private static final int AFTER_Q_NUM_OFFSET = ". ".length();
+
     private int id;
     private String questionPart;
     private String optionA;
@@ -28,7 +30,7 @@ public class Question implements Serializable {
     private String rightAns;
     private String tags;
     private Set<TagType> possibleTagTypes; // set to hold values of possible
-    // TagType's when the Question is analyzed by java.classifier
+    // TagType's when the Question is analyzed by classifier
     
     {
         possibleTagTypes = new HashSet<>();
@@ -39,7 +41,7 @@ public class Question implements Serializable {
     }
 
 	/** The Question(String text) constructor is actually is a parser
-     * of a text of a multiple choice test java.question of format
+     * of a text of a multiple choice test question of format
      * "id. A) ..... B) ...... C) ..... D) ...... .
      */    
     public Question(String text) {
@@ -47,20 +49,20 @@ public class Question implements Serializable {
 		int dotIndex = text.indexOf(".");		
 
 		
-		// the id of a java.question is one or two characters before '.'
+		// the id of a question is one or two characters before '.'
 		int id = Integer.parseInt(text.substring(0, dotIndex));
 		setId(id);
 
 		/* next delimiter is "A) ". Note that we need only 
 		* text of A option without "A) " that's why we
-		* will later add (3) 2(!!!!!) because somethimes there is no space between
+		* will later add (3) 2(!!!!!) because sometimes there is no space between
         * "A)" and option A.
         */
 		int optionAIndex = text.indexOf("A)");
 
 		// The text between ". " dotIndex + one_space and optionAIndex
 		// is actually questionPart (2 was later changed to 1, because sometimes 
-        // there may not be a space between "." and java.question part)
+        // there may not be a space between "." and question part)
 		String questionPart = text.substring(dotIndex + 1, optionAIndex);
 		setQuestionPart(questionPart);
 
@@ -68,16 +70,16 @@ public class Question implements Serializable {
 		int optionCIndex = text.indexOf("C)");
 		int optionDIndex = text.indexOf("D)");
 
-		String optionA = text.substring(optionAIndex + 2, optionBIndex);
+		String optionA = text.substring(optionAIndex + AFTER_Q_NUM_OFFSET, optionBIndex);
 		setOptionA(optionA);
 
-		String optionB = text.substring(optionBIndex + 2, optionCIndex);
+		String optionB = text.substring(optionBIndex + AFTER_Q_NUM_OFFSET, optionCIndex);
 		setOptionB(optionB);
 
-		String optionC = text.substring(optionCIndex + 2, optionDIndex);
+		String optionC = text.substring(optionCIndex + AFTER_Q_NUM_OFFSET, optionDIndex);
 		setOptionC(optionC);
 
-		String optionD = text.substring(optionDIndex + 2);
+		String optionD = text.substring(optionDIndex + AFTER_Q_NUM_OFFSET);
 		setOptionD(optionD);
 
 	}
@@ -95,12 +97,10 @@ public class Question implements Serializable {
 		// index of the first dot character "." in the text
 		int dotIndex = text.indexOf(".");		
 
-		
-		// the id of a java.question is one or two characters before '.'
+		// the id of a question is one or two characters before '.'
 		int id = Integer.parseInt(text.substring(0, dotIndex));
 		setId(id);
 
-		
         int optionAIndex = 0;
         String questionPart;
         int optionBIndex = 0;
@@ -117,8 +117,14 @@ public class Question implements Serializable {
 
             // The text between ". " dotIndex + one_space and optionAIndex
             // is actually questionPart (2 was later changed to 1, because sometimes 
-            // there may not be a space between "." and java.question part)
-            questionPart = text.substring(dotIndex + 1, optionAIndex);
+            // there may not be a space between "." and question part)
+			questionPart = "";
+			if ((dotIndex + 1) <= optionAIndex ) {
+				questionPart = text.substring(dotIndex + 1, optionAIndex);
+			} else {
+				System.out.println("Wrong Question parsing...");
+			}
+
             setQuestionPart(questionPart);
 
             optionBIndex = text.indexOf("B)");
@@ -137,8 +143,13 @@ public class Question implements Serializable {
 
             // The text between ". " dotIndex + one_space and optionAIndex
             // is actually questionPart (2 was later changed to 1, because sometimes 
-            // there may not be a space between "." and java.question part)
-            questionPart = text.substring(dotIndex + 1, optionAIndex);
+            // there may not be a space between "." and question part)
+			questionPart = "";
+			if ((dotIndex + 1) <= optionAIndex ) {
+				questionPart = text.substring(dotIndex + 1, optionAIndex);
+			} else {
+				System.out.println("Wrong Question parsing...");
+			}
             setQuestionPart(questionPart);
 
             optionBIndex = text.indexOf("b)");
@@ -151,27 +162,38 @@ public class Question implements Serializable {
             System.out.println("optionAIndex: " + optionAIndex);
             System.out.println("optionBIndex: " + optionBIndex);
         }
-        
-		String optionA = text.substring(optionAIndex + 2, optionBIndex);     // error out of bound occurs here!         
-        
-		setOptionA(optionA);               
 
-		String optionB = text.substring(optionBIndex + 2, optionCIndex);
-		setOptionB(optionB);
+		String optionA = "";
+        if (optionAIndex + AFTER_Q_NUM_OFFSET <= optionBIndex) {
+			optionA = text.substring(optionAIndex + AFTER_Q_NUM_OFFSET, optionBIndex);
+			setOptionA(optionA);
+		} else {
+			System.out.println("Wrong Question parsing...");
+		}
 
-		String optionC = text.substring(optionCIndex + 2, optionDIndex);
-		setOptionC(optionC);
 
-		String optionD = text.substring(optionDIndex + 2);
+		String optionB = "";
+        if (optionBIndex + AFTER_Q_NUM_OFFSET <= optionCIndex) {
+			optionB = text.substring(optionBIndex + AFTER_Q_NUM_OFFSET, optionCIndex);
+			setOptionB(optionB);
+		}
+
+		String optionC = "";
+		if (optionCIndex + AFTER_Q_NUM_OFFSET <= optionDIndex) {
+			optionC = text.substring(optionCIndex + AFTER_Q_NUM_OFFSET, optionDIndex);
+			setOptionC(optionC);
+		}
+
+		String optionD = text.substring(optionDIndex + AFTER_Q_NUM_OFFSET);
 		setOptionD(optionD);
 
 	}
     
 
-	/** Returns an id integer of a java.question which is non-zero based
-     * ordinal number of java.question.
-     * @return id integer of a java.question which is non-zero based
-     * ordinal number of java.question
+	/** Returns an id integer of a question which is non-zero based
+     * ordinal number of question.
+     * @return id integer of a question which is non-zero based
+     * ordinal number of question
      */
     public int getId() {
 		return id;

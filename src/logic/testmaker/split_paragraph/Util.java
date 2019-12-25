@@ -30,7 +30,7 @@ public class Util {
             }
             paragWithOneNum = placeNumAtStart(num, paragWithOneNum);
             sb.append(paragWithOneNum);
-            // todo test this function
+
             List<ParagraphOption> currOptionSingleList = listOfOptions.stream()
                     .filter(option -> option.getNumber() == num)
                     .collect(Collectors.toList());
@@ -114,22 +114,24 @@ public class Util {
                 .map(BracedOrdinal::getValue)
                 .collect(Collectors.toList());
         Integer max = Collections.max(numbers);
+
+        String onlyOptionsText = getOnlyOptionsText(bracedOrdinals, text);
         for (Integer num : numbers) {
             String numMarker = String.valueOf(num) + ". ";
             int numMarkerLen = numMarker.length();
-            int startIndex = text.indexOf(numMarker);
+            int startIndex = onlyOptionsText.indexOf(numMarker);
             if (num != max) {
                 String nextNumMarker = String.valueOf(num + 1) + ". ";
-                int nextIndex = text.indexOf(nextNumMarker);
-                String optionText = text.substring(startIndex + numMarkerLen, nextIndex);
+                int nextIndex = onlyOptionsText.indexOf(nextNumMarker);
+                String optionText = onlyOptionsText.substring(startIndex + numMarkerLen, nextIndex);
                 ParagraphOption option = new ParagraphOption(num, startIndex, optionText);
                 options.add(option);
             } else {
                 // if it's the last option - till the end of text
                 String startLastIndex = String.valueOf(num) + ". ";
                 int startLastIndexLen = startLastIndex.length();
-                int lastIndex = text.indexOf(startLastIndex);
-                String optionText = text.substring(lastIndex + startLastIndexLen);
+                int lastIndex = onlyOptionsText.indexOf(startLastIndex);
+                String optionText = onlyOptionsText.substring(lastIndex + startLastIndexLen);
                 ParagraphOption option = new ParagraphOption(num, lastIndex, optionText);
                 options.add(option);
             }
