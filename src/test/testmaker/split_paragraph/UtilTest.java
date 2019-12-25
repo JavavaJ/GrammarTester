@@ -6,6 +6,7 @@ import logic.testmaker.split_paragraph.Util;
 import logic.testmaker.split_paragraph.exception.NoSuchBraceException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UtilTest {
 
@@ -71,11 +72,44 @@ public class UtilTest {
         System.out.println(onlyParagraph);
     }
 
+    private static void testGetFormatedParagraph() {
+        String formatedParagraph = Util.getFormatedParagraph(orderedText);
+        System.out.println(formatedParagraph);
+    }
+
+    private static void testJustThatFunction() {
+        List<BracedOrdinal> bracedOrdinals = Util.getAllParensedNumbers(orderedText);
+        String onlyParagraph = Util.getOnlyParagraph(bracedOrdinals, orderedText);
+        List<Integer> qNums = bracedOrdinals.stream()
+                .map(BracedOrdinal::getValue)
+                .collect(Collectors.toList());
+        List<ParagraphOption> listOfOptions = Util.getListOfOptions(bracedOrdinals, orderedText);
+
+        List<ParagraphOption> currOptionSingleList = listOfOptions.stream()
+                .filter(option -> option.getNumber() == 20)
+                .collect(Collectors.toList());
+
+        ParagraphOption neededOption = null;
+        for (ParagraphOption option : listOfOptions) {
+            if (option.getNumber() == 27) {
+                neededOption = option;
+                break;
+            }
+        }
+
+        System.out.println(neededOption);
+    }
+
     public static void main(String[] args) {
 //        testRemoveAllNumsExceptOne();
 //        testPlaceNumAtStart();
 //        testGetListOfOptions();
 //        testGetOnlyParagraph();
+//        testGetFormatedParagraph();
+//        testJustThatFunction();
+        List<BracedOrdinal> bracedOrdinals = Util.getAllParensedNumbers(orderedText);
+        String onlyOptionsText = Util.getOnlyOptionsText(bracedOrdinals, orderedText);
+        System.out.println(onlyOptionsText);
     }
 
 }

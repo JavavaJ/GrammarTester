@@ -63,12 +63,8 @@ public class ParagraphTextSplitterGUI extends Application {
 
     public void click_buttonShowAsTable() {
         String text = textArea.getText();
-        System.out.println(text);
-        String reversedText = new StringBuilder(text)
-                .reverse()
-                .toString();
-        ParagraphSplitter.findNumsInParenths(text);
-        textArea.setText(reversedText);
+        String formatedParagraph = Util.getFormatedParagraph(text);
+        textArea.setText(formatedParagraph);
     }
 
 }

@@ -11,6 +11,40 @@ import java.util.stream.Collectors;
 
 public class Util {
 
+    public static String getFormatedParagraph(String text) {
+        List<BracedOrdinal> bracedOrdinals = getAllParensedNumbers(text);
+        String onlyParagraph = getOnlyParagraph(bracedOrdinals, text);
+        List<Integer> qNums = bracedOrdinals.stream()
+                .map(BracedOrdinal::getValue)
+                .collect(Collectors.toList());
+        List<ParagraphOption> listOfOptions = getListOfOptions(bracedOrdinals, text);
+
+        StringBuilder sb = new StringBuilder("\n \n");
+
+        for (Integer num : qNums) {
+            String paragWithOneNum = "";
+            try {
+                paragWithOneNum = removeAllNumsExceptOne(num, onlyParagraph);
+            } catch (NoSuchBraceException e) {
+                e.printStackTrace();
+            }
+            paragWithOneNum = placeNumAtStart(num, paragWithOneNum);
+            sb.append(paragWithOneNum);
+            // todo test this function
+            List<ParagraphOption> currOptionSingleList = listOfOptions.stream()
+                    .filter(option -> option.getNumber() == num)
+                    .collect(Collectors.toList());
+            ParagraphOption currOption = null;
+            if (currOptionSingleList.size() > 0) {
+                currOption = currOptionSingleList.get(0);
+            }
+            sb.append(" \n");
+            sb.append(currOption.getOptions());
+            sb.append("\n \n");
+        }
+        return sb.toString();
+    }
+
     public static String removeAllNumsExceptOne(int num, String text) throws NoSuchBraceException {
 
         List<BracedOrdinal> bracedOrdinals = getAllParensedNumbers(text);
@@ -23,8 +57,6 @@ public class Util {
         List<BracedOrdinal> bracesToRemove = bracedOrdinals.stream()
                 .filter(brace -> brace.getValue() != num)
                 .collect(Collectors.toList());
-
-        System.out.println("Braces to remove: " + bracesToRemove);
 
         StringBuilder textSb = new StringBuilder(text);
 
@@ -76,6 +108,7 @@ public class Util {
     }
 
     public static List<ParagraphOption> getListOfOptions(List<BracedOrdinal> bracedOrdinals, String text) {
+
         List<ParagraphOption> options = new ArrayList<>();
         List<Integer> numbers = bracedOrdinals.stream()
                 .map(BracedOrdinal::getValue)
@@ -83,24 +116,36 @@ public class Util {
         Integer max = Collections.max(numbers);
         for (Integer num : numbers) {
             String numMarker = String.valueOf(num) + ". ";
+            int numMarkerLen = numMarker.length();
             int startIndex = text.indexOf(numMarker);
             if (num != max) {
                 String nextNumMarker = String.valueOf(num + 1) + ". ";
                 int nextIndex = text.indexOf(nextNumMarker);
-                String optionText = text.substring(startIndex, nextIndex);
-                ParagraphOption option = new ParagraphOption(startIndex, optionText);
+                String optionText = text.substring(startIndex + numMarkerLen, nextIndex);
+                ParagraphOption option = new ParagraphOption(num, startIndex, optionText);
                 options.add(option);
             } else {
                 // if it's the last option - till the end of text
                 String startLastIndex = String.valueOf(num) + ". ";
+                int startLastIndexLen = startLastIndex.length();
                 int lastIndex = text.indexOf(startLastIndex);
-                String optionText = text.substring(lastIndex);
-                ParagraphOption option = new ParagraphOption(lastIndex, optionText);
+                String optionText = text.substring(lastIndex + startLastIndexLen);
+                ParagraphOption option = new ParagraphOption(num, lastIndex, optionText);
                 options.add(option);
             }
         }
 
         return options;
+    }
+
+    public static String getOnlyOptionsText(List<BracedOrdinal> bracedOrdinals, String text) {
+        Integer min = bracedOrdinals.stream()
+                .map(BracedOrdinal::getValue)
+                .min(Integer::compare)
+                .get();
+        String minNumStrMarker = String.valueOf(min) + ". ";
+        int minIndex = text.indexOf(minNumStrMarker);
+        return text.substring(minIndex);
     }
 
     public static String getOnlyParagraph(List<BracedOrdinal> bracedOrdinals, String text) {
