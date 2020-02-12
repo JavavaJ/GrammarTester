@@ -4,6 +4,7 @@
 
 package logic.tagger;
 
+import javafx.application.Platform;
 import logic.database.SQLReader;
 
 import java.nio.file.FileSystems;
@@ -500,6 +501,12 @@ public class TaggerGUI extends Application {
 
     public void click_createTagButton() {
         System.out.println("Create tag button is clicked!");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                new TagCreationStage().start(new Stage());
+            }
+        });
     }
     
     
