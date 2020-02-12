@@ -1,7 +1,11 @@
 package logic.database.topics;
 
+import logic.config.PropertiesLoader;
+import logic.question.Question;
+
 import java.sql.*;
 import java.util.List;
+import java.util.Properties;
 
 public class TopicsDBUtil {
 
@@ -10,7 +14,6 @@ public class TopicsDBUtil {
         System.out.println("Preparing to create topics table ...");
         createTopicTable(dBPath);
         writeEnumsToTopicsDb();
-
     }
 
     public static void createTopicTable(String dataBasePath) {
@@ -72,6 +75,48 @@ public class TopicsDBUtil {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    public static void writeSingleTopic(TopicEntity topic) {
+        Properties properties = PropertiesLoader.getProperties();
+        String dbPath = properties.getProperty("allElemDbPath");
+        String urlSQLite = "jdbc:sqlite:" + dbPath.replace("\\", "/");
+        String topicsTableName = properties.getProperty("topicsTableName");
+
+        Connection connection = null;
+        PreparedStatement prStmt;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection(urlSQLite);
+
+            String sql = "insert into " + topicsTableName + " (id, level, topic_full, topic_tag) values ((select MAX(id) from topics) + 1, ?, ?, ?)";
+            prStmt = connection.prepareStatement(sql);
+
+            prStmt.setString(1, topic.getLevel());
+            prStmt.setString(2, topic.getTopicFull());
+            prStmt.setString(3, topic.getTopicTag());
+
+            prStmt.addBatch();
+            prStmt.executeBatch();
+            prStmt.close();
+            connection.close();
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (ClassNotFoundException notFoundExp) {
+            notFoundExp.printStackTrace();
+        } finally {
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
 
     }

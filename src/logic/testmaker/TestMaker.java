@@ -128,14 +128,14 @@ public class TestMaker extends Application {
         
         // ------------- GUI Scene code ----------------
         
-        ObservableList<Question>allQuesntionsObs = FXCollections.observableArrayList(allQuestions);
+        ObservableList<Question>allQuestionsObservList = FXCollections.observableArrayList(allQuestions);
         String tableName = "Random Test";
         
         Label labelHeading = new Label(tableName);
         labelHeading.setFont(new Font("Arial", 20));
         
         TableView<Question> table = new TableView<>();
-        table.setItems(allQuesntionsObs);
+        table.setItems(allQuestionsObservList);
         
         TableColumn<Question, Integer> colId = new TableColumn<>("Id");
         colId.setPrefWidth(30);
@@ -214,10 +214,10 @@ public class TestMaker extends Application {
     public void click_buttonSave() {
         NewOrOldFileMessageBox.show();        
         String chosenPath = NewOrOldFileMessageBox.getFilePath();
-        System.out.println("The chosen path inside java.testmaker: " + chosenPath);
+        System.out.println("The chosen path inside testmaker: " + chosenPath);
         TableNameMessageBox.show();
         String chosenTableName = TableNameMessageBox.getTableName();
-        System.out.println("The chosen table name inside java.testmaker: " + chosenTableName);
+        System.out.println("The chosen table name inside testmaker: " + chosenTableName);
         DataBasesUtil.createDB(chosenPath, chosenTableName);
         DataBasesUtil.storeValues(allQuestions, chosenPath, chosenTableName);
         System.out.println("Table in Database is created!");

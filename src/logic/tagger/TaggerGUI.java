@@ -242,10 +242,20 @@ public class TaggerGUI extends Application {
         
         tagChoice.setPrefSize(150, 40);
         tagChoice.setStyle("-fx-font: 17px \"Segoe UI\";");
+
+        Region spaceBeforeAddButton = new Region();
+        spaceBeforeAddButton.setPrefHeight(30);
+
+        Button createTagButton = new Button("Create Tag");
+        createTagButton.setFont(new Font(20));
+        createTagButton.setTooltip(new Tooltip("Create New Tag"));
+        createTagButton.setOnAction(e -> click_createTagButton());
         
-        
-        
-        VBox tagPane = new VBox(levelChoice, spacerBetwTaggers , tagChoice);
+        VBox tagPane = new VBox(levelChoice,
+            spacerBetwTaggers,
+            tagChoice,
+            spaceBeforeAddButton,
+            createTagButton);
         tagPane.setPadding(new Insets(10));
 
         BorderPane mainPane = new BorderPane();
@@ -486,6 +496,10 @@ public class TaggerGUI extends Application {
         }
         
         
+    }
+
+    public void click_createTagButton() {
+        System.out.println("Create tag button is clicked!");
     }
     
     

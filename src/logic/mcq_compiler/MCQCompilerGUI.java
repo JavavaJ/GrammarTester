@@ -5,8 +5,6 @@
  */
 package logic.mcq_compiler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,10 +24,6 @@ import javafx.stage.Stage;
 import logic.database.topics.TopicEntity;
 import logic.database.topics.TopicGather;
 import logic.question.Question;
-import logic.question.topics.MixType;
-import logic.question.topics.A1_LEVEL;
-import logic.question.topics.A2_LEVEL;
-import logic.question.topics.TagType;
 import logic.testmaker.GrammarGUI;
 
 /**
