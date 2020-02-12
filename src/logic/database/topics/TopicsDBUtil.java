@@ -10,10 +10,19 @@ import java.util.Properties;
 public class TopicsDBUtil {
 
     public static void main(String[] args) {
-        String dBPath = "resources/ALL_ELEM.db";
-        System.out.println("Preparing to create topics table ...");
-        createTopicTable(dBPath);
-        writeEnumsToTopicsDb();
+//        String dBPath = "resources/ALL_ELEM.db";
+//        System.out.println("Preparing to create topics table ...");
+//        createTopicTable(dBPath);
+//        writeEnumsToTopicsDb();
+
+//        // writeSingleTopic test
+//        TopicEntity topic = new TopicEntity();
+//        topic.setLevel("u2");
+//        topic.setTopicFull("Some very new topic");
+//        topic.setTopicTag("very_new_topic");
+//
+//        writeSingleTopic(topic);
+
     }
 
     public static void createTopicTable(String dataBasePath) {
@@ -103,6 +112,7 @@ public class TopicsDBUtil {
             prStmt.executeBatch();
             prStmt.close();
             connection.close();
+            System.out.println("Successfully written a single row to topics: " + topic.toString());
 
         } catch (SQLException se) {
             se.printStackTrace();
