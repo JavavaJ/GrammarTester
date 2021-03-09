@@ -113,16 +113,17 @@ public class StartClassifiersChain {
         // get the first Question in the list and instantiate QuestionForClassification from it
         QuestionForClassification currentClassQuestion = new QuestionForClassification(qListComparatives.get(0));
 
+        // create and populate an ArrayList of QuestionForClassification objects
+        // based on qListComparatives
+        List<QuestionForClassification> qListComparToClassify = new ArrayList<>(qListComparatives.size());
+        for (Question question : qListComparatives) {
+            qListComparToClassify.add(new QuestionForClassification(question));
+        }
         
-        
-        
-        
-        
-        // finally some code for creating Chain of Responsiblity
-        AbstractClassifier comparativeClassifier = new ComparativeClassifier();
-        comparativeClassifier.classify(currentClassQuestion, getAllNLPTagsSet(currentClassQuestion));
-        
-        currentClassQuestion.printAllPossibleTagTypes();
+        // classify and print all comparatives Questions
+        for (QuestionForClassification qToClass : qListComparToClassify) {
+            classifyQuestionAndPrint(qToClass);
+        }
              
     }
     
@@ -137,6 +138,19 @@ public class StartClassifiersChain {
         String tag = str.substring(posUnderscore + 1);
         
         return tag;
+    }
+    
+    public void classifyQuestionAndPrint(QuestionForClassification questionToClassify) {
+        AbstractClassifier comparativeClassifier = new ComparativeClassifier();
+        comparativeClassifier.classify(questionToClassify, getAllNLPTagsSet(questionToClassify));
+        
+        // print out allPositbleTags set
+        System.out.println("Id: " + questionToClassify.getId());
+        questionToClassify.printAllPossibleTagTypes();
+        if (questionToClassify.isAllPossibleTagTypesSetEmpty()) {
+            questionToClassify.printQuestion();
+        }
+        System.out.println("");
     }
 
 }

@@ -15,6 +15,9 @@ public class EnumTest {
         System.out.println(tagNull == null);
         
         */
+        
+        
+        System.out.println(TagType.getTagTypeByTag("voc"));
     }
     
     

@@ -23,7 +23,12 @@ import tagger.TagType;
  */
 public class MCQCompilationFactory {
     
-    
+    /** The method takes a TagType as a parameter and returns a list of all 
+     * Questions from ALL_ELEM.db with this tag.
+     * 
+     * @param tagType type of questions 
+     * @return list of questions of type TagType
+     */
     public static List<Question> getSpecifiedQList(TagType tagType) {
         List<Question> qSpecifiedList = new ArrayList<>();
         

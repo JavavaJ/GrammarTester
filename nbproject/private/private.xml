@@ -3,23 +3,37 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/mcq_compiler/MCQCompilationFactoryTest.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/classifier/StartClassifiersChain.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/mcq_compiler/MCQCompilerGUI.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/GrammarGUI.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/A2_LEVEL.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/classifier/StringTokenizerTest.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/DataBasesUtil.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/TestMaker.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/grammartester/SQLReader.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/FileChooserSaveDB.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/classifier/POSTest.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/read/ReadFile.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/NewOrOldFileMessageBox.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/mcq_compiler/RelativePathTests.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TaggerGUI.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/MixType.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/classifier/ComparativeClassifier.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/grammartester/DataBaseMaker.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/classifier/QuestionForClassification.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/MenuBarSketch.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TagType.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TagTypeMapInitializer.java</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/DataBasesUtil.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/aggregate_db/AggregateDataBaseUtil.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/build.xml</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/testmaker/TestMaker.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TaggerLauncher.java</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/grammartester/SQLReader.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/A1_LEVEL.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/SQLTagWriterTest.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/mcq_compiler/MCQCompilationFactory.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/read/Question.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/SQLTagWriter.java</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/TaggerGUI.java</file>
-            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/MixType.java</file>
+            <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/classifier/AbstractClassifier.java</file>
             <file>file:/C:/Users/ALEXXX/Documents/NetBeansProjects/GrammarTester/src/tagger/EnumTest.java</file>
         </group>
     </open-files>
